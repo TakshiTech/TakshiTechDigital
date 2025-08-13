@@ -145,7 +145,7 @@ const Careers: React.FC = () => {
             variants={fadeInUp}
             className="text-lg text-gray-700 mb-10"
           >
-            Passionate about sales and marketing? Join our growing team and help businesses thrive through powerful digital solutions.
+            Passionate about sales and marketing? Join our growing team and help businesses thrive through powerful digital solution.
           </motion.p>
 
           <form onSubmit={handleSubmit} className="bg-white p-8 rounded shadow-md space-y-6 text-left">
