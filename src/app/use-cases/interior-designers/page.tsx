@@ -1,0 +1,235 @@
+"use client";
+import Footer from '@/components/Footer';
+import Navbar from '@/components/Navbar';
+import SocialSidebar from '@/components/SocialSidebar';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
+import React from 'react';
+
+const interiorDesigners: React.FC = () => {
+  return (
+
+    <div className="bg-gray-50 min-h-screen">
+        <Navbar/>
+        <SocialSidebar/>
+         <section
+              className="w-full h-[100vh] relative overflow-hidden flex items-center justify-center"
+            >
+              {/* Background Image */}
+              <div
+                className="absolute inset-0 bg-center bg-cover bg-no-repeat"
+                style={{
+                  backgroundImage: "url('/images/usecase/designers.webp')",
+                  filter: "blur(2px)",
+                  transform: "scale(1.1)", // prevents edges from showing when blurred
+                }}
+              ></div>
+      
+              {/* Overlay color for readability (optional) */}
+              <div className="absolute inset-0 bg-white/50"></div>
+      
+              {/* Content */}
+              <motion.div
+                initial={{ y: "-150%" }}
+                animate={{ y: 0 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className="absolute text-center w-full"
+              >
+                <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold text-black">
+                  USE CASES
+                </h1>
+                <p className="mt-2 sm:mt-4 text-lg sm:text-xl md:text-2xl text-gray-600">
+                   [Interior-Designers]
+                </p>
+              </motion.div>
+      </section>
+      {/* Hero Section */}
+      <section className="bg-gradient-to-r from-indigo-600 to-cyan-500 text-white py-20">
+        <div className="container mx-auto px-6 text-center">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            Digital Marketing Use Cases for Interior-Designers
+          </h1>
+          <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
+           At Web Digital Bazaar, we help interior designers showcase their creativity and attract dream clients through effective digital marketing. From elegant portfolios to targeted online campaigns, we craft strategies that highlight design expertise and turn online visitors into loyal customers. Our digital solutions help designers stand out in a competitive market and grow their business sustainably.
+          </p>
+          <Link
+            href="/contact"
+            className="inline-block bg-white text-indigo-600 font-semibold py-3 px-6 rounded-lg hover:bg-indigo-100 transition"
+          >
+            Get Started
+          </Link>
+        </div>
+      </section>
+
+      {/* Use Cases Section */}
+      <section className="py-16">
+        <div className="container mx-auto px-6">
+          <h2 className="text-3xl md:text-4xl font-semibold text-gray-800 text-center mb-12">
+            Use Cases for Interior Designers
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Use Case 1: Showcasing Design Portfolios Online*/}
+            <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition">
+              <h3 className="text-xl font-semibold text-indigo-600 mb-4">
+                Showcasing Design Portfolios Online
+              </h3>
+              <p className="text-gray-600">
+                Interior designers build stunning websites and galleries to display their projects and style, impressing potential clients looking for design inspiration.
+              </p>
+            </div>
+
+            {/* Use Case 2: Attracting Local Clients through SEO */}
+            <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition">
+              <h3 className="text-xl font-semibold text-indigo-600 mb-4">
+                Attracting Local Clients through SEO
+              </h3>
+              <p className="text-gray-600">
+                Designers use local SEO and Google My Business to appear in searches like “interior designer near me,” bringing in more local inquiries.
+              </p>
+            </div>
+
+            {/* Use Case 3: Generating High-Quality Leads with Ads */}
+            <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition">
+              <h3 className="text-xl font-semibold text-indigo-600 mb-4">
+                Generating High-Quality Leads with Ads
+              </h3>
+              <p className="text-gray-600">
+                Interior design studios run Google Ads and social media campaigns targeting homeowners and businesses planning renovations or new interiors.
+              </p>
+            </div>
+
+            {/* Use Case 4: Sharing Design Tips and Trends*/}
+            <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition">
+              <h3 className="text-xl font-semibold text-indigo-600 mb-4">
+               Sharing Design Tips and Trends
+              </h3>
+              <p className="text-gray-600">
+                Designers create blogs, videos, and social posts sharing design ideas, trends, and tips, positioning themselves as trusted industry experts.
+              </p>
+            </div>
+
+            {/* Use Case 5: Promoting Specific Services or Niches*/}
+            <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition">
+              <h3 className="text-xl font-semibold text-indigo-600 mb-4">
+                Promoting Specific Services or Niches
+              </h3>
+              <p className="text-gray-600">
+                Interior designers highlight specialized services like luxury interiors, sustainable design, or office spaces through targeted digital campaigns.
+              </p>
+            </div>
+
+            {/* Use Case 6: Managing Reputation and Client Testimonials */}
+            <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition">
+              <h3 className="text-xl font-semibold text-indigo-600 mb-4">
+                Managing Reputation and Client Testimonials
+              </h3>
+              <p className="text-gray-600">
+              Designers actively collect and showcase client reviews and testimonials online, building credibility and attracting new clients through word-of-mouth.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Video Section */}
+      <section className="py-16 bg-gray-100">
+        <div className="container mx-auto px-6">
+          <h2 className="text-3xl md:text-4xl font-semibold text-gray-800 text-center mb-8">
+            See Interior Designers in Action
+          </h2>
+          <p className="text-lg text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+            Watch how WebDigitaBazaar uses Interior Designers to transform digital marketing
+            strategies, from automated outreach to content creation and beyond.
+          </p>
+          <div className="flex justify-center">
+            <div className="w-full max-w-4xl">
+              <div className="relative" style={{ paddingBottom: '56.25%' }}>
+                <iframe
+                  className="absolute top-0 left-0 w-full h-full rounded-lg shadow-lg"
+                  src="https://www.youtube.com/embed/ICK3MBle0BE?si=CPvZyCdOvKSFxp_P" 
+                  title="Interior Designers in Digital Marketing"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+       {/* What Makes WebDigitaBazaar Different Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-6 text-center">
+          <h2 className="text-3xl md:text-4xl font-semibold text-gray-800 mb-12">
+            What Makes WebDigitaBazaar Different
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Ease of Use */}
+            <div>
+              <div className="text-4xl text-green-600 mb-4">👆</div>
+              <h3 className="text-xl font-semibold text-indigo-600 mb-4">
+                Ease of Use
+              </h3>
+              <p className="text-gray-600">
+                You don’t need to be a tech expert to use our AI tools. We offer a
+                user-friendly interface, detailed reports, and drag-and-drop
+                editors that everyone can use.
+              </p>
+            </div>
+
+            {/* Great Value */}
+            <div>
+              <div className="text-4xl text-green-600 mb-4">💎</div>
+              <h3 className="text-xl font-semibold text-indigo-600 mb-4">
+                Great Value
+              </h3>
+              <p className="text-gray-600">
+                Our flexible pricing model is designed to allow any business to
+                access high-end AI tools and support them as they grow. Pay by
+                usage, not by number of contacts.
+              </p>
+            </div>
+
+            {/* Superb Customer Support */}
+            <div>
+              <div className="text-4xl text-green-600 mb-4">🤝</div>
+              <h3 className="text-xl font-semibold text-indigo-600 mb-4">
+                Superb Customer Support
+              </h3>
+              <p className="text-gray-600">
+                Our unparalleled 24/7 customer care is provided in 6 languages,
+                across web, social, and email. Phone support is available on
+                WebDigitaBazaar Enterprise plans.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="bg-indigo-600 text-white py-16">
+        <div className="container mx-auto px-6 text-center">
+          <h2 className="text-3xl md:text-4xl font-semibold mb-4">
+            Ready to Revolutionize Your Marketing?
+          </h2>
+          <p className="text-lg mb-8 max-w-lg mx-auto">
+            Partner with WebDigitaBazaar to integrate AI into your operations and
+            achieve unparalleled efficiency and results.
+          </p>
+          <Link
+            href="/contact"
+            className="inline-block bg-white text-indigo-600 font-semibold py-3 px-6 rounded-lg hover:bg-indigo-100 transition"
+          >
+            Contact Us
+          </Link>
+        </div>
+      </section>
+
+      {/* Footer */}
+     <Footer/>
+    </div>
+  );
+};
+
+export default interiorDesigners;
