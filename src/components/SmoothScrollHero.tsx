@@ -54,7 +54,7 @@ const Nav: React.FC<{ navOpacity: any }> = ({ navOpacity }) => {
           <img
             src="/images/logo.png"
             alt="Logo"
-            className="h-20 md:h-30 w-auto object-contain"
+            className="h-10 md:h-20 w-auto object-contain"
           />
         </Link>
       </div>

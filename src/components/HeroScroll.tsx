@@ -18,7 +18,7 @@ const HeroScrollDemo = () => {
         }
       >
         <img
-          src="/images/wdb.webp"
+          src="/images/ttd.webp"
           alt="hero"
           height={720}
           width={1280}

@@ -6,7 +6,7 @@ import { DraggableCardBody, DraggableCardContainer } from '@/ui/draggable-card';
 import FramerStacking from '@/components/FramerStacking';
 import ScrollFloat from '@/ui/ScrollFloat';
 import { ServicesTimeline } from '@/components/ServicesTimeline';
-import { DreamTeam } from '@/components/DreamTeam';
+// import { DreamTeam } from '@/components/DreamTeam';
 import Navbar from '@/components/Navbar';
 import SocialSidebar from '@/components/SocialSidebar';
 import Footer from '@/components/Footer';
@@ -64,10 +64,10 @@ const AboutClient = () => {
       <ServicesTimeline />
 
       {/* Dream Team */}
-      <ScrollFloat animationDuration={1} ease="back.inOut(2)" scrollStart="center bottom+=50%" scrollEnd="bottom bottom-=40%" stagger={0.03}>
+      {/* <ScrollFloat animationDuration={1} ease="back.inOut(2)" scrollStart="center bottom+=50%" scrollEnd="bottom bottom-=40%" stagger={0.03}>
         Our Dream Team
       </ScrollFloat>
-      <DreamTeam />
+      <DreamTeam /> */}
 
       {/* What We Do */}
       <ScrollFloat animationDuration={1} ease="back.inOut(2)" scrollStart="center bottom+=50%" scrollEnd="bottom bottom-=40%" stagger={0.03}>
