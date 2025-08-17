@@ -99,9 +99,9 @@ const Footer = () => {
             ></div>
             <h2 className="text-2xl sm:text-3xl font-semibold">Let's Work Together</h2>
             <p className="text-sm sm:text-lg">
-              <a href="mailto:info@webdigitalbazaar.com">info@webdigitalbazaar.com</a>
+              <a href="mailto:info@takshitechdigital.com">info@takshitechdigital.com</a>
             </p>
-            <p className="text-sm sm:text-lg">+91 8860692013 | +91 8447514419 | +91 9990430159</p>
+            <p className="text-sm sm:text-lg">+91 8851099103</p>
           </div>
           <div className="w-full h-32 sm:h-40 bg-white rounded-lg overflow-hidden">
             <img
@@ -218,9 +218,9 @@ const Footer = () => {
             Carrers
           </Link>
         </div>
-        <p className="mt-2 sm:mt-3 text-xs sm:text-sm text-gray-400">
+        {/* <p className="mt-2 sm:mt-3 text-xs sm:text-sm text-gray-400">
           GST No: 09GUZPS6143H1ZL
-        </p>
+        </p> */}
         <p className="mt-2 sm:mt-3 text-xs sm:text-sm text-gray-400">
           © 2025 Takshi Tech Digital | All Rights Reserved
         </p>

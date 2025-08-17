@@ -31,7 +31,7 @@ const ScrollContactForm = dynamic(() => import('@/components/ScrollContactForm')
 const SmoothScrollHero = dynamic(() => import('@/components/SmoothScrollHero'));
 const Cursor = dynamic(() => import('@/components/Cursor'));
 const FAQ = dynamic(() => import('@/components/FAQ'));
-const FounderSection = dynamic(() => import('@/components/FounderSection'));
+// const FounderSection = dynamic(() => import('@/components/FounderSection'));
 const Services = dynamic(() => import('@/components/Services'));
 const Testimonials = dynamic(() => import('@/components/Testimonials'));
 const FloatNavbar = dynamic(() => import('@/components/FloatNavbar'));
@@ -72,7 +72,7 @@ export default function Home() {
       </ScrollFloat>
       <Testimonials />
       
-      <FounderSection />
+      {/* <FounderSection /> */}
       
       <FAQ />
       <Footer />

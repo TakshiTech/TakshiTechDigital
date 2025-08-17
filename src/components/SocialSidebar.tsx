@@ -6,7 +6,7 @@ const SocialSidebar: React.FC = () => {
     <div className="hidden md:flex fixed top-1/2 right-4 transform -translate-y-1/2 z-50 flex-col items-center space-y-4">
       {/* Instagram */}
       <a
-        href="https://www.instagram.com/webdigitalbazaar"
+        href="https://www.instagram.com/takshitechdigital"
         target="_blank"
         rel="noopener noreferrer"
         className="bg-black p-3 rounded-full hover:bg-gray-700 transition"
@@ -16,7 +16,7 @@ const SocialSidebar: React.FC = () => {
 
       {/* LinkedIn */}
       <a
-        href="https://www.linkedin.com/company/webdigitalbazaar/"
+        href="https://www.linkedin.com/company/takshitechdigital/"
         target="_blank"
         rel="noopener noreferrer"
         className="bg-black p-3 rounded-full hover:bg-gray-700 transition"
@@ -26,7 +26,7 @@ const SocialSidebar: React.FC = () => {
 
       {/* Facebook */}
       <a
-        href="https://www.facebook.com/webdigitalbazaar"
+        href="https://www.facebook.com/takshitechdigital"
         target="_blank"
         rel="noopener noreferrer"
         className="bg-black p-3 rounded-full hover:bg-gray-700 transition"
@@ -36,7 +36,7 @@ const SocialSidebar: React.FC = () => {
 
       {/* Phone */}
       <a
-        href="tel:+919871492013"
+        href="tel:+918851099103"
         target="_blank"
         rel="noopener noreferrer"
         className="bg-black p-3 rounded-full hover:bg-gray-700 transition"
