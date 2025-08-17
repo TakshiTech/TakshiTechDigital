@@ -115,7 +115,7 @@ const AboutClient = () => {
               </ScrollFloat>
             </h2>
             <p className="mt-4 text-base sm:text-lg md:text-xl text-[#dadada] leading-relaxed">
-              At Web Digital Bazaar, our journey began with a simple mission — to help businesses unlock their true potential through smart digital marketing.
+              At Takshi Tech Digital, our journey began with a simple mission — to help businesses unlock their true potential through smart digital marketing.
               One of our earliest projects involved managing the complete online presence for a local retail brand. From redesigning their website and running
               targeted ad campaigns to boosting their social media engagement, we delivered a 300% increase in traffic and a significant rise in sales within
               three months.
@@ -154,7 +154,7 @@ const AboutClient = () => {
               </ScrollFloat>
             </h2>
             <p className="mt-4 text-base sm:text-lg lg:text-2xl text-[#333333] lg:ml-10">
-              At Web Digital Bazaar, our mission is straightforward: to support organizations of all sizes—from emerging startups to established corporations—
+              At Takshi Tech Digital, our mission is straightforward: to support organizations of all sizes—from emerging startups to established corporations—
               with their marketing needs. We are committed to providing tailored solutions that ensure every business, regardless of scale, has the tools and
               expertise to thrive in the digital landscape.
             </p>

@@ -1,23 +1,23 @@
 // src/app/privacy/page.tsx
 
 export const metadata = {
-  title: "Privacy Statement | Web Digital Bazaar's Security of Information",
+  title: "Privacy Statement | Takshi Tech Digital's Security of Information",
   description:
-    "To learn how Web Digital Bazaar gathers, uses and safeguards your personal information across all of our digital platforms, read our privacy policy.",
+    "To learn how Takshi Tech Digital gathers, uses and safeguards your personal information across all of our digital platforms, read our privacy policy.",
   keywords: [
-    "Web Digital Bazaar privacy",
+    "Takshi Tech Digital privacy",
     "digital platform privacy policy",
     "user data protection",
     "information security statement",
-    "privacy practices Web Digital Bazaar"
+    "privacy practices Takshi Tech Digital"
   ],
   robots: "index, follow",
   openGraph: {
-    title: "Privacy Statement | Web Digital Bazaar's Security of Information",
+    title: "Privacy Statement | Takshi Tech Digital's Security of Information",
     description:
-      "To learn how Web Digital Bazaar gathers, uses and safeguards your personal information across all of our digital platforms, read our privacy policy.",
+      "To learn how Takshi Tech Digital gathers, uses and safeguards your personal information across all of our digital platforms, read our privacy policy.",
     url: "https://www.takshitechdigital.com/privacy",
-    siteName: "Web Digital Bazaar",
+    siteName: "Takshi Tech Digital",
     locale: "en_US",
     type: "website",
   },

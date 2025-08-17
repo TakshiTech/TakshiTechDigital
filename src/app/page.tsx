@@ -1,19 +1,19 @@
 
 export const metadata = {
-  title: "Top Digital Marketing Company in Noida - Web Digital Bazaar",
+  title: "Top Digital Marketing Company in Noida - Takshi Tech Digital",
   description:
-    "Web Digital Bazaar offers expert digital marketing services in India. Trusted as a top digital marketing company in Noida for results oriented strategies.",
+    "Takshi Tech Digital offers expert digital marketing services in India. Trusted as a top digital marketing company in Noida for results oriented strategies.",
   keywords: [
     "digital marketing company Noida",
     "Digital Marketing Service in India",
   ],
   robots: "index, follow",
   openGraph: {
-    title: "Top Digital Marketing Company in Noida - Web Digital Bazaar",
+    title: "Top Digital Marketing Company in Noida - Takshi Tech Digital",
     description:
-      "Web Digital Bazaar offers expert digital marketing services in India. Trusted as a top digital marketing company in Noida for results oriented strategies.",
+      "Takshi Tech Digital offers expert digital marketing services in India. Trusted as a top digital marketing company in Noida for results oriented strategies.",
     url: "https://www.takshitechdigital.com/",
-    siteName: "Web Digital Bazaar",
+    siteName: "Takshi Tech Digital",
     locale: "en_US",
     type: "website",
   },

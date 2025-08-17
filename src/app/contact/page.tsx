@@ -1,22 +1,22 @@
 // src/app/contact/page.tsx
 export const metadata = {
-  title: "Get in Touch with Us Now with Web Digital Bazaar",
+  title: "Get in Touch with Us Now with Takshi Tech Digital",
   description:
     "Have questions or need assistance? Our team is here to help. Reach out today and we'll get back to you as soon as possible.",
   keywords: [
-    "contact Web Digital Bazaar",
+    "contact Takshi Tech Digital",
     "digital marketing support",
-    "get in touch Web Digital Bazaar",
+    "get in touch Takshi Tech Digital",
     "contact digital marketing company",
-    "Web Digital Bazaar inquiry"
+    "Takshi Tech Digital inquiry"
   ],
   robots: "index, follow",
   openGraph: {
-    title: "Get in Touch with Us Now with Web Digital Bazaar",
+    title: "Get in Touch with Us Now with Takshi Tech Digital",
     description:
       "Have questions or need assistance? Our team is here to help. Reach out today and we'll get back to you as soon as possible.",
     url: "https://www.takshitechdigital.com/contact",
-    siteName: "Web Digital Bazaar",
+    siteName: "Takshi Tech Digital",
     locale: "en_US",
     type: "website",
   },

@@ -18,8 +18,8 @@
 //       <SocialSidebar />
 //       <Cursor />
 //       <Head>
-//         <title>Payment - Web Digital Bazaar</title>
-//         <meta name="description" content="Make a payment to Web Digital Bazaar using our account details or scan the QR code." />
+//         <title>Payment - Takshi Tech Digital</title>
+//         <meta name="description" content="Make a payment to Takshi Tech Digital using our account details or scan the QR code." />
 //         <script src="https://cdn.tailwindcss.com"></script>
 //       </Head>
 //       <div className="min-h-screen bg-gray-50 py-12 mt-20">
@@ -76,7 +76,7 @@
 //                     <span className="font-medium">Bank Name:</span> [Your Bank Name]
 //                   </li>
 //                   <li>
-//                     <span className="font-medium">Account Holder:</span> Web Digital Bazaar
+//                     <span className="font-medium">Account Holder:</span> Takshi Tech Digital
 //                   </li>
 //                   <li>
 //                     <span className="font-medium">Account Number:</span> [Your Account Number]
@@ -113,7 +113,7 @@
 //                 </div>
 //               </div>
 //               <p className="mt-4 text-gray-600">
-//                 Scan the QR code with any UPI app to make a payment to Web Digital Bazaar.
+//                 Scan the QR code with any UPI app to make a payment to Takshi Tech Digital.
 //               </p>
 //             </div>
 

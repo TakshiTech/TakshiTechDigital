@@ -51,12 +51,12 @@ export default function PaymentContent() {
       <SocialSidebar />
       <Cursor />
       <Head>
-        <title>Payment - Web Digital Bazaar</title>
+        <title>Payment - Takshi Tech Digital</title>
         <meta
           name="description"
-          content="Make a payment to Web Digital Bazaar using our account details or scan the QR code."
+          content="Make a payment to Takshi Tech Digital using our account details or scan the QR code."
         />
-        <script src="https://cdn.tailwindcss.com"></script>
+      
       </Head>
       <div className="min-h-screen bg-gray-50 py-12 mt-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

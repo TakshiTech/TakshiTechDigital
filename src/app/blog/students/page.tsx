@@ -5,10 +5,10 @@ import Link from 'next/link';
 
 //meta tags
 export const metadata = {
-  title: 'Digital Marketing Opportunities for Students By Web Digital Bazaar ',
+  title: 'Digital Marketing Opportunities for Students By Takshi Tech Digital ',
   description: 'WDB offers students exciting career-starting roles, internships, and digital learning experiences to build skills and confidence for the future.',
   openGraph: {
-    title: 'Digital Marketing Opportunities for Students By Web Digital Bazaar',
+    title: 'Digital Marketing Opportunities for Students By Takshi Tech Digital',
     description: 'WDB offers students exciting career-starting roles, internships, and digital learning experiences to build skills and confidence for the future.',
     images: ['/images/blogs/enabling-growth-how-the-best-digital-marketing-company-in-india-empowers-businesses.avif'],
     type: 'article',

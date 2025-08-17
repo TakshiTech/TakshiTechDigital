@@ -11,19 +11,19 @@ interface TestimonialData {
 const testimonials: TestimonialData[] = [
   {
     logoSrc: 'images/testimonial/testimonial1.png',
-    testimonial: 'Web Digital Bazaar transformed our online presence with their expert digital marketing strategies. From SEO to paid campaigns, every service delivered measurable results. Highly recommended for business growth!',
+    testimonial: 'Takshi Tech Digital transformed our online presence with their expert digital marketing strategies. From SEO to paid campaigns, every service delivered measurable results. Highly recommended for business growth!',
     author: 'Ankit Sharma',
     role: 'Founder',
   },
   {
     logoSrc: 'images/testimonial/testimonial2.png',
-    testimonial: 'The team at Web Digital Bazaar designed an outstanding and user-friendly website for us. Their attention to detail, creative approach, and timely delivery exceeded our expectations',
+    testimonial: 'The team at Takshi Tech Digital designed an outstanding and user-friendly website for us. Their attention to detail, creative approach, and timely delivery exceeded our expectations',
     author: 'Pooja Mehta',
     role: 'Marketing Head',
   },
   {
     logoSrc: 'images/testimonial/testimonial3.png',
-    testimonial: 'We approached Web Digital Bazaar for tech solutions and were impressed by their professionalism and innovative approach. Their custom solutions simplified our operations and improved efficiency.',
+    testimonial: 'We approached Takshi Tech Digital for tech solutions and were impressed by their professionalism and innovative approach. Their custom solutions simplified our operations and improved efficiency.',
     author: 'Rahul Verma',
     role: 'CEO',
   },

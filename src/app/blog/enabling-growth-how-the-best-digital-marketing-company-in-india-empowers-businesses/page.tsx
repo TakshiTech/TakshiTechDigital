@@ -5,11 +5,11 @@ import Link from 'next/link';
 
 //meta tags
 export const metadata = {
-  title: 'Enabling Growth: How the Best Digital Marketing Company in India Empowers Businesses | Web Digital Bazaar',
+  title: 'Enabling Growth: How the Best Digital Marketing Company in India Empowers Businesses | Takshi Tech Digital',
   description: 'Learn how the best digital marketing company in India empowers businesses with strategies like SEO, PPC, and SMM to drive growth and success.',
   openGraph: {
     title: 'Enabling Growth: How the Best Digital Marketing Company in India Empowers Businesses',
-    description: 'Discover how Web Digital Bazaar helps businesses grow with expert digital marketing services in India.',
+    description: 'Discover how Takshi Tech Digital helps businesses grow with expert digital marketing services in India.',
     images: ['/images/blogs/enabling-growth-how-the-best-digital-marketing-company-in-india-empowers-businesses.avif'],
     type: 'article',
   },
@@ -135,9 +135,9 @@ const blog = {
     <p class="text-gray-600 mt-4">In the ever-evolving digital landscape, the support of a seasoned  <a href="/" class="text-blue-600">digital marketing agency in India</a> can make all the difference. Their expertise in audience targeting, performance optimization, and campaign management helps businesses overcome challenges and unlock new opportunities.</p>
 
     <h2 class="text-2xl font-semibold text-gray-800 mt-8 mb-4">Why Choose Us</h2>
-    <p class="text-gray-600 mb-4">At  <a href="/" class="text-blue-600">Web Digital Bazaar</a>, we blend creativity, strategy, and technology to deliver digital marketing solutions that produce tangible results. Our dedicated team of professionals works closely with clients to understand their goals and craft performance-oriented campaigns that accelerate growth. Whether you're launching a new brand or scaling an established one, we’re here to guide your journey through the digital ecosystem.</p>
+    <p class="text-gray-600 mb-4">At  <a href="/" class="text-blue-600">Takshi Tech Digital</a>, we blend creativity, strategy, and technology to deliver digital marketing solutions that produce tangible results. Our dedicated team of professionals works closely with clients to understand their goals and craft performance-oriented campaigns that accelerate growth. Whether you're launching a new brand or scaling an established one, we’re here to guide your journey through the digital ecosystem.</p>
     <blockquote class="border-l-4 border-purple-600 pl-4 italic text-gray-700 my-4">
-      "At Web Digital Bazaar, we turn your digital challenges into opportunities for growth."
+      "At Takshi Tech Digital, we turn your digital challenges into opportunities for growth."
     </blockquote>
   `,
 };

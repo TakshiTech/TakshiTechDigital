@@ -33,7 +33,7 @@ const Content1 = () => {
           </p>
           <img
             src="https://images.pexels.com/photos/270637/pexels-photo-270637.jpeg"
-            alt="Seo Services by Web Digital Bazaar"
+            alt="Seo Services by Takshi Tech Digital"
             height="500"
             width="500"
             className="md:w-1/2 md:h-1/2 h-full w-full mx-auto object-contain"
@@ -56,7 +56,7 @@ const Content2 = () => {
           </p>
           <img
             src="https://images.pexels.com/photos/15406294/pexels-photo-15406294.jpeg"
-            alt="Social Media Marketing by Web Digital Bazaar"
+            alt="Social Media Marketing by Takshi Tech Digital"
             height="500"
             width="500"
             className="md:w-1/2 md:h-1/2 h-full w-full mx-auto object-contain"
@@ -79,7 +79,7 @@ const Content3 = () => {
           </p>
           <img
             src="https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg"
-            alt="UI UX Design Service by Web Digital Bazaar"
+            alt="UI UX Design Service by Takshi Tech Digital"
             height="500"
             width="500"
             className="md:w-1/2 md:h-1/2 h-full w-full mx-auto object-contain"
@@ -102,7 +102,7 @@ const Content4 = () => {
           </p>
           <img
             src="https://images.pexels.com/photos/574077/pexels-photo-574077.jpeg"
-            alt="Web Development Service by Web Digital Bazaar"
+            alt="Web Development Service by Takshi Tech Digital"
             height="500"
             width="500"
             className="md:w-1/2 md:h-1/2 h-full w-full mx-auto object-contain"
@@ -125,7 +125,7 @@ const Content5 = () => {
           </p>
           <img
             src="https://media.istockphoto.com/id/872078638/photo/pay-per-click-concept.jpg?b=1&s=612x612&w=0&k=20&c=rylTWOjibxJCU-lFAxvn9BVZSOdHp6J9ezFQuOUmogE="
-            alt="Paid Ads Management Service by Web Digital Bazaar"
+            alt="Paid Ads Management Service by Takshi Tech Digital"
             height="500"
             width="500"
             className="md:w-1/2 md:h-1/2 h-full w-full mx-auto object-contain"
@@ -163,42 +163,42 @@ const data = [
     category: 'SEO OPTIMIZATION',
     title: 'Implement SEO Best Practices to Increase Website Traffic.',
     src: '/images/ourwork/ourwork1.webp',
-    alt:'SEO Services by Web Digital Bazaar',
+    alt:'SEO Services by Takshi Tech Digital',
     content: <Content1 />,
   },
   {
     category: 'SOCIAL MEDIA MARKETING',
     title: 'Engage and Grow with Social Media Campaigns.',
     src: '/images/ourwork/ourwork2.webp',
-    alt:'Social Media Marketing by Web Digital Bazaar',
+    alt:'Social Media Marketing by Takshi Tech Digital',
     content: <Content2 />,
   },
   {
     category: 'UI/UX DESIGN',
     title: 'Developing Modern and Intuitive User Experiences.',
     src: '/images/ourwork/ourwork3.webp',
-    alt:'UX/UI Design Service by Web Digital Bazaar',
+    alt:'UX/UI Design Service by Takshi Tech Digital',
     content: <Content3 />,
   },
   {
     category: 'WEB DEVELOPMENT',
     title: 'Personalized Websites Designed for Performance and Speed.',
     src: '/images/ourwork/ourwork4.webp',
-    alt:'Web Development Service by Web Digital Bazaar',
+    alt:'Web Development Service by Takshi Tech Digital',
     content: <Content4 />,
   },
   {
     category: 'PAID ADS MANAGEMENT',
     title: 'Utilize Targeted Paid Advertising Campaigns to Increase ROI.',
     src: '/images/ourwork/ourwork5.webp',
-    alt:'Paid Ads Management Service by Web Digital Bazaar',
+    alt:'Paid Ads Management Service by Takshi Tech Digital',
     content: <Content5 />,
   },
   {
     category: 'TECH SOLUTIONS',
     title: 'Ready for the Future Technology to Boost Business Intelligence.',
     src: '/images/ourwork/ourwork6.webp',
-    alt:'Technology Service & Solution by Web Digital Bazaar',
+    alt:'Technology Service & Solution by Takshi Tech Digital',
     content: <Content6 />,
   },
 ];

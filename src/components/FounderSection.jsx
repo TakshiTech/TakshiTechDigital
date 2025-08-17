@@ -38,7 +38,7 @@ function FounderSection() {
               Shaurya Sarin
             </motion.h3>
             <p className="text-lg mb-4">
-              Founder, Head of Marketing & Sales at Web Digital Bazaar.
+              Founder, Head of Marketing & Sales at Takshi Tech Digital.
             </p>
 
             {/* Social Media Icons */}
@@ -90,7 +90,7 @@ function FounderSection() {
 
           <TiltedCard
             imageSrc="/images/founder.webp"
-            altText="Web Digital Bazaar CEO Shaurya Sarin"
+            altText="Takshi Tech Digital CEO Shaurya Sarin"
             captionText=" Shaurya Sarin"
 
             containerHeight="300px"

@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 //meta tags
 export const metadata = {
-  title: 'Digital Roles for Experienced Professionals at WDB | Web Digital Bazaar',
+  title: 'Digital Roles for Experienced Professionals at WDB | Takshi Tech Digital',
   description: 'Accelerate your digital career at WDB with roles designed for experienced professionals seeking leadership, innovation, and high-impact work.',
   openGraph: {
     title: 'Digital Roles for Experienced Professionals at WDB',
@@ -24,9 +24,9 @@ const blog = {
   image: 'https://assets.kpmg.com/is/image/kpmgcloud/experienced-professionals-1:cq5dam-web-1976-878?wid=1488&hei=662',
   content: `
     <h1 class="text-4xl font-bold text-gray-800 mb-4">Experienced Professionals</h1>
-    <p class=" text-gray-600 mb-6">Experienced professionals are given the freedom to lead, innovate, and leave a lasting impression at Web Digital Bazaar. We value the depth of expertise and insight that comes from years in the industry and provide opportunities to apply that knowledge in challenging, rewarding projects. Your experience isn’t just appreciated - it’s essential to driving our growth and shaping the future of digital innovation.</p>
+    <p class=" text-gray-600 mb-6">Experienced professionals are given the freedom to lead, innovate, and leave a lasting impression at Takshi Tech Digital. We value the depth of expertise and insight that comes from years in the industry and provide opportunities to apply that knowledge in challenging, rewarding projects. Your experience isn’t just appreciated - it’s essential to driving our growth and shaping the future of digital innovation.</p>
 
-    <p class="text-gray-600 mb-4">We foster a collaborative environment where your leadership is respected, your ideas are heard, and your contributions are celebrated. At WDB(<a href="/" class="text-blue-600">Web Digital Bazaar</a>), you're not just continuing your career - you’re elevating it.</p>
+    <p class="text-gray-600 mb-4">We foster a collaborative environment where your leadership is respected, your ideas are heard, and your contributions are celebrated. At WDB(<a href="/" class="text-blue-600">Takshi Tech Digital</a>), you're not just continuing your career - you’re elevating it.</p>
   `,
 };
 

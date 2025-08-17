@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 //meta tags
 export const metadata = {
-  title: 'Meet Our Team Behind Digital Success at WDB | Web Digital Bazaar',
+  title: 'Meet Our Team Behind Digital Success at WDB | Takshi Tech Digital',
   description: 'Meet the skilled digital professionals at WDB who bring creative energy, strategic thinking, and results-driven focus to every project.',
   openGraph: {
     title: 'Meet Our Team Behind Digital Success at WDB',

@@ -50,7 +50,7 @@ const realestate: React.FC = () => {
             Digital Marketing Use Cases for Real Estate
           </h1>
           <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
-           At Web Digital Bazaar, we empower real estate businesses to connect with buyers, sellers, and investors through powerful digital strategies. From property developers to brokers and real estate agencies, we help them showcase properties, generate high-quality leads, and build trust in a competitive market. Our digital solutions turn online searches into real-world deals.
+           At Takshi Tech Digital, we empower real estate businesses to connect with buyers, sellers, and investors through powerful digital strategies. From property developers to brokers and real estate agencies, we help them showcase properties, generate high-quality leads, and build trust in a competitive market. Our digital solutions turn online searches into real-world deals.
           </p>
           <Link
             href="/contact"

@@ -50,7 +50,7 @@ const b2b: React.FC = () => {
            Digital Marketing Use Cases for B2B Businesses
           </h1>
           <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
-           At Web Digital Bazaar, we help B2B businesses connect with the right clients and build strong industry relationships through smart digital marketing. Whether you’re offering services, products, or technology solutions, our strategies generate quality leads, nurture prospects, and position your brand as an industry leader. We turn complex B2B sales cycles into steady business growth.
+           At Takshi Tech Digital, we help B2B businesses connect with the right clients and build strong industry relationships through smart digital marketing. Whether you’re offering services, products, or technology solutions, our strategies generate quality leads, nurture prospects, and position your brand as an industry leader. We turn complex B2B sales cycles into steady business growth.
           </p>
           <Link
             href="/contact"

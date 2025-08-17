@@ -172,7 +172,7 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
           <div className="text-white max-w-xl px-4 lg:px-0">
             {/* Logo */}
             <div className="">
-              <Image src="/images/logo.png" alt="Web Digital Bazaar" width={200} height={50} className="object-contain" />
+              <Image src="/images/logo.png" alt="Takshi Tech Digital" width={200} height={50} className="object-contain" />
             </div>
             <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-2 text-black">
               Digital Marketing Services That  <br /> Drive Real Results
@@ -418,7 +418,7 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeRight}>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Experience</h2>
             <p className="text-gray-700 mb-8">
-              With more than five years of experience in the field of digital marketing, Web Digital Bazaar has produced positive outcomes for customers in a number of industries, including IT, real estate, e-commerce, and healthcare. Our team helps brands develop online by fusing data-driven tactics with creativity. We've taken care of everything from social media and SEO to performance marketing and web development, giving our clients steady returns on investment and long-term success.
+              With more than five years of experience in the field of digital marketing, Takshi Tech Digital has produced positive outcomes for customers in a number of industries, including IT, real estate, e-commerce, and healthcare. Our team helps brands develop online by fusing data-driven tactics with creativity. We've taken care of everything from social media and SEO to performance marketing and web development, giving our clients steady returns on investment and long-term success.
             </p>
 
             <div className="space-y-4">

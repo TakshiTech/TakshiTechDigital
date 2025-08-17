@@ -50,7 +50,7 @@ const interiorDesigners: React.FC = () => {
             Digital Marketing Use Cases for Interior-Designers
           </h1>
           <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
-           At Web Digital Bazaar, we help interior designers showcase their creativity and attract dream clients through effective digital marketing. From elegant portfolios to targeted online campaigns, we craft strategies that highlight design expertise and turn online visitors into loyal customers. Our digital solutions help designers stand out in a competitive market and grow their business sustainably.
+           At Takshi Tech Digital, we help interior designers showcase their creativity and attract dream clients through effective digital marketing. From elegant portfolios to targeted online campaigns, we craft strategies that highlight design expertise and turn online visitors into loyal customers. Our digital solutions help designers stand out in a competitive market and grow their business sustainably.
           </p>
           <Link
             href="/contact"

@@ -4,10 +4,10 @@ import { motion } from "framer-motion";
 export const RevealLinks = () => {
   return (
     <section className="grid place-content-center gap-2 bg-green-200 px-8 py-24 text-black">
-      <FlipLink href="https://www.twitter.com/webdigitalbazaar">Twitter</FlipLink>
-      <FlipLink href="https://www.linkedin.com/company/webdigitalbazaar/">Linkedin</FlipLink>
-      <FlipLink href="https://www.facebook.com/webdigitalbazaar">Facebook</FlipLink>
-      <FlipLink href="https://www.instagram.com/webdigitalbazaar">Instagram</FlipLink>
+      <FlipLink href="https://www.twitter.com/takshitechdigital">Twitter</FlipLink>
+      <FlipLink href="https://www.linkedin.com/company/takshitechdigital/">Linkedin</FlipLink>
+      <FlipLink href="https://www.facebook.com/takshitechdigital">Facebook</FlipLink>
+      <FlipLink href="https://www.instagram.com/takshitechdigital">Instagram</FlipLink>
     </section>
   );
 };

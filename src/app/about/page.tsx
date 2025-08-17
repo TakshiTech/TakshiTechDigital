@@ -1,9 +1,9 @@
 // src/app/about/page.tsx
 
 export const metadata = {
-  title: "Web Digital Bazaar | Experts in SEO, SMM & Web Design Services",
+  title: "Takshi Tech Digital | Experts in SEO, SMM & Web Design Services",
   description:
-    "Overlook Web Digital Bazaar experts in responsive web design, social media marketing, and top tier search engine optimization services for your business growth.",
+    "Overlook Takshi Tech Digital experts in responsive web design, social media marketing, and top tier search engine optimization services for your business growth.",
   keywords: [
     "responsive web design services",
     "social media marketing services",
@@ -11,11 +11,11 @@ export const metadata = {
   ],
   robots: "index, follow",
   openGraph: {
-    title: "Web Digital Bazaar | Experts in SEO, SMM & Web Design Services",
+    title: "Takshi Tech Digital | Experts in SEO, SMM & Web Design Services",
     description:
-      "Overlook Web Digital Bazaar experts in responsive web design, social media marketing, and top tier search engine optimization services for your business growth.",
+      "Overlook Takshi Tech Digital experts in responsive web design, social media marketing, and top tier search engine optimization services for your business growth.",
     url: "https://www.webdigitalbazaar.com/about",
-    siteName: "Web Digital Bazaar",
+    siteName: "Takshi Tech Digital",
     locale: "en_US",
     type: "website",
   },

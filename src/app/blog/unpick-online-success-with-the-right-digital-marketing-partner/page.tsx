@@ -9,7 +9,7 @@ export const metadata = {
     description: 'Learn how the best digital marketing company in India empowers businesses with strategies like SEO, PPC, and SMM to drive growth and success.',
     openGraph: {
         title: 'Unpick Online Success with the Right Digital Marketing Partner',
-        description: 'Discover how Web Digital Bazaar helps businesses grow with expert digital marketing services in India.',
+        description: 'Discover how Takshi Tech Digital helps businesses grow with expert digital marketing services in India.',
         images: ['/images/blogs/unpick-online-success-with-the-right-digital-marketing-partner.avif'],
         type: 'article',
     },
@@ -108,7 +108,7 @@ Moreover, an experienced agency doesn’t just work on improving rankings or lik
     <h2 class="text-2xl font-semibold text-gray-800 mt-8 mb-4">Why Invest in a Digital Marketing Service in India?</h2>
     <p class="text-gray-600 mb-4 bg-gray-100 p-4 rounded-lg">Choosing a Digital Marketing Service in India offers cost-effectiveness without compromising on quality. Indian agencies are known for their technical expertise, creativity, and commitment to delivering results. They stay updated with the latest trends and Google algorithms to ensure your business stays ahead of the curve.
 Whether you want to grow your brand locally or target a global audience, partnering with an Indian digital marketing firm gives you access to scalable and performance-driven solutions.
-Partner with Web Digital Bazaar for Real Results when it comes to driving online growth, Web Digital Bazaar stands out as a reliable digital marketing partner. With a proven track record of helping businesses boost visibility, engagement, and sales, our team of experts works closely with clients to craft and execute customized strategies that deliver measurable results. If you're ready to expand your digital reach, generate more leads, and grow your business online — we're here to help you every step of the way.</p>
+Partner with Takshi Tech Digital for Real Results when it comes to driving online growth, Takshi Tech Digital stands out as a reliable digital marketing partner. With a proven track record of helping businesses boost visibility, engagement, and sales, our team of experts works closely with clients to craft and execute customized strategies that deliver measurable results. If you're ready to expand your digital reach, generate more leads, and grow your business online — we're here to help you every step of the way.</p>
   `,
 };
 

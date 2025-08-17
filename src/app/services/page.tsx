@@ -1,23 +1,23 @@
 // ❌ NO 'use client' here – must remain a server component
 
 export const metadata = {
-  title: "Digital Marketing & Tech Services Provide by Web Digital Bazaar",
+  title: "Digital Marketing & Tech Services Provide by Takshi Tech Digital",
   description:
-    "Explore all in one digital services from Web Digital Bazaar, including marketing, design, and development everything you need to grow your business online.",
+    "Explore all in one digital services from Takshi Tech Digital, including marketing, design, and development everything you need to grow your business online.",
   keywords: [
     "digital marketing services",
     "web development",
     "UI/UX design",
     "online business growth",
-    "Web Digital Bazaar services"
+    "Takshi Tech Digital services"
   ],
   robots: "index, follow",
   openGraph: {
-    title: "Digital Marketing & Tech Services Provide by Web Digital Bazaar",
+    title: "Digital Marketing & Tech Services Provide by Takshi Tech Digital",
     description:
-      "Explore all in one digital services from Web Digital Bazaar, including marketing, design, and development everything you need to grow your business online.",
+      "Explore all in one digital services from Takshi Tech Digital, including marketing, design, and development everything you need to grow your business online.",
     url: "https://www.takshitechdigital.com/services",
-    siteName: "Web Digital Bazaar",
+    siteName: "Takshi Tech Digital",
     locale: "en_US",
     type: "website",
   },

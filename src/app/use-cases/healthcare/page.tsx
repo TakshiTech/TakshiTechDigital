@@ -51,7 +51,7 @@ const UseCases: React.FC = () => {
            Digital Marketing Use Cases for Healthcare
           </h1>
           <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
-           At Web Digital Bazaar, we help healthcare providers connect with patients and build trust through digital strategies tailored for the medical industry. From boosting local visibility and managing online reputation to generating patient inquiries, our proven solutions empower hospitals, clinics, and wellness brands to grow sustainably and ethically in the digital age.
+           At Takshi Tech Digital, we help healthcare providers connect with patients and build trust through digital strategies tailored for the medical industry. From boosting local visibility and managing online reputation to generating patient inquiries, our proven solutions empower hospitals, clinics, and wellness brands to grow sustainably and ethically in the digital age.
           </p>
           <Link
             href="/contact"
@@ -216,7 +216,7 @@ const UseCases: React.FC = () => {
            Let’s Build Your Digital Success Story
           </h2>
           <p className="text-lg mb-8 max-w-lg mx-auto">
-           Whether you're just starting out or scaling up, your business can benefit from proven digital marketing use cases tailored to your goals. At Web Digital Bazaar, we combine strategy, design, and performance to deliver meaningful results.
+           Whether you're just starting out or scaling up, your business can benefit from proven digital marketing use cases tailored to your goals. At Takshi Tech Digital, we combine strategy, design, and performance to deliver meaningful results.
           </p>
           <Link
             href="/contact"

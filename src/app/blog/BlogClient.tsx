@@ -72,7 +72,7 @@ const BlogClient: React.FC = () => {
           Blogs
         </h2>
         <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-800 mt-4">
-          Explore Web Digital Bazaar Blogs
+          Explore Takshi Tech Digital Blogs
         </h1>
       </section>
 

@@ -467,7 +467,7 @@ export default function PricingClient() {
       <SocialSidebar />
       <Cursor />
       <Head>
-        <title>Pricing - Web Digital Bazaar</title>
+        <title>Pricing - Takshi Tech Digital</title>
         <meta name="description" content="Explore our pricing plans for SEO, social media marketing, web development, paid ads, content, Google listing, and all-in-one digital marketing services." />
       </Head>
 

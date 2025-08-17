@@ -71,7 +71,7 @@ const blog = {
     <p class=" text-gray-600 mb-6">Customization also extends to features such as third-party integrations, multilingual support, and unique design elements that reflect your brand identity. This tailored approach ensures that your website supports your operations while standing out in a crowded online marketplace.
 </p>
 <h2 class="text-2xl font-semibold text-gray-800 mt-8 mb-4">Why Choose Us</h2>
-    <p class="text-gray-600 mb-4"><a href="/" class="text-blue-600">Web Digital Bazaar</a>, is committed to creating digital experiences that drive results. With a focus on quality, creativity, and innovation, we help businesses of all sizes establish a strong online presence through tailored web design and development solutions.</p>
+    <p class="text-gray-600 mb-4"><a href="/" class="text-blue-600">Takshi Tech Digital</a>, is committed to creating digital experiences that drive results. With a focus on quality, creativity, and innovation, we help businesses of all sizes establish a strong online presence through tailored web design and development solutions.</p>
   `,
 };
 

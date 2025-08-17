@@ -47,7 +47,7 @@ const TermsClient: React.FC = () => {
             <p className="text-gray-600 mb-4"><strong>Last updated on</strong> 03-06-2025 18:57:57</p>
             <p className="text-gray-600 mb-4">
               These Terms and Conditions, along with privacy policy or other terms (“Terms”) constitute a binding
-              agreement by and between WEB DIGITAL BAZAAR, ( “Website Owner” or “we” or “us” or “our”) and
+              agreement by and between Takshi Tech Digital, ( “Website Owner” or “we” or “us” or “our”) and
               you (“you” or “your”) and relate to your use of our website, goods (as applicable) or services (as
               applicable) (collectively, “Services”).
             </p>
@@ -130,7 +130,7 @@ const TermsClient: React.FC = () => {
             <h2 id="cancellation-refund" className="text-4xl font-bold mb-4">Cancellation & Refund Policy</h2>
             <p className="text-gray-600 mb-4"><strong>Last updated on</strong> 03-06-2025 18:58:28</p>
             <p className="text-gray-600 mb-4">
-              WEB DIGITAL BAZAAR believes in helping its customers as far as possible, and has therefore a liberal
+              Takshi Tech Digital believes in helping its customers as far as possible, and has therefore a liberal
               cancellation policy. Under this policy:
             </p>
             <ul className="list-disc list-inside text-gray-600 mb-4">
@@ -140,7 +140,7 @@ const TermsClient: React.FC = () => {
                 vendors/merchants and they have initiated the process of shipping them.
               </li>
               <li>
-                WEB DIGITAL BAZAAR does not accept cancellation requests for perishable items like flowers,
+                Takshi Tech Digital does not accept cancellation requests for perishable items like flowers,
                 eatables etc. However, refund/replacement can be made if the customer establishes that the quality of
                 product delivered is not good.
               </li>
@@ -154,7 +154,7 @@ const TermsClient: React.FC = () => {
               </li>
               <li>
                 In case of complaints regarding products that come with a warranty from manufacturers, please refer
-                the issue to them. In case of any Refunds approved by the WEB DIGITAL BAZAAR, it’ll take 9-15
+                the issue to them. In case of any Refunds approved by the Takshi Tech Digital, it’ll take 9-15
                 Days days for the refund to be processed to the end customer.
               </li>
             </ul>

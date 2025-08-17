@@ -5,10 +5,10 @@ import Link from 'next/link';
 
 //meta tags
 export const metadata = {
-  title: 'Life at Web Digital Bazaar India - Digital Culture & Values | Web Digital Bazaar',
+  title: 'Life at Takshi Tech Digital India - Digital Culture & Values | Takshi Tech Digital',
   description: 'Explore the work culture at TTD India where innovation, collaboration, and a positive environment help professionals grow and thrive digitally.',
   openGraph: {
-    title: 'Life at Web Digital Bazaar India - Digital Culture & Values',
+    title: 'Life at Takshi Tech Digital India - Digital Culture & Values',
     description: 'Explore the work culture at TTD India where innovation, collaboration, and a positive environment help professionals grow and thrive digitally.',
     images: ['/images/blogs/enabling-growth-how-the-best-digital-marketing-company-in-india-empowers-businesses.avif'],
     type: 'article',

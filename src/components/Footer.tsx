@@ -222,7 +222,7 @@ const Footer = () => {
           GST No: 09GUZPS6143H1ZL
         </p>
         <p className="mt-2 sm:mt-3 text-xs sm:text-sm text-gray-400">
-          © 2025 Web Digital Bazaar | All Rights Reserved
+          © 2025 Takshi Tech Digital | All Rights Reserved
         </p>
       </div>
     </footer>

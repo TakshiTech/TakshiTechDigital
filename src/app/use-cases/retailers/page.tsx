@@ -50,7 +50,7 @@ const retailers: React.FC = () => {
             Digital Marketing Use Cases for Retailers
           </h1>
           <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
-            At Web Digital Bazaar, we help retailers grow their customer base and boost sales through tailored digital strategies. Whether you’re running a physical store, an e-commerce business, or both, our digital solutions help you attract shoppers, build loyalty, and stay ahead in a competitive market. From engaging websites to targeted ads, we turn clicks into customers.
+            At Takshi Tech Digital, we help retailers grow their customer base and boost sales through tailored digital strategies. Whether you’re running a physical store, an e-commerce business, or both, our digital solutions help you attract shoppers, build loyalty, and stay ahead in a competitive market. From engaging websites to targeted ads, we turn clicks into customers.
           </p>
           <Link
             href="/contact"

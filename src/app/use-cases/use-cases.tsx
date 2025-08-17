@@ -49,7 +49,7 @@ const UseCasesComponent = () => {
             Digital Marketing Use Cases that Deliver Results
           </h1>
           <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
-            We at Web Digital Bazaar think that digital marketing is a
+            We at Takshi Tech Digital think that digital marketing is a
             strategy-driven approach to addressing actual business problems, not
             just social media posts or advertisements. Whether you want to build
             brand awareness, generate qualified leads, increase online sales, or
@@ -241,7 +241,7 @@ const UseCasesComponent = () => {
           <p className="text-lg mb-8 max-w-lg mx-auto">
             Whether you're just starting out or scaling up, your business can
             benefit from proven digital marketing use cases tailored to your goals.
-            At Web Digital Bazaar, we combine strategy, design, and performance to
+            At Takshi Tech Digital, we combine strategy, design, and performance to
             deliver meaningful results.
           </p>
           <Link

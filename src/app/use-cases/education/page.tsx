@@ -50,7 +50,7 @@ const education: React.FC = () => {
             Digital Marketing Use Cases for Education
           </h1>
           <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
-            At Web Digital Bazaar, we help educational institutions connect with students and build strong reputations in the digital space. Whether it’s schools, colleges, coaching centers, or e-learning platforms, our digital strategies ensure they reach the right audience, generate quality leads, and grow enrollments. From creating engaging websites to running targeted ad campaigns, we deliver measurable results for the education sector.
+            At Takshi Tech Digital, we help educational institutions connect with students and build strong reputations in the digital space. Whether it’s schools, colleges, coaching centers, or e-learning platforms, our digital strategies ensure they reach the right audience, generate quality leads, and grow enrollments. From creating engaging websites to running targeted ad campaigns, we deliver measurable results for the education sector.
           </p>
           <Link
             href="/contact"

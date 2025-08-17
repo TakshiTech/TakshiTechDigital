@@ -5,8 +5,8 @@ import Link from 'next/link';
 
 //meta tags
 export const metadata = {
-  title: 'Providing Brands with Online Growth Strategies | Web Digital Bazaar',
-  description: 'Discover how digital marketing strategies are helping brands grow online. Learn about SEO, PPC, SMM, and more with Web Digital Bazaar.',
+  title: 'Providing Brands with Online Growth Strategies | Takshi Tech Digital',
+  description: 'Discover how digital marketing strategies are helping brands grow online. Learn about SEO, PPC, SMM, and more with Takshi Tech Digital.',
   openGraph: {
     title: 'Providing Brands with Online Growth Strategies',
     description: 'Explore how to transform your brand online with powerful digital marketing services in Noida.',
@@ -32,7 +32,7 @@ const blog = {
     <p class="text-gray-600 mb-4">Digital marketing is not just about visibility; it’s about delivering value to the right people at the right time. A well-structured digital strategy helps brands generate leads, improve conversion rates, increase brand awareness, and foster customer loyalty.</p>
 
     <h2 class="text-2xl font-semibold text-gray-800 mt-8 mb-4">Services Offered by a Top Digital Marketing Company in Noida</h2>
-    <p class="text-gray-600 mb-4">An experienced digital marketing agency in Noida like  Web Digital Bazaar offers comprehensive solutions tailored to each client's unique goals and industry. These services typically include:</p>
+    <p class="text-gray-600 mb-4">An experienced digital marketing agency in Noida like  Takshi Tech Digital offers comprehensive solutions tailored to each client's unique goals and industry. These services typically include:</p>
     <ul class="list-none space-y-4">
       <li class="flex items-start">
         <span class="text-purple-600 mr-2">📈</span>
@@ -118,9 +118,9 @@ const blog = {
     <p class="text-gray-600 mb-4">As more businesses invest in online strategies, the demand for reliable marketing partners continues to rise. By choosing a reputable  <a href="/" class="text-blue-600">Digital Marketing Service in India</a>, companies not only enhance their digital presence but also future-proof their brand. Whether your goal is lead generation, brand building, or e-commerce growth, professional services provide the foundation needed to thrive in a competitive landscape.</p>
 
     <h2 class="text-2xl font-semibold text-gray-800 mt-8 mb-4">Final Thoughts</h2>
-    <p class="text-gray-600 mb-4">Every business has different chances and problems, and we at  <a href="/" class="text-blue-600">Web Digital Bazaar</a> are aware of this. As a trusted digital marketing company in Noida, we are committed to delivering customized, result-oriented strategies that align with your vision. Let us help you turn your online presence into your most powerful business asset.</p>
+    <p class="text-gray-600 mb-4">Every business has different chances and problems, and we at  <a href="/" class="text-blue-600">Takshi Tech Digital</a> are aware of this. As a trusted digital marketing company in Noida, we are committed to delivering customized, result-oriented strategies that align with your vision. Let us help you turn your online presence into your most powerful business asset.</p>
     <blockquote class="border-l-4 border-purple-600 pl-4 italic text-gray-700 my-4">
-      "Turn your online presence into your most powerful business asset with Web Digital Bazaar."
+      "Turn your online presence into your most powerful business asset with Takshi Tech Digital."
     </blockquote>
   `,
 };

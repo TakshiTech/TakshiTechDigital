@@ -160,7 +160,7 @@ const Navbar = () => {
           <Link href="/">
             <Image
               src="/images/animated-logo.gif"
-              alt="Web Digital Bazaar Logo"
+              alt="Takshi Tech Digital Logo"
               width={160}
               height={40}
               className="w-full h-auto object-contain"

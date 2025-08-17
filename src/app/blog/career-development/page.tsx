@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 //meta tags
 export const metadata = {
-  title: 'Career Development with Digital Marketing Skills | Web Digital Bazaar',
+  title: 'Career Development with Digital Marketing Skills | Takshi Tech Digital',
   description: 'Learn how WDB empowers career development with digital marketing training, real-time experience, upskilling, and personalized growth opportunities.',
   openGraph: {
     title: 'Career Development with Digital Marketing Skills',
@@ -24,7 +24,7 @@ const blog = {
   image: 'https://kpmg.com/adobe/dynamicmedia/deliver/dm-aid--192358d2-d97a-47bf-8828-7224b8e485c5/tax-intelligence-solution-gst-data-analytics.jpg?preferwebp=true&quality=82',
   content: `
     <h1 class="text-4xl font-bold text-gray-800 mb-4">Career Development</h1>
-    <p class=" text-gray-600 mb-6">Career growth is ingrained in Web Digital Bazaar's culture and is not merely a perk. We invest in every team member’s growth through upskilling programs, certifications, mentoring, and cross-functional training. No matter your role or experience level, you’ll find clear pathways to advancement and continuous learning.</p>
+    <p class=" text-gray-600 mb-6">Career growth is ingrained in Takshi Tech Digital's culture and is not merely a perk. We invest in every team member’s growth through upskilling programs, certifications, mentoring, and cross-functional training. No matter your role or experience level, you’ll find clear pathways to advancement and continuous learning.</p>
 
     <p class="text-gray-600 mb-4">Our goal is to ensure that your career evolves with your aspirations. With regular performance feedback and leadership support, WDB empowers you to take control of your professional future.</p>
   `,

@@ -5,9 +5,9 @@
 // import ScrollFloat from '@/ui/ScrollFloat';
 // const tabs = [
 //   {
-//     title: '1. What is Web Digital Bazaar?',
+//     title: '1. What is Takshi Tech Digital?',
 //     description:
-//       'Web Digital Bazaar is a full-service digital marketing agency offering SEO, social media marketing, website design & development, and paid advertising services to help businesses grow online.',
+//       'Takshi Tech Digital is a full-service digital marketing agency offering SEO, social media marketing, website design & development, and paid advertising services to help businesses grow online.',
 //     imageUrl:
 //       'https://images.unsplash.com/photo-1709949908058-a08659bfa922?q=80&w=1200&auto=format',
 //   },
@@ -171,8 +171,8 @@ const FAQSection = () => {
 
   const faqs = [
     {
-      question: 'What is Web Digital Bazaar?',
-      answer: 'Web Digital Bazaar is a full-service digital marketing agency offering SEO, social media marketing, website design & development, and paid advertising services to help businesses grow online.'
+      question: 'What is Takshi Tech Digital?',
+      answer: 'Takshi Tech Digital is a full-service digital marketing agency offering SEO, social media marketing, website design & development, and paid advertising services to help businesses grow online.'
     },
     {
       question: 'Who can benefit from your digital marketing services?',
