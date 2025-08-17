@@ -18,7 +18,7 @@ const PrivacyClient: React.FC = () => {
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-8">Privacy Policy</h1>
           <p className="text-lg md:text-xl max-w-2xl mx-auto">
-            At <Tarea:c></Tarea:c>akshitechdigital, your privacy matters. Learn how we collect, use, and safeguard your data.
+            At Takshitechdigital, your privacy matters. Learn how we collect, use, and safeguard your data.
           </p>
         </div>
       </section>
