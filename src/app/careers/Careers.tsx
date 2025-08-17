@@ -190,6 +190,8 @@ const Careers: React.FC = () => {
                   onChange={handleFileChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md bg-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700"
                   required
+                  placeholder="Upload your CV"
+                  title="Upload your CV"
                 />
               </div>
             </div>
