@@ -183,11 +183,11 @@ const UseCasesComponent = () => {
         </div>
       </section>
 
-      {/* What Makes WebDigitaBazaar Different Section */}
+      {/* What Makes Takshi Tech Digital Different Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-3xl md:text-4xl font-semibold text-gray-800 mb-12">
-            What Makes WebDigitaBazaar Different
+            What Makes Takshi Tech Digital Different
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Ease of Use */}
@@ -225,7 +225,7 @@ const UseCasesComponent = () => {
               <p className="text-gray-600">
                 Our unparalleled 24/7 customer care is provided in 6 languages,
                 across web, social, and email. Phone support is available on
-                WebDigitaBazaar Enterprise plans.
+                Takshi Tech Digital Enterprise plans.
               </p>
             </div>
           </div>
