@@ -23,12 +23,13 @@ export const metadata = {
 import dynamic from 'next/dynamic';
 
 
+
 // Dynamic component imports
 const Footer = dynamic(() => import('@/components/Footer'));
 const HeroScrollDemo = dynamic(() => import('@/components/HeroScroll'));
 const OurWork = dynamic(() => import('@/components/OurWork'));
 const ScrollContactForm = dynamic(() => import('@/components/ScrollContactForm'));
-const SmoothScrollHero = dynamic(() => import('@/components/SmoothScrollHero'));
+// const SmoothScrollHero = dynamic(() => import('@/components/SmoothScrollHero'));
 const Cursor = dynamic(() => import('@/components/Cursor'));
 const FAQ = dynamic(() => import('@/components/FAQ'));
 // const FounderSection = dynamic(() => import('@/components/FounderSection'));
@@ -37,6 +38,7 @@ const Testimonials = dynamic(() => import('@/components/Testimonials'));
 const FloatNavbar = dynamic(() => import('@/components/FloatNavbar'));
 const SocialSidebar = dynamic(() => import('@/components/SocialSidebar'));
 const ScrollFloat = dynamic(() => import('@/ui/ScrollFloat'));
+const HeroSection = dynamic(() => import('@/components/HeroSection'));
 
 export default function Home() {
   return (
@@ -45,7 +47,8 @@ export default function Home() {
       <SocialSidebar />
       <ScrollContactForm />
       <Cursor />
-      <SmoothScrollHero />
+      {/* <SmoothScrollHero /> */}
+      <HeroSection/>
       <HeroScrollDemo />
 
       <ScrollFloat

@@ -55,7 +55,7 @@ const AboutClient = () => {
                   ABOUT US
                 </h1>
                 <p className="mt-2 sm:mt-4 text-lg sm:text-xl md:text-2xl text-gray-600">
-                   Welcome to the Takshi Tech Digital Marketing Agency
+                   Welcome to the Takshi Tech Digital
                 </p>
               </motion.div>
             </section>
