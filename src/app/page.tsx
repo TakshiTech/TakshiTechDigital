@@ -20,6 +20,7 @@ export const metadata = {
 };
 
 
+import PricingTeaser from '@/components/PricingTeaser';
 import dynamic from 'next/dynamic';
 
 
@@ -63,6 +64,17 @@ export default function Home() {
 
       <Services />
       <OurWork />
+      
+      <ScrollFloat
+        animationDuration={1}
+        ease='back.inOut(2)'
+        scrollStart='center bottom+=50%'
+        scrollEnd='bottom bottom-=40%'
+        stagger={0.03}
+      >
+        PRICING PLANS
+      </ScrollFloat>
+      <PricingTeaser/>
 
       <ScrollFloat
         animationDuration={1}
