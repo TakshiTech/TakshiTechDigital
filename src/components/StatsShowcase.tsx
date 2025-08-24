@@ -73,7 +73,7 @@ export default function StatsShowcase({
   stats = DEFAULT_STATS,
 }: StatsShowcaseProps) {
   return (
-    <section className="relative overflow-hidden bg-transparent">
+    <section className="relative overflow-hidden bg-transparent mt-[-200px]">
       <div className="mx-auto max-w-7xl px-6 py-20 lg:py-28">
         {/* Header */}
         <div className="mx-auto max-w-3xl text-center">
