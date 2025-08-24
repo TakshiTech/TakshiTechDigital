@@ -22,6 +22,7 @@ export const metadata = {
 
 import PricingTeaser from '@/components/PricingTeaser';
 import dynamic from 'next/dynamic';
+import StatsShowcase from '../components/StatsShowcase';
 
 
 
@@ -29,7 +30,7 @@ import dynamic from 'next/dynamic';
 const Footer = dynamic(() => import('@/components/Footer'));
 const HeroScrollDemo = dynamic(() => import('@/components/HeroScroll'));
 const OurWork = dynamic(() => import('@/components/OurWork'));
-const ScrollContactForm = dynamic(() => import('@/components/ScrollContactForm'));
+// const ScrollContactForm = dynamic(() => import('@/components/ScrollContactForm'));
 // const SmoothScrollHero = dynamic(() => import('@/components/SmoothScrollHero'));
 const Cursor = dynamic(() => import('@/components/Cursor'));
 const FAQ = dynamic(() => import('@/components/FAQ'));
@@ -46,12 +47,12 @@ export default function Home() {
     <main>
       <FloatNavbar />
       <SocialSidebar />
-      <ScrollContactForm />
+      {/* <ScrollContactForm /> */}
       <Cursor />
       {/* <SmoothScrollHero /> */}
       <HeroSection/>
       <HeroScrollDemo />
-
+      <StatsShowcase/>
       <ScrollFloat
         animationDuration={1}
         ease='back.inOut(2)'
