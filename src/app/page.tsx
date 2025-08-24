@@ -23,6 +23,7 @@ export const metadata = {
 import PricingTeaser from '@/components/PricingTeaser';
 import dynamic from 'next/dynamic';
 import StatsShowcase from '../components/StatsShowcase';
+import IndustriesGrid from '@/components/IndustriesGrid';
 
 
 
@@ -77,6 +78,8 @@ export default function Home() {
       </ScrollFloat>
       <PricingTeaser/>
 
+    <IndustriesGrid/>
+    
       <ScrollFloat
         animationDuration={1}
         ease='back.inOut(2)'
