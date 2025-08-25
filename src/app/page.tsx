@@ -24,7 +24,7 @@ import PricingTeaser from '@/components/PricingTeaser';
 import dynamic from 'next/dynamic';
 import StatsShowcase from '../components/StatsShowcase';
 import IndustriesGrid from '@/components/IndustriesGrid';
-import TestimonialsCarousel from '@/components/TestimonialsCarousel';
+import TestimonialsModern from '@/components/TestimonialsCarousel';
 
 
 
@@ -91,7 +91,7 @@ export default function Home() {
         WHAT CLIENTS SAYS
       </ScrollFloat>
       {/* <Testimonials /> */}
-      <TestimonialsCarousel/>
+      <TestimonialsModern autoplayMs={3500} />
       
       {/* <FounderSection /> */}
       

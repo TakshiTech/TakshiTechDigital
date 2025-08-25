@@ -1,22 +1,22 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 
-// ---- Types ----
 export type Testimonial = {
   name: string;
-  designation: string; // e.g., "Marketing Head"
-  company: string; // e.g., "Acme Inc."
-  logo: string; // public path to company logo
+  designation: string;
+  company: string;
+  logo: string;
   quote: string;
 };
 
 export type TestimonialsCarouselProps = {
-  autoplayMs?: number; // interval for auto slide
+  autoplayMs?: number;
   items?: Testimonial[];
+  className?: string;
 };
 
 const DEFAULT_ITEMS: Testimonial[] = [
@@ -46,67 +46,81 @@ const DEFAULT_ITEMS: Testimonial[] = [
   },
 ];
 
-export default function TestimonialsCarousel({
+export default function TestimonialsModern({
   autoplayMs = 3500,
   items = DEFAULT_ITEMS,
+  className = "",
 }: TestimonialsCarouselProps) {
-  // Duplicate items for seamless loop
+  const shouldReduce = useReducedMotion();
   const slides = useMemo(() => [...items, ...items], [items]);
   const [index, setIndex] = useState(0);
   const [isHover, setIsHover] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  // auto-play
-  useEffect(() => {
-    if (isHover) return; // pause on hover
-    const id = setInterval(() => setIndex((i) => i + 1), autoplayMs);
-    return () => clearInterval(id);
-  }, [autoplayMs, isHover]);
-
-  // wrap-around
-  useEffect(() => {
-    const count = slides.length;
-    if (index >= count) setIndex(0);
-  }, [index, slides.length]);
-
-  // responsive card width (JS calc -> translateX)
-  const getVisible = () => {
-    if (typeof window === "undefined") return 1;
-    if (window.innerWidth >= 1280) return 3; // xl
-    if (window.innerWidth >= 1024) return 3; // lg
-    if (window.innerWidth >= 640) return 2; // sm
-    return 1;
-  };
-
   const [visible, setVisible] = useState(1);
+
+  // responsive: 1 / 2 / 3 per view
   useEffect(() => {
-    const set = () => setVisible(getVisible());
+    const calc = () => {
+      if (typeof window === "undefined") return 1;
+      if (window.innerWidth >= 1024) return 3;
+      if (window.innerWidth >= 640) return 2;
+      return 1;
+    };
+    const set = () => setVisible(calc());
     set();
-    window.addEventListener("resize", set);
+    window.addEventListener("resize", set, { passive: true });
     return () => window.removeEventListener("resize", set);
   }, []);
 
-  // translate amount
+  // autoplay (pause on hover or prefers-reduced-motion)
+  useEffect(() => {
+    if (isHover || shouldReduce) return;
+    const id = setInterval(() => setIndex((i) => i + 1), autoplayMs);
+    return () => clearInterval(id);
+  }, [autoplayMs, isHover, shouldReduce]);
+
+  // wrap index
+  useEffect(() => {
+    const count = slides.length;
+    if (index >= count) setIndex(0);
+    if (index < 0) setIndex(items.length - 1);
+  }, [index, slides.length, items.length]);
+
   const translatePct = (100 / visible) * (index % items.length);
 
-  const goPrev = () => setIndex((i) => (i - 1 < 0 ? items.length - 1 : i - 1));
+  const goPrev = () =>
+    setIndex((i) => (i - 1 < 0 ? items.length - 1 : i - 1));
   const goNext = () => setIndex((i) => i + 1);
 
+  // swipe
+  const downRef = useRef<{ id: number; x: number } | null>(null);
+  const onPointerDown: React.PointerEventHandler = (e) => {
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+    downRef.current = { id: e.pointerId, x: e.clientX };
+  };
+  const onPointerUp: React.PointerEventHandler = (e) => {
+    if (!downRef.current) return;
+    const dx = e.clientX - downRef.current.x;
+    if (dx > 40) goPrev();
+    if (dx < -40) goNext();
+    downRef.current = null;
+  };
+
   return (
-    <section className="relative">
-      <div className="mx-auto max-w-7xl px-6 py-12 sm:py-16">
+    <section className={`relative ${className}`}>
+      <div className="relative mx-auto max-w-7xl px-6 py-14 sm:py-16">
         {/* Carousel */}
         <div
-          ref={containerRef}
           onMouseEnter={() => setIsHover(true)}
           onMouseLeave={() => setIsHover(false)}
-          className="relative mt-2 overflow-hidden"
+          onPointerDown={onPointerDown}
+          onPointerUp={onPointerUp}
+          className="relative overflow-hidden"
+          aria-roledescription="carousel"
         >
-          {/* Track */}
           <motion.ul
-            className="flex gap-8"
+            className="flex items-stretch gap-6 sm:gap-7 lg:gap-8"
             animate={{ x: `-${translatePct}%` }}
-            transition={{ ease: "easeInOut", duration: 0.7 }}
+            transition={{ ease: "easeInOut", duration: shouldReduce ? 0 : 0.6 }}
             style={{ width: `${(slides.length * 100) / visible}%` }}
           >
             {slides.map((t, i) => (
@@ -114,48 +128,62 @@ export default function TestimonialsCarousel({
                 key={`${t.company}-${i}`}
                 className="w-full shrink-0 basis-full sm:basis-1/2 lg:basis-1/3"
               >
-                <article className="group h-full rounded-2xl border border-gray-200/70 bg-white p-7 lg:p-8 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg">
-                  <div className="flex items-start gap-5">
-                    <div className="relative h-16 w-16 overflow-hidden rounded-full ring-1 ring-gray-200">
-                      <Image
-                        src={t.logo}
-                        alt={`${t.company} logo`}
-                        fill
-                        className="object-contain p-2"
-                      />
+                {/* Card with gradient background (self-contained), equal height */}
+                <motion.article
+                  whileHover={{ y: -6 }}
+                  className="group relative h-full"
+                >
+                  <div
+                    className="
+                      flex h-full min-h-[230px] flex-col justify-start
+                      rounded-2xl border border-white/20
+                      bg-gradient-to-tr from-indigo-400/70 via-violet-400/70 to-cyan-300/70
+                      p-6 lg:p-7 backdrop-blur-md
+                      shadow-[0_8px_24px_rgba(0,0,0,0.12)]
+                    "
+                  >
+                    <div className="flex items-start gap-5">
+                      <div className="relative h-16 w-16 overflow-hidden rounded-full bg-white ring-2 ring-indigo-400/60">
+                        <Image
+                          src={t.logo}
+                          alt={`${t.company} logo`}
+                          fill
+                          className="object-contain p-2"
+                        />
+                      </div>
+                      <div className="min-w-0">
+                        <h3 className="text-lg font-semibold text-black">
+                          {t.name}
+                        </h3>
+                        <p className="text-sm text-black">
+                          {t.designation} • {t.company}
+                        </p>
+                      </div>
+                      <Quote className="ms-auto h-6 w-6 flex-none text-indigo-700" />
                     </div>
-                    <div className="min-w-0">
-                      <h3 className="text-lg font-semibold text-gray-900">
-                        {t.name}
-                      </h3>
-                      <p className="text-sm text-gray-500">
-                        {t.designation} • {t.company}
-                      </p>
-                    </div>
-                    <Quote className="ms-auto h-6 w-6 flex-none text-indigo-500/80" />
-                  </div>
 
-                  <p className="mt-5 text-base leading-relaxed text-gray-700">
-                    {t.quote}
-                  </p>
-                </article>
+                    <p className="mt-5 text-base leading-relaxed text-black">
+                      {t.quote}
+                    </p>
+                  </div>
+                </motion.article>
               </li>
             ))}
           </motion.ul>
 
-          {/* Controls */}
-          <div className="pointer-events-none absolute inset-y-0 left-0 right-0 flex items-center justify-between px-1">
+          {/* Controls - now fully clickable and above track */}
+          <div className="absolute inset-y-0 left-0 right-0 z-20 flex items-center justify-between px-1">
             <button
               onClick={goPrev}
               aria-label="Previous"
-              className="pointer-events-auto inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/95 shadow ring-1 ring-black/5 transition hover:bg-white md:h-11 md:w-11"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-black/20 text-white ring-1 ring-black/20 transition hover:bg-black/30 md:h-11 md:w-11"
             >
               <ChevronLeft className="h-5 w-5" />
             </button>
             <button
               onClick={goNext}
               aria-label="Next"
-              className="pointer-events-auto inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/95 shadow ring-1 ring-black/5 transition hover:bg-white md:h-11 md:w-11"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-black/20 text-white ring-1 ring-black/20 transition hover:bg-black/30 md:h-11 md:w-11"
             >
               <ChevronRight className="h-5 w-5" />
             </button>
@@ -165,14 +193,14 @@ export default function TestimonialsCarousel({
         {/* Dots */}
         <div className="mt-6 flex justify-center gap-2">
           {items.map((_, i) => {
-            const active = (index % items.length) === i;
+            const active = index % items.length === i;
             return (
               <button
                 key={i}
                 aria-label={`Go to slide ${i + 1}`}
                 onClick={() => setIndex(i)}
                 className={`h-3 w-3 rounded-full transition md:h-3.5 md:w-3.5 ${
-                  active ? "bg-indigo-600" : "bg-gray-300 hover:bg-gray-400"
+                  active ? "bg-indigo-500" : "bg-black/20 hover:bg-black/30"
                 }`}
               />
             );
@@ -182,10 +210,3 @@ export default function TestimonialsCarousel({
     </section>
   );
 }
-
-/*
-- Header hatadi gayi hai.
-- Logo size bada (h-16 w-16), text+quote size bhi bada.
-- Controls & dots size increase.
-- Responsive: 1/2/3 per view.
-*/

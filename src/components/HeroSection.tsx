@@ -66,11 +66,11 @@ export default function AnimatedHero() {
 
             <h1 className="mt-6 text-4xl sm:text-6xl font-black tracking-tight leading-[1.05]">
               <span className="bg-gradient-to-br from-white via-white to-neutral-300 bg-clip-text text-transparent">
-                Outsmart competitors.
+                OUTSMART COMPETITORS.
               </span>
               <br />
               <span className="bg-[linear-gradient(120deg,#22d3ee_0%,#a78bfa_35%,#f472b6_70%,#facc15_100%)] bg-clip-text text-transparent drop-shadow-[0_2px_18px_rgba(99,102,241,0.35)]">
-                Dominate demand.
+                DOMINATE DEMAND.
               </span>
             </h1>
 
@@ -285,12 +285,12 @@ function ContactForm() {
             className="w-full rounded-xl border border-white/15 bg-white/10 px-3 py-2 text-sm text-white placeholder-white/60 outline-none backdrop-blur-md focus:ring-2 focus:ring-cyan-300/40"
             defaultValue="SEO"
           >
-            <option className="bg-neutral-900" value="SEO">SEO</option>
+            <option className="bg-neutral-900" value="SEO">Search Engine Optimization (SEO)</option>
             <option className="bg-neutral-900" value="Paid Media">Paid Media (Google/Meta)</option>
-            <option className="bg-neutral-900" value="CRO">Conversion Rate Optimization (CRO)</option>
-            <option className="bg-neutral-900" value="Content">Content & Copy</option>
-            <option className="bg-neutral-900" value="Analytics">Analytics & Attribution</option>
-            <option className="bg-neutral-900" value="Full‑stack Growth">Full‑stack Growth</option>
+            <option className="bg-neutral-900" value="SMM">Social Media Marketing (SMM)</option>
+            <option className="bg-neutral-900" value="Website Development">Website Development</option>
+            <option className="bg-neutral-900" value="Application Development">Application Development</option>
+            <option className="bg-neutral-900" value="Content Marketing">Content Marketing</option>
           </select>
         </Field>
         <Field label="Name" htmlFor="name">
@@ -365,6 +365,7 @@ function Field({ label, htmlFor, children }: { label: string; htmlFor: string; c
     </label>
   );
 }
+
 
 /* ==========================================================================
    ADD THIS API ROUTE so the form stops showing "Something went wrong"

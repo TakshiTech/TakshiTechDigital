@@ -1,73 +1,80 @@
-'use client';
+"use client";
 
-import React, { useState, ChangeEvent } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { FaLinkedin, FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
+import React, { useMemo, useState, ChangeEvent } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { FaLinkedin, FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
+import { AnimatePresence, motion } from "framer-motion";
 
-const Footer = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [service, setService] = useState('');
+// -----------------------------------------------------------------------------
+// Modern footer with glassmorphism, animated accents, inline validation + toasts
+// Tailwind-only UI + Framer Motion micro-interactions
+// -----------------------------------------------------------------------------
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const phoneRegex = /^[0-9]{10}$/; // 10 digits (we prefix +91 on send)
+
+const FooterModern: React.FC = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [service, setService] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [errors, setErrors] = useState({ email: '' });
+  const [status, setStatus] = useState<null | { ok: boolean; message: string }>(null);
+  const [errors, setErrors] = useState<{ email?: string; phone?: string; all?: string }>({});
 
-  const validateEmail = (val: string) =>
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val.trim());
+  const canSubmit = useMemo(
+    () => name.trim() && emailRegex.test(email.trim()) && phoneRegex.test(phone) && service.trim(),
+    [name, email, phone, service]
+  );
 
   const handleSubmit = async () => {
-    // Required fields
-    if (!name.trim() || !email.trim() || !phone.trim() || !service.trim()) {
-      alert('Name, email, phone, and service are required.');
-      return;
-    }
+    setStatus(null);
 
-    // Email + phone
-    const emailOk = validateEmail(email);
-    setErrors({ email: emailOk ? '' : 'Please enter a valid email address.' });
-    const phoneRegex = /^[0-9]{10}$/; // 10 digits only (we add +91 on send)
-    if (!phoneRegex.test(phone)) {
-      alert('Please enter a valid 10-digit phone number.');
-      return;
+    // Validate
+    const currentErrors: typeof errors = {};
+    if (!name.trim() || !email.trim() || !phone.trim() || !service.trim()) {
+      currentErrors.all = "Name, email, phone & service are required.";
     }
-    if (!emailOk) return;
+    if (!emailRegex.test(email.trim())) currentErrors.email = "Enter a valid email address.";
+    if (!phoneRegex.test(phone)) currentErrors.phone = "Enter a 10‑digit number.";
+    setErrors(currentErrors);
+    if (Object.keys(currentErrors).length) return;
 
     // Split name
-    const [firstName, ...rest] = name.trim().split(' ');
-    const lastName = rest.join(' ');
+    const [firstName, ...rest] = name.trim().split(" ");
+    const lastName = rest.join(" ");
 
     const payload = {
       email: email.trim(),
       firstName,
       lastName,
       phone: `+91${phone}`,
-      sms: '',
+      sms: "",
       service,
-      message: '',
+      message: "",
     };
 
     try {
       setSubmitting(true);
-      const response = await fetch('/api/submit-contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/submit-contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-
-      const result = await response.json();
+      const result = await response.json().catch(() => ({}));
       if (response.ok) {
-        alert('Thank you for your message! We will get back to you soon.');
-        setName('');
-        setEmail('');
-        setPhone('');
-        setService('');
+        setStatus({ ok: true, message: "Thanks! We\u2019ll get back to you soon." });
+        setName("");
+        setEmail("");
+        setPhone("");
+        setService("");
       } else {
-        alert('Error: ' + (result.error || 'Failed to submit form'));
+        setStatus({ ok: false, message: result.error || "Failed to submit form." });
       }
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : String(error);
-      alert('An error occurred while submitting the form: ' + errorMessage);
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      setStatus({ ok: false, message: msg });
     } finally {
       setSubmitting(false);
     }
@@ -75,20 +82,35 @@ const Footer = () => {
 
   return (
     <footer className="relative overflow-hidden bg-slate-950 text-white">
-      {/* soft gradient accent that won’t clash with next section */}
-      <div
+      {/* soft animated blobs */}
+      <motion.div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-20"
+        className="pointer-events-none absolute inset-0"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
         style={{
           background:
-            'radial-gradient(60% 60% at 100% 0%, rgba(99,102,241,.35) 0%, transparent 60%), radial-gradient(50% 50% at 0% 100%, rgba(20,184,166,.25) 0%, transparent 60%)',
+            "radial-gradient(60% 60% at 100% 0%, rgba(99,102,241,.28) 0%, transparent 60%), radial-gradient(50% 50% at 0% 100%, rgba(20,184,166,.22) 0%, transparent 60%)",
         }}
+      />
+
+      {/* grid background */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 [background-image:linear-gradient(to_right,rgba(255,255,255,.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,.05)_1px,transparent_1px)] [background-size:22px_22px]"
       />
 
       <div className="relative mx-auto max-w-screen-xl px-4 py-14 sm:py-16">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-12">
-          {/* Left: contact + logo card */}
-          <div className="flex flex-col gap-6 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur supports-[backdrop-filter]:bg-white/5">
+          {/* Left: contact + logo */}
+          <motion.div
+            initial={{ y: 16, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="flex flex-col gap-6 rounded-2xl border border-white/10 bg-white/5 p-6 shadow-[0_10px_40px_-12px_rgba(0,0,0,.6)] backdrop-blur supports-[backdrop-filter]:bg-white/5"
+          >
             <div className="space-y-2">
               <h2 className="text-3xl font-semibold tracking-tight">Let&apos;s Work Together</h2>
               <p className="text-base text-gray-300">
@@ -102,23 +124,27 @@ const Footer = () => {
               <p className="text-base text-gray-300">+91 8851099103</p>
             </div>
 
-            {/* Logo card – dark bg / light bg jo tumhe chahiye */} 
-<div className="rounded-xl shadow-lg flex justify-start p-5">
-  <div className="relative aspect-[3/1] w-full max-w-sm">
-    <Image
-      src="/images/animated-logo.gif"
-      alt="Takshi Tech Digital"
-      fill
-      className="object-contain"
-      priority
-    />
-  </div>
-</div>
-
-          </div>
+            <div className="rounded-xl bg-slate-900/40 p-5 shadow-inner">
+              <div className="relative aspect-[3/1] w-full max-w-sm">
+                <Image
+                  src="/images/animated-logo.gif"
+                  alt="Takshi Tech Digital"
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </div>
+            </div>
+          </motion.div>
 
           {/* Right: form */}
-          <div className="flex flex-col justify-between rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur supports-[backdrop-filter]:bg-white/5">
+          <motion.div
+            initial={{ y: 16, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.08 }}
+            className="flex flex-col justify-between rounded-2xl border border-white/10 bg-white/5 p-6 shadow-[0_10px_40px_-12px_rgba(0,0,0,.6)] backdrop-blur supports-[backdrop-filter]:bg-white/5"
+          >
             <div>
               <h2 className="text-3xl font-semibold tracking-tight">Get In Touch</h2>
 
@@ -145,34 +171,38 @@ const Footer = () => {
                     inputMode="numeric"
                     maxLength={10}
                     placeholder="1234567890"
-                    className="w-full rounded-r-lg border border-l-0 border-white/10 bg-slate-900/60 p-3 text-white outline-none transition placeholder:text-gray-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-400/30"
+                    className={`w-full rounded-r-lg border bg-slate-900/60 p-3 text-white outline-none transition placeholder:text-gray-400 focus:ring-2 focus:ring-indigo-400/30 ${
+                      errors.phone ? "border-red-500 focus:ring-red-400/30" : "border-white/10 focus:border-indigo-400"
+                    }`}
                     value={phone}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      setPhone(e.target.value.replace(/\\D/g, '').slice(0, 10))
-                    }
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                      setPhone(e.target.value.replace(/\D/g, "").slice(0, 10));
+                      if (errors.phone) setErrors((p) => ({ ...p, phone: undefined }));
+                    }}
                     aria-label="Phone number"
+                    aria-invalid={!!errors.phone}
                   />
                 </div>
+                {errors.phone && (
+                  <p className="-mt-2 text-xs text-red-400">⚠ {errors.phone}</p>
+                )}
 
                 <div>
                   <input
                     type="email"
                     placeholder="Email"
-                    className={`w-full rounded-lg border bg-slate-900/60 p-3 text-white outline-none transition placeholder:text-gray-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-400/30 ${
-                      errors.email ? 'border-red-500 focus:border-red-500 focus:ring-red-400/30' : 'border-white/10'
+                    className={`w-full rounded-lg border bg-slate-900/60 p-3 text-white outline-none transition placeholder:text-gray-400 focus:ring-2 focus:ring-indigo-400/30 ${
+                      errors.email ? "border-red-500 focus:ring-red-400/30" : "border-white/10 focus:border-indigo-400"
                     }`}
                     value={email}
                     onChange={(e) => {
                       setEmail(e.target.value);
-                      if (errors.email) setErrors({ email: '' });
+                      if (errors.email) setErrors((p) => ({ ...p, email: undefined }));
                     }}
                     aria-invalid={!!errors.email}
-                    aria-describedby={errors.email ? 'email-error' : undefined}
                   />
                   {errors.email && (
-                    <p id="email-error" className="mt-1 text-xs text-red-400">
-                      ⚠ {errors.email}
-                    </p>
+                    <p className="mt-1 text-xs text-red-400">⚠ {errors.email}</p>
                   )}
                 </div>
 
@@ -191,18 +221,54 @@ const Footer = () => {
                   <option value="ContentMarketing">Content Marketing</option>
                   <option value="WebDevelopment">Web Development</option>
                 </select>
+
+                {errors.all && (
+                  <p className="text-xs text-red-400">⚠ {errors.all}</p>
+                )}
               </div>
             </div>
 
-            <button
+            <motion.button
               type="button"
               onClick={handleSubmit}
-              disabled={submitting}
-              className="mt-6 w-full rounded-lg bg-teal-400 p-3 font-medium text-slate-900 transition hover:bg-teal-300 focus:outline-none focus:ring-2 focus:ring-teal-300/40 disabled:cursor-not-allowed disabled:opacity-60"
+              disabled={submitting || !canSubmit}
+              whileTap={{ scale: 0.98 }}
+              className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-teal-400 p-3 font-medium text-slate-900 transition hover:bg-teal-300 focus:outline-none focus:ring-2 focus:ring-teal-300/40 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {submitting ? 'Submitting...' : 'Submit'}
-            </button>
-          </div>
+              <AnimatePresence initial={false}>
+                {submitting ? (
+                  <motion.span
+                    key="spinner"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="h-5 w-5 animate-spin rounded-full border-2 border-slate-900/30 border-t-slate-900"
+                  />
+                ) : null}
+              </AnimatePresence>
+              {submitting ? "Submitting..." : "Submit"}
+            </motion.button>
+
+            {/* Inline toast */}
+            <AnimatePresence>
+              {status && (
+                <motion.div
+                  key="toast"
+                  initial={{ y: 10, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -10, opacity: 0 }}
+                  transition={{ duration: 0.25 }}
+                  className={`mt-3 rounded-lg border px-3 py-2 text-sm ${
+                    status.ok
+                      ? "border-emerald-400/30 bg-emerald-400/10 text-emerald-200"
+                      : "border-red-400/30 bg-red-400/10 text-red-200"
+                  }`}
+                >
+                  {status.message}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
         </div>
 
         {/* Divider */}
@@ -213,24 +279,24 @@ const Footer = () => {
           <div className="flex justify-center gap-4">
             {[
               {
-                href: 'https://www.linkedin.com/company/webdigitalbazaar/',
+                href: "https://www.linkedin.com/company/webdigitalbazaar/",
                 icon: <FaLinkedin className="h-5 w-5" />,
-                label: 'LinkedIn',
+                label: "LinkedIn",
               },
               {
-                href: 'https://www.facebook.com/webdigitalbazaar',
+                href: "https://www.facebook.com/webdigitalbazaar",
                 icon: <FaFacebook className="h-5 w-5" />,
-                label: 'Facebook',
+                label: "Facebook",
               },
               {
-                href: 'https://www.instagram.com/webdigitalbazaar',
+                href: "https://www.instagram.com/webdigitalbazaar",
                 icon: <FaInstagram className="h-5 w-5" />,
-                label: 'Instagram',
+                label: "Instagram",
               },
               {
-                href: 'https://www.twitter.com/webdigitalbazaar',
+                href: "https://www.twitter.com/webdigitalbazaar",
                 icon: <FaTwitter className="h-5 w-5" />,
-                label: 'Twitter',
+                label: "Twitter",
               },
             ].map((s) => (
               <a
@@ -264,13 +330,34 @@ const Footer = () => {
             </Link>
           </nav>
 
-          <p className="mt-3 text-xs text-gray-400">
-            © 2025 Takshi Tech Digital | All Rights Reserved
-          </p>
+          <p className="mt-3 text-xs text-gray-400">© 2025 Takshi Tech Digital | All Rights Reserved</p>
         </div>
       </div>
+
+      {/* ContactPoint JSON-LD for SEO */}
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "Takshi Tech Digital",
+            url: "https://takshitechdigital.com",
+            contactPoint: [
+              {
+                "@type": "ContactPoint",
+                telephone: "+91 8851099103",
+                contactType: "customer support",
+                areaServed: "IN",
+                availableLanguage: ["en", "hi"],
+              },
+            ],
+          }),
+        }}
+      />
     </footer>
   );
 };
 
-export default Footer;
+export default FooterModern;
