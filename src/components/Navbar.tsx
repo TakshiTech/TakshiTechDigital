@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Define a type for nav links, allowing for an optional dropdown property
+// Types
 type NavLink = {
   name: string;
   href: string;
@@ -34,66 +34,34 @@ const navLinks: NavLink[] = [
   { name: "CONTACT", href: "/contact" },
 ];
 
-// Framer Motion Variants for Sidebar Animation
+// Motion variants
 const sidebarVariants = {
   hidden: { x: "100%", opacity: 0 },
   visible: {
     x: 0,
     opacity: 1,
-    transition: {
-      duration: 0.6,
-      ease: [0.4, 0, 0.2, 1],
-    },
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
   },
   exit: {
     x: "100%",
     opacity: 0,
-    transition: {
-      duration: 0.4,
-      ease: [0.4, 0, 1, 1],
-    },
+    transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
 const linkVariants = {
-  hidden: { x: 300, opacity: 0 },
-  visible: (index: number) => ({
+  hidden: { x: 32, opacity: 0 },
+  visible: (i: number) => ({
     x: 0,
     opacity: 1,
-    transition: {
-      delay: index * 0.25,
-      duration: 0.5,
-      ease: [0.4, 0, 0.2, 1],
-    },
+    transition: { delay: i * 0.06 + 0.08, duration: 0.28 },
   }),
-  exit: {
-    x: 300,
-    opacity: 0,
-    transition: {
-      duration: 0.3,
-      ease: [0.4, 0, 1, 1],
-    },
-  },
+  exit: { x: 32, opacity: 0, transition: { duration: 0.22 } },
 };
 
-// Navbar Variants for hide/show animation
 const navbarVariants = {
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      duration: 0.3,
-      ease: "easeInOut",
-    },
-  },
-  hidden: {
-    y: "-100%",
-    opacity: 0,
-    transition: {
-      duration: 0.3,
-      ease: "easeInOut",
-    },
-  },
+  visible: { y: 0, opacity: 1, transition: { duration: 0.25 } },
+  hidden: { y: "-100%", opacity: 0, transition: { duration: 0.25 } },
 };
 
 const Navbar = () => {
@@ -104,87 +72,92 @@ const Navbar = () => {
   const [scrollTimeout, setScrollTimeout] = useState<NodeJS.Timeout | null>(null);
   const [activeSubMenu, setActiveSubMenu] = useState<string | null>(null);
 
-  // Memoize toggle function to prevent unnecessary re-renders
   const toggleNavbar = useCallback(() => {
     setIsOpen((prev) => !prev);
     setActiveSubMenu(null);
   }, []);
 
-  // Handle scroll behavior for hiding/showing and background change
+  // Lock body scroll when menu open
   useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
+    document.body.style.overflow = isOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
 
-      setIsScrolled(currentScrollY > 50);
+  // Hide on scroll down, show on scroll up; add slight idle-show delay
+  useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY;
+      setIsScrolled(y > 50);
 
-      if (scrollTimeout) {
-        clearTimeout(scrollTimeout);
-      }
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+      if (y > lastScrollY && y > 50) setIsVisible(false);
+      else if (y < lastScrollY) setIsVisible(true);
 
-      if (currentScrollY > lastScrollY && currentScrollY > 50) {
-        setIsVisible(false);
-      } else if (currentScrollY < lastScrollY) {
-        setIsVisible(true);
-      }
-
-      const timeout = setTimeout(() => {
-        setIsVisible(true);
-      }, 150);
-
-      setScrollTimeout(timeout);
-      setLastScrollY(currentScrollY);
+      const t = setTimeout(() => setIsVisible(true), 150);
+      setScrollTimeout(t);
+      setLastScrollY(y);
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-      if (scrollTimeout) {
-        clearTimeout(scrollTimeout);
-      }
+      window.removeEventListener("scroll", onScroll);
+      if (scrollTimeout) clearTimeout(scrollTimeout);
     };
   }, [lastScrollY, scrollTimeout]);
 
   return (
     <>
       <motion.header
-        className={`fixed top-0 left-0 w-full z-50 flex items-center justify-between px-8 py-4 transition-all duration-300 ${
-          isScrolled ? "bg-white shadow-md" : "bg-transparent"
+        className={`fixed top-0 left-0 w-full z-50 flex items-center justify-between px-6 py-4 transition-all duration-300 ${
+          isScrolled
+            ? "bg-white/85 backdrop-blur-xl shadow-md border-b border-black/5"
+            : "bg-transparent"
         }`}
         variants={navbarVariants}
         initial="visible"
         animate={isVisible ? "visible" : "hidden"}
       >
-        {/* Logo */}
-        <div className="w-40 h-auto">
-          <Link href="/">
-            <Image
-              src="/images/animated-logo.gif"
-              alt="Takshi Tech Digital Logo"
-              width={160}
-              height={40}
-              className="w-full h-auto object-contain"
-              priority
-              unoptimized
-            />
+        {/* Logo with a subtle dark chip on scroll so it always shows on white */}
+        <div className="w-36 h-auto">
+          <Link href="/" className="inline-block">
+            <span
+              className={
+                isScrolled
+                  ? "bg-neutral-900/90 ring-1 ring-white/10 rounded-xl px-2 py-1 inline-flex"
+                  : "inline-flex"
+              }
+            >
+              <Image
+                src="/images/animated-logo.gif"
+                alt="Takshi Tech Digital Logo"
+                width={150}
+                height={40}
+                className="w-full h-auto object-contain drop-shadow-[0_1px_1px_rgba(0,0,0,0.5)]"
+                priority
+                unoptimized
+              />
+            </span>
           </Link>
         </div>
 
-        {/* Hamburger */}
+        {/* Hamburger — same style as before (no morph) */}
         <button
-          className={`z-[60] cursor-pointer ${isScrolled ? "text-black" : "text-black"}`}
           onClick={toggleNavbar}
-          aria-label="Toggle navigation menu"
+          className="z-[60] cursor-pointer"
+          aria-label="Toggle menu"
+          aria-expanded={isOpen}
         >
           <div className="space-y-1">
-            <span className="block w-8 h-1 bg-current transition-transform duration-300 ease-in-out" />
-            <span className="block w-8 h-1 bg-current transition-opacity duration-300 ease-in-out" />
-            <span className="block w-8 h-1 bg-current transition-transform duration-300 ease-in-out" />
+            <span className="block w-8 h-1 bg-black transition-transform duration-300 ease-in-out" />
+            <span className="block w-8 h-1 bg-black transition-opacity duration-300 ease-in-out" />
+            <span className="block w-8 h-1 bg-black transition-transform duration-300 ease-in-out" />
           </div>
         </button>
       </motion.header>
 
-      {/* Overlay Menu */}
+      {/* Overlay Menu (modern visuals only) */}
       <AnimatePresence>
         {isOpen && !activeSubMenu && (
           <motion.div
@@ -195,63 +168,53 @@ const Navbar = () => {
             variants={sidebarVariants}
             style={{ willChange: "transform, opacity" }}
           >
-            {/* Clickable Area to Close Sidebar */}
+            {/* Dim backdrop (click to close) */}
             <div
-              className="hidden md:block w-[70%] h-full bg-transparent"
+              className="hidden md:block w-[70%] h-full bg-gradient-to-br from-black/30 via-black/20 to-black/10 backdrop-blur-sm"
               onClick={toggleNavbar}
               aria-label="Close sidebar"
             />
 
-            {/* Sidebar Menu */}
+            {/* Sidebar panel */}
             <motion.div
-              className="w-full md:w-[30%] h-full bg-white/80 backdrop-blur-sm flex flex-col justify-center items-start px-8 space-y-6"
+              className="w-full md:w-[30%] h-full bg-white/90 backdrop-blur-xl border-l border-black/10 flex flex-col justify-center items-start px-8 space-y-6 shadow-2xl relative"
               variants={sidebarVariants}
-              style={{ willChange: "transform, opacity" }}
             >
-              {/* Close Button */}
+              {/* Close button */}
               <button
                 onClick={toggleNavbar}
-                className="absolute top-5 left-8 text-black text-5xl font-bold cursor-pointer"
+                className="absolute top-5 left-8 text-black text-5xl font-bold cursor-pointer hover:opacity-80"
                 aria-label="Close navigation menu"
               >
                 ×
               </button>
 
-              {/* Nav Links */}
-              <nav className="flex flex-col items-start space-y-4 text-black text-4xl">
-                {navLinks.map((link, index) => {
-                  const hasSubMenu = link.dropdown && link.dropdown.length > 0;
-
-                  return (
-                    <motion.div
-                      key={link.name}
-                      className="hover:text-gray-600 transition-colors duration-200"
-                      custom={index}
-                      initial="hidden"
-                      animate="visible"
-                      exit="exit"
-                      variants={linkVariants}
-                      style={{ willChange: "transform, opacity" }}
-                    >
-                      {hasSubMenu ? (
-                        <button
-                          onClick={() => setActiveSubMenu(link.name)}
-                          className="text-black text-left"
-                        >
-                          {link.name}
-                        </button>
-                      ) : (
-                        <Link
-                          href={link.href}
-                          onClick={toggleNavbar}
-                          className="text-black"
-                        >
-                          {link.name}
-                        </Link>
-                      )}
-                    </motion.div>
-                  );
-                })}
+              {/* Links (staggered) */}
+              <nav className="flex flex-col items-start space-y-3 text-black text-4xl">
+                {navLinks.map((link, i) => (
+                  <motion.div
+                    key={link.name}
+                    custom={i}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    variants={linkVariants}
+                    className="hover:text-gray-700 transition-colors"
+                  >
+                    {link.dropdown ? (
+                      <button
+                        onClick={() => setActiveSubMenu(link.name)}
+                        className="text-left"
+                      >
+                        {link.name}
+                      </button>
+                    ) : (
+                      <Link href={link.href} onClick={toggleNavbar}>
+                        {link.name}
+                      </Link>
+                    )}
+                  </motion.div>
+                ))}
               </nav>
             </motion.div>
           </motion.div>
@@ -262,32 +225,27 @@ const Navbar = () => {
       <AnimatePresence>
         {isOpen && activeSubMenu && (
           <motion.div
-            className="fixed inset-0 z-[60] bg-white/80 backdrop-blur-sm flex flex-col px-8 py-8"
+            className="fixed inset-0 z-[60] bg-white/90 backdrop-blur-xl border-l border-black/10 flex flex-col px-8 py-8"
             initial={{ x: "100%", opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: "100%", opacity: 0 }}
-            transition={{
-              duration: 0.5,
-              ease: [0.4, 0, 0.2, 1],
-            }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
           >
             <button
               onClick={() => setActiveSubMenu(null)}
-              className="mb-8 text-4xl font-bold text-black flex items-center gap-2"
+              className="mb-8 text-4xl font-bold text-black flex items-center gap-2 hover:opacity-80"
             >
               ← Back
             </button>
 
             {navLinks
-              .find((link) => link.name === activeSubMenu)
+              .find((l) => l.name === activeSubMenu)
               ?.dropdown?.map((item, idx) => (
                 <Link
                   key={idx}
-                  href={`/use-cases/${item
-                    .toLowerCase()
-                    .replace(/\s+/g, "-")}`}
+                  href={`/use-cases/${item.toLowerCase().replace(/\s+/g, "-")}`}
                   onClick={toggleNavbar}
-                  className="block text-4xl mb-4 text-black hover:text-gray-600 transition-colors duration-300"
+                  className="block text-4xl mb-4 text-black hover:text-gray-700 transition-colors"
                 >
                   {item}
                 </Link>
@@ -295,6 +253,9 @@ const Navbar = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Spacer so content isn't hidden behind the fixed header */}
+      <div className="h-16" />
     </>
   );
 };
