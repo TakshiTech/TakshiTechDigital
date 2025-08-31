@@ -50,19 +50,6 @@ const FloatNavbar = () => {
         <IconMoneybag className="h-4 w-4 text-neutral-500 dark:text-white" />
       ),
     },
-    {
-      name: 'Blog',
-      link: '/blog',
-      icon: (
-        <IconBrowser className="h-4 w-4 text-neutral-500 dark:text-white" />
-      ),
-    },
-    {
-      name: 'Use Cases',
-      link: '/use-cases',
-      icon: <IconBriefcase className="h-4 w-4 text-neutral-500 dark:text-white" />,
-      dropdown: true,
-    },
   ];
 
   return (

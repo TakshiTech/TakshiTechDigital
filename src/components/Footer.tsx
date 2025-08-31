@@ -3,7 +3,7 @@
 import React, { useMemo, useState, ChangeEvent } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { FaLinkedin, FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
+import { FaLinkedin, FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import { AnimatePresence, motion } from "framer-motion";
 
 // -----------------------------------------------------------------------------
@@ -112,7 +112,7 @@ const FooterModern: React.FC = () => {
             className="flex flex-col gap-6 rounded-2xl border border-white/10 bg-white/5 p-6 shadow-[0_10px_40px_-12px_rgba(0,0,0,.6)] backdrop-blur supports-[backdrop-filter]:bg-white/5"
           >
             <div className="space-y-2">
-              <h2 className="text-3xl font-semibold tracking-tight">Let&apos;s Work Together</h2>
+              <h2 className="text-3xl font-semibold tracking-tight">Let\'s Work Together</h2>
               <p className="text-base text-gray-300">
                 <a
                   href="mailto:info@takshitechdigital.com"
@@ -270,69 +270,146 @@ const FooterModern: React.FC = () => {
             </AnimatePresence>
           </motion.div>
         </div>
+        {/* LINKS AREA – modern pill style across all columns */}
+<div className="mt-14">
+  <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
+    {/* COL 1: COMPANY */}
+    <div>
+      <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-white/70">Company</h3>
+      <div className="mt-4 grid gap-2">
+        {[
+          { label: "Why Us?", href: "/why-choose-a-digital-marketing-agency" },
+          { label: "Blog", href: "/blog" },
+          { label: "Careers", href: "/careers" },
+        ].map((l) => (
+          <Link
+            key={l.label}
+            href={l.href}
+            className="rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm text-gray-200 transition hover:border-white/20 hover:bg-white/10 hover:text-white"
+          >
+            {l.label}
+          </Link>
+        ))}
+      </div>
+    </div>
 
-        {/* Divider */}
+    {/* COL 2: USE CASES */}
+    <div>
+      <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-white/70">Use Cases</h3>
+      <div className="mt-4 grid grid-cols-2 gap-2">
+        {[
+          { label: "Healthcare", slug: "healthcare" },
+          { label: "Education", slug: "education" },
+          { label: "Real Estate", slug: "real-estate" },
+          { label: "Retailers", slug: "retailers" },
+          { label: "Interior Designers", slug: "interior-designers" },
+          { label: "B2B", slug: "b2b" },
+        ].map((u) => (
+          <Link
+            key={u.slug}
+            href={`/use-cases/${u.slug}`}
+            className="rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm text-gray-200 transition hover:border-white/20 hover:bg-white/10 hover:text-white text-center"
+          >
+            {u.label}
+          </Link>
+        ))}
+      </div>
+    </div>
+
+    {/* COL 3: SITE NAV */}
+    <div>
+      <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-white/70">Site</h3>
+      <div className="mt-4 grid grid-cols-2 gap-2">
+        {[
+          { label: "Home", href: "/" },
+          { label: "About", href: "/about" },
+          { label: "Services", href: "/services" },
+          { label: "Portfolio", href: "/portfolio" },
+          { label: "Pricing", href: "/pricing" },
+          { label: "Contact", href: "/contact" },
+        ].map((l) => (
+          <Link
+            key={l.label}
+            href={l.href}
+            className="rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm text-gray-200 transition hover:border-white/20 hover:bg-white/10 hover:text-white text-center"
+          >
+            {l.label}
+          </Link>
+        ))}
+      </div>
+    </div>
+
+    {/* COL 4: LEGAL */}
+    <div>
+      <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-white/70">Legal</h3>
+      <div className="mt-4 grid gap-2">
+        {[
+          { label: "Privacy Policy", href: "/privacy" },
+          { label: "Terms & Conditions", href: "/terms" },
+          { label: "Refund Policy", href: "/terms#cancellation-refund" },
+        ].map((l) => (
+          <Link
+            key={l.label}
+            href={l.href}
+            className="rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm text-gray-200 transition hover:border-white/20 hover:bg-white/10 hover:text-white"
+          >
+            {l.label}
+          </Link>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
         <div className="mt-10 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
-        {/* Social + links */}
-        <div className="mt-8 text-center">
-          <div className="flex justify-center gap-4">
-            {[
-              {
-                href: "https://www.linkedin.com/company/webdigitalbazaar/",
-                icon: <FaLinkedin className="h-5 w-5" />,
-                label: "LinkedIn",
-              },
-              {
-                href: "https://www.facebook.com/webdigitalbazaar",
-                icon: <FaFacebook className="h-5 w-5" />,
-                label: "Facebook",
-              },
-              {
-                href: "https://www.instagram.com/webdigitalbazaar",
-                icon: <FaInstagram className="h-5 w-5" />,
-                label: "Instagram",
-              },
-              {
-                href: "https://www.twitter.com/webdigitalbazaar",
-                icon: <FaTwitter className="h-5 w-5" />,
-                label: "Twitter",
-              },
-            ].map((s) => (
-              <a
-                key={s.label}
-                href={s.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={s.label}
-                className="group inline-flex items-center justify-center rounded-full border border-white/10 p-2 text-white transition hover:border-white/30 hover:text-teal-300 focus:outline-none focus:ring-2 focus:ring-white/30"
-              >
-                {s.icon}
-              </a>
-            ))}
-          </div>
+        {/* Social */}
+<div className="mt-12 text-center">
+  <div className="flex justify-center gap-4">
+    {[
+      // {
+      //   href: "https://www.linkedin.com/company/webdigitalbazaar/",
+      //   icon: <FaLinkedin className="h-5 w-5" />,
+      //   label: "LinkedIn",
+      // },
+      {
+        href: "https://www.youtube.com/@TakshiTechDigital",
+        icon: <FaYoutube className="h-5 w-5" />,
+        label: "Facebook",
+      },
+      {
+        href: "https://www.facebook.com/profile.php?id=61579852981225",
+        icon: <FaFacebook className="h-5 w-5" />,
+        label: "Facebook",
+      },
+      {
+        href: "https://www.instagram.com/takshitechdigital/",
+        icon: <FaInstagram className="h-5 w-5" />,
+        label: "Instagram",
+      },
+      {
+        href: "https://x.com/TakshiTech",
+        icon: <FaTwitter className="h-5 w-5" />,
+        label: "Twitter",
+      },
+    ].map((s) => (
+      <a
+        key={s.label}
+        href={s.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={s.label}
+        className="group inline-flex items-center justify-center rounded-full border border-white/10 p-2 text-white transition hover:border-white/30 hover:text-teal-300 focus:outline-none focus:ring-2 focus:ring-white/30"
+      >
+        {s.icon}
+      </a>
+    ))}
+  </div>
 
-          <nav className="mt-6 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm text-gray-300">
-            <Link href="/privacy" className="hover:text-white">
-              Privacy Policy
-            </Link>
-            <Link href="/terms" className="hover:text-white">
-              Terms &amp; Conditions
-            </Link>
-            <Link href="/terms#cancellation-refund" className="hover:text-white">
-              Refund Policy
-            </Link>
-            <Link href="/why-choose-a-digital-marketing-agency" className="hover:text-white">
-              Why Us?
-            </Link>
-            <Link href="/careers" className="hover:text-white">
-              Careers
-            </Link>
-          </nav>
+  <p className="mt-3 text-xs text-gray-400">© 2025 Takshi Tech Digital | All Rights Reserved</p>
+</div>
+</div>
 
-          <p className="mt-3 text-xs text-gray-400">© 2025 Takshi Tech Digital | All Rights Reserved</p>
-        </div>
-      </div>
+{/* ContactPoint JSON-LD for SEO */}
 
       {/* ContactPoint JSON-LD for SEO */}
       <script

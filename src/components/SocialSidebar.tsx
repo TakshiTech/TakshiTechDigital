@@ -6,7 +6,7 @@ const SocialSidebar: React.FC = () => {
     <div className="hidden md:flex fixed top-1/2 right-4 transform -translate-y-1/2 z-50 flex-col items-center space-y-4">
       {/* Instagram */}
       <a
-        href="https://www.instagram.com/takshitechdigital"
+        href="https://www.instagram.com/takshitechdigital/"
         target="_blank"
         rel="noopener noreferrer"
         className="bg-black p-3 rounded-full hover:bg-gray-700 transition"
@@ -15,18 +15,18 @@ const SocialSidebar: React.FC = () => {
       </a>
 
       {/* LinkedIn */}
-      <a
+      {/* <a
         href="https://www.linkedin.com/company/takshitechdigital/"
         target="_blank"
         rel="noopener noreferrer"
         className="bg-black p-3 rounded-full hover:bg-gray-700 transition"
       >
         <FaLinkedinIn className="text-white text-xl hover:text-blue-500" />
-      </a>
+      </a> */}
 
       {/* Facebook */}
       <a
-        href="https://www.facebook.com/takshitechdigital"
+        href="https://www.facebook.com/profile.php?id=61579852981225/"
         target="_blank"
         rel="noopener noreferrer"
         className="bg-black p-3 rounded-full hover:bg-gray-700 transition"
