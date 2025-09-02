@@ -1,19 +1,18 @@
-'use client'
+'use client';
 
-import React, { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
-import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
-import Link from 'next/link'
-import { supabase } from '@/lib/supabaseClient'
+import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import Link from 'next/link';
 
 type BlogRow = {
-  id: number | string
-  title: string | null
-  content: string | null
-  image_url: string | null
-  created_at: string | null
-}
+  id: number | string;
+  title: string | null;
+  content: string | null;
+  image_url: string | null;
+  created_at: string | null;
+};
 
 const htmlToText = (html?: string | null, n = 130) => {
   const raw = (html || '')
@@ -22,50 +21,110 @@ const htmlToText = (html?: string | null, n = 130) => {
     .replace(/<[^>]+>/g, '')
     .replace(/\u00A0/g, ' ')
     .replace(/\s+/g, ' ')
-    .trim()
-  return raw.length > n ? raw.slice(0, n) + '…' : raw
-}
+    .trim();
+  return raw.length > n ? raw.slice(0, n) + '…' : raw;
+};
 
 const formatDate = (d?: string | null) =>
-  d ? new Date(d).toLocaleDateString() : ''
+  d ? new Date(d).toLocaleDateString() : '';
+
+// Optional: simple mock data so the grid doesn’t look empty during design/dev.
+// Remove this array if you prefer showing just skeletons / “No posts.”
+const MOCK_BLOGS: BlogRow[] = [
+  {
+    id: 'demo-1',
+    title: 'Providing Brands with Online Growth Strategies',
+    content:
+      'In this post we explore practical growth tactics—SEO foundations, ad funnels, and content that compounds over time.',
+    image_url: '/images/blogs/providing-brands-with-online-growth-strategies.webp',
+    created_at: new Date().toISOString(),
+  },
+  {
+    id: 'demo-2',
+    title: 'Social Ads: From First Click to Loyal Customer',
+    content:
+      'How to structure full-funnel social ad campaigns that convert and retain customers.',
+    image_url: '/images/background6.webp',
+    created_at: new Date(Date.now() - 86400000).toISOString(),
+  },
+  {
+    id: 'demo-3',
+    title: 'SEO in 2025: What Actually Moves the Needle',
+    content:
+      'We separate trend from truth and share a 6-step checklist for sustainable organic growth.',
+    image_url: '/images/background6.webp',
+    created_at: new Date(Date.now() - 2 * 86400000).toISOString(),
+  },
+];
 
 export default function BlogClient() {
-  const [blogs, setBlogs] = useState<BlogRow[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-  const [visible, setVisible] = useState(9) // load-more for grid
+  const [blogs, setBlogs] = useState<BlogRow[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [visible, setVisible] = useState(9); // load-more for grid
 
   useEffect(() => {
-    let mounted = true
+    let mounted = true;
+
     const run = async () => {
-      setLoading(true)
-      setError(null)
+      setLoading(true);
+      setError(null);
 
-      const { data, error } = await supabase
-        .from('blogs')
-        .select('id,title,content,image_url,created_at,status')
-        .eq('status', 'published')
-        .order('created_at', { ascending: false })
+      // Only attempt Supabase if env vars exist.
+      const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+      const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-      if (!mounted) return
-      if (error) {
-        console.error('Blogs query failed:', error?.message || error, error)
-        setError(error.message || 'Failed to load blogs.')
-        setBlogs([])
-      } else {
-        setBlogs((data || []) as BlogRow[])
+      if (!url || !key) {
+        // No env configured -> skip Supabase. Show mock data (or leave empty).
+        if (mounted) {
+          // Choose ONE of the following lines:
+          setBlogs(MOCK_BLOGS); // keeps design populated
+          // setBlogs([]);      // or show skeletons/“No posts.”
+          setLoading(false);
+        }
+        return;
       }
-      setLoading(false)
-    }
-    run()
-    return () => {
-      mounted = false
-    }
-  }, [])
 
-  const hero = blogs[0]
-  const sidebar = blogs.slice(1, 3)
-  const grid = blogs.slice(3, 3 + visible)
+      try {
+        // Dynamically import to avoid initializing Supabase during build.
+        const { createClient } = await import('@supabase/supabase-js');
+        const supabase = createClient(url, key);
+
+        const { data, error } = await supabase
+          .from('blogs')
+          .select('id,title,content,image_url,created_at,status')
+          .eq('status', 'published')
+          .order('created_at', { ascending: false });
+
+        if (!mounted) return;
+
+        if (error) {
+          console.error('Blogs query failed:', error?.message || error, error);
+          setError(error.message || 'Failed to load blogs.');
+          setBlogs([]);
+        } else {
+          setBlogs((data || []) as BlogRow[]);
+        }
+      } catch (e: any) {
+        console.error('Supabase init/fetch failed:', e);
+        if (mounted) {
+          setError('Failed to load blogs.');
+          setBlogs([]);
+        }
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    };
+
+    run();
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const hero = blogs[0];
+  const sidebar = blogs.slice(1, 3);
+  const grid = blogs.slice(3, 3 + visible);
 
   return (
     <>
@@ -91,25 +150,6 @@ export default function BlogClient() {
         </motion.div>
       </section>
 
-      {/* ====== Explore bar (static chips) ======
-      <div className="bg-emerald-900 text-white">
-        <div className="max-w-6xl mx-auto px-6 py-4">
-          <div className="flex items-center gap-3 flex-wrap">
-            <span className="text-xs uppercase tracking-wide px-3 py-1 rounded-full bg-white/10">
-              Explore the blog
-            </span>
-            {['Partnerships', 'Product', 'Meet The Team', 'Company News'].map((x) => (
-              <span
-                key={x}
-                className="text-sm px-3 py-1 rounded-full bg-white/10 hover:bg-white/20 cursor-default"
-              >
-                {x}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div> */}
-
       {/* ====== Latest stories ====== */}
       <section className="max-w-6xl mx-auto px-6 py-10">
         <h2 className="text-2xl md:text-[28px] font-bold tracking-tight mb-6">
@@ -132,7 +172,7 @@ export default function BlogClient() {
                   <img
                     src={hero.image_url || '/images/blogs/providing-brands-with-online-growth-strategies.webp'}
                     alt={hero.title || 'Blog'}
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"}
                   />
                 </div>
                 <div className="p-5">
@@ -188,7 +228,7 @@ export default function BlogClient() {
             ? Array.from({ length: 6 }).map((_, i) => (
                 <div key={i} className="h-64 rounded-2xl bg-gray-200 animate-pulse" />
               ))
-            : grid.map((b) => (
+            : blogs.slice(3, 3 + visible).map((b) => (
                 <Link
                   key={b.id}
                   href={`/blog/${b.id}`}
@@ -199,7 +239,7 @@ export default function BlogClient() {
                     <img
                       src={b.image_url || '/images/blogs/providing-brands-with-online-growth-strategies.webp'}
                       alt={b.title || 'Blog'}
-                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"}
                     />
                   </div>
                   <div className="p-4">
@@ -216,7 +256,7 @@ export default function BlogClient() {
         </div>
 
         {/* Load more */}
-        {!loading && grid.length < Math.max(0, blogs.length - 3) && (
+        {!loading && blogs.slice(3).length > visible && (
           <div className="mt-8 flex justify-center">
             <button
               onClick={() => setVisible((v) => v + 9)}
@@ -242,5 +282,5 @@ export default function BlogClient() {
 
       <Footer />
     </>
-  )
+  );
 }
