@@ -28,8 +28,6 @@ const htmlToText = (html?: string | null, n = 130) => {
 const formatDate = (d?: string | null) =>
   d ? new Date(d).toLocaleDateString() : '';
 
-// Optional: simple mock data so the grid doesn’t look empty during design/dev.
-// Remove this array if you prefer showing just skeletons / “No posts.”
 const MOCK_BLOGS: BlogRow[] = [
   {
     id: 'demo-1',
@@ -61,7 +59,7 @@ export default function BlogClient() {
   const [blogs, setBlogs] = useState<BlogRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [visible, setVisible] = useState(9); // load-more for grid
+  const [visible, setVisible] = useState(9);
 
   useEffect(() => {
     let mounted = true;
@@ -70,23 +68,18 @@ export default function BlogClient() {
       setLoading(true);
       setError(null);
 
-      // Only attempt Supabase if env vars exist.
       const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
       const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
       if (!url || !key) {
-        // No env configured -> skip Supabase. Show mock data (or leave empty).
         if (mounted) {
-          // Choose ONE of the following lines:
-          setBlogs(MOCK_BLOGS); // keeps design populated
-          // setBlogs([]);      // or show skeletons/“No posts.”
+          setBlogs(MOCK_BLOGS); // or setBlogs([]) if you prefer empty
           setLoading(false);
         }
         return;
       }
 
       try {
-        // Dynamically import to avoid initializing Supabase during build.
         const { createClient } = await import('@supabase/supabase-js');
         const supabase = createClient(url, key);
 
@@ -124,7 +117,6 @@ export default function BlogClient() {
 
   const hero = blogs[0];
   const sidebar = blogs.slice(1, 3);
-  const grid = blogs.slice(3, 3 + visible);
 
   return (
     <>
@@ -172,7 +164,7 @@ export default function BlogClient() {
                   <img
                     src={hero.image_url || '/images/blogs/providing-brands-with-online-growth-strategies.webp'}
                     alt={hero.title || 'Blog'}
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"}
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                   />
                 </div>
                 <div className="p-5">
@@ -239,7 +231,7 @@ export default function BlogClient() {
                     <img
                       src={b.image_url || '/images/blogs/providing-brands-with-online-growth-strategies.webp'}
                       alt={b.title || 'Blog'}
-                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"}
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                     />
                   </div>
                   <div className="p-4">
