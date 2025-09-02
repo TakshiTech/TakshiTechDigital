@@ -363,6 +363,7 @@ const FooterModern: React.FC = () => {
         <div className="mt-10 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
         {/* Social */}
+{/* Social */}
 <div className="mt-12 text-center">
   <div className="flex justify-center gap-4">
     {[
@@ -374,7 +375,7 @@ const FooterModern: React.FC = () => {
       {
         href: "https://www.youtube.com/@TakshiTechDigital",
         icon: <FaYoutube className="h-5 w-5" />,
-        label: "Facebook",
+        label: "YouTube", // <-- was "Facebook"
       },
       {
         href: "https://www.facebook.com/profile.php?id=61579852981225",
@@ -393,7 +394,7 @@ const FooterModern: React.FC = () => {
       },
     ].map((s) => (
       <a
-        key={s.label}
+        key={s.href}                 // <-- unique, stable key
         href={s.href}
         target="_blank"
         rel="noopener noreferrer"
@@ -407,6 +408,7 @@ const FooterModern: React.FC = () => {
 
   <p className="mt-3 text-xs text-gray-400">© 2025 Takshi Tech Digital | All Rights Reserved</p>
 </div>
+
 </div>
 
 {/* ContactPoint JSON-LD for SEO */}
