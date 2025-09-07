@@ -9,6 +9,7 @@ import type React from 'react'
 export function AdminShell({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
+  const safePath = pathname ?? '' // ensure non-null for comparisons/formatting
 
   const nav = [
     { label: 'Blog', href: '/admin/blog', icon: BlogIcon },
@@ -69,12 +70,12 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             <nav className="px-2">
               <SectionLabel>Content</SectionLabel>
               <ul className="space-y-1">
-                <NavItem item={nav[0]} active={pathname.startsWith(nav[0].href)} />
+                <NavItem item={nav[0]} active={safePath.startsWith(nav[0].href)} />
               </ul>
 
               <SectionLabel className="mt-4">Growth</SectionLabel>
               <ul className="space-y-1">
-                <NavItem item={nav[1]} active={pathname.startsWith(nav[1].href)} />
+                <NavItem item={nav[1]} active={safePath.startsWith(nav[1].href)} />
               </ul>
             </nav>
 
@@ -108,11 +109,11 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
               <nav className="p-2">
                 <SectionLabel>Content</SectionLabel>
                 <ul className="space-y-1">
-                  <NavItem item={nav[0]} active={pathname.startsWith(nav[0].href)} onNavigate={() => setOpen(false)} />
+                  <NavItem item={nav[0]} active={safePath.startsWith(nav[0].href)} onNavigate={() => setOpen(false)} />
                 </ul>
                 <SectionLabel className="mt-4">Growth</SectionLabel>
                 <ul className="space-y-1">
-                  <NavItem item={nav[1]} active={pathname.startsWith(nav[1].href)} onNavigate={() => setOpen(false)} />
+                  <NavItem item={nav[1]} active={safePath.startsWith(nav[1].href)} onNavigate={() => setOpen(false)} />
                 </ul>
               </nav>
             </div>
@@ -127,7 +128,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
               <div className="text-sm text-neutral-500">
                 Admin <span className="mx-1">/</span>
                 <span className="font-medium text-neutral-900">
-                  {formatCrumb(pathname) ?? 'Dashboard'}
+                  {formatCrumb(safePath) ?? 'Dashboard'}
                 </span>
               </div>
               <div className="flex items-center gap-2">
@@ -179,7 +180,7 @@ function NavItem({
   active,
   onNavigate,
 }: {
-  item: { label: string; href: string; icon: (p: any) => JSX.Element }
+  item: { label: string; href: string; icon: React.ComponentType<React.SVGProps<SVGSVGElement>> } // typed for SVG icon components
   active?: boolean
   onNavigate?: () => void
 }) {
