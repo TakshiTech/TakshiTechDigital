@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, animate } from "framer-motion";
 import {
   Briefcase,
   Globe2,
@@ -15,24 +15,11 @@ function Counter({ value }: { value: number }) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    let start = 0;
-    const end = value;
-    if (start === end) return;
-
-    let totalMilSecDur = 1200;
-    let incrementTime = 20;
-    let step = Math.ceil((end - start) / (totalMilSecDur / incrementTime));
-
-    const timer = setInterval(() => {
-      start += step;
-      if (start >= end) {
-        start = end;
-        clearInterval(timer);
-      }
-      setCount(start);
-    }, incrementTime);
-
-    return () => clearInterval(timer);
+    const controls = animate(0, value, {
+      duration: 1.5, // speed of animation
+      onUpdate: (v) => setCount(Math.floor(v)),
+    });
+    return () => controls.stop();
   }, [value]);
 
   return <span>{count}</span>;
@@ -56,12 +43,48 @@ export type StatsShowcaseProps = {
 
 // ---- Default content ----
 const DEFAULT_STATS: StatItem[] = [
-  { label: "Digital Marketing", sublabel: "& Still Counting", value: 450, suffix: "+", Icon: Briefcase },
-  { label: "Websites Developed", sublabel: "& Still Counting", value: 300, suffix: "+", Icon: Code2 },
-  { label: "Email Marketing", sublabel: "& Still Counting", value: 100, suffix: "+", Icon: Mail },
-  { label: "Satisfied Clients", sublabel: "& Still Counting", value: 800, suffix: "+", Icon: Users2 },
-  { label: "Countries Served", sublabel: "& Still Counting", value: 5, suffix: "+", Icon: Globe2 },
-  { label: "Success Score", sublabel: "on UpWork", value: 90, suffix: "%", Icon: TrendingUp },
+  {
+    label: "Digital Marketing",
+    sublabel: "& Still Counting",
+    value: 450,
+    suffix: "+",
+    Icon: Briefcase,
+  },
+  {
+    label: "Websites Developed",
+    sublabel: "& Still Counting",
+    value: 300,
+    suffix: "+",
+    Icon: Code2,
+  },
+  {
+    label: "Email Marketing",
+    sublabel: "& Still Counting",
+    value: 100,
+    suffix: "+",
+    Icon: Mail,
+  },
+  {
+    label: "Satisfied Clients",
+    sublabel: "& Still Counting",
+    value: 800,
+    suffix: "+",
+    Icon: Users2,
+  },
+  {
+    label: "Countries Served",
+    sublabel: "& Still Counting",
+    value: 5,
+    suffix: "+",
+    Icon: Globe2,
+  },
+  {
+    label: "Success Score",
+    sublabel: "on UpWork",
+    value: 90,
+    suffix: "%",
+    Icon: TrendingUp,
+  },
 ];
 
 // ---- Component ----
@@ -73,7 +96,7 @@ export default function StatsShowcase({
   stats = DEFAULT_STATS,
 }: StatsShowcaseProps) {
   return (
-    <section className="relative overflow-hidden bg-transparent mt-[-100px] sm:*mt-[-150px] lg:mt-[-200px]">
+    <section className="relative overflow-hidden bg-transparent mt-[-100px] sm:mt-[-150px] lg:mt-[-200px]">
       <div className="mx-auto max-w-7xl px-6 py-20 lg:py-28">
         {/* Header */}
         <div className="mx-auto max-w-3xl text-center">
@@ -119,9 +142,13 @@ export default function StatsShowcase({
                   <div className="min-w-0">
                     <h3 className="text-3xl font-extrabold tracking-tight text-gray-900">
                       <Counter value={value} />
-                      <span className="align-baseline text-indigo-600">{suffix}</span>
+                      <span className="align-baseline text-indigo-600">
+                        {suffix}
+                      </span>
                     </h3>
-                    <p className="mt-1 text-base font-medium text-gray-800">{label}</p>
+                    <p className="mt-1 text-base font-medium text-gray-800">
+                      {label}
+                    </p>
                     {sublabel && (
                       <p className="text-sm text-gray-500">{sublabel}</p>
                     )}
