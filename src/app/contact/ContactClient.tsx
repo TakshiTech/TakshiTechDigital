@@ -224,7 +224,7 @@ const ContactClient = () => {
               <FaPhoneAlt className="text-green-500 mt-1" />
               <div>
                 <div className="font-semibold">Phone</div>
-                <div>+91 9871492013<br />+91 8860692013</div>
+                <div>+91 8851099103</div>
               </div>
             </div>
           </div>

@@ -2,14 +2,39 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type React from 'react'
+
+// simple client hook to load the logged-in user (name/email) from an API route
+// expects /api/me -> { name?: string, email: string }
+function useUser() {
+  const [user, setUser] = useState<{ name?: string; email?: string } | null>(null)
+  useEffect(() => {
+    let mounted = true
+    ;(async () => {
+      try {
+        const res = await fetch('/api/me', { cache: 'no-store' })
+        if (!res.ok) throw new Error('Failed')
+        const data = await res.json()
+        if (mounted) setUser(data)
+      } catch {
+        // no-op; keep user null
+      }
+    })()
+    return () => {
+      mounted = false
+    }
+  }, [])
+  return user
+}
 
 export function AdminShell({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
   const safePath = pathname ?? '' // ensure non-null for comparisons/formatting
+  const user = useUser()
 
   const nav = [
     { label: 'Blog', href: '/admin/blog', icon: BlogIcon },
@@ -17,21 +42,33 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   ]
 
   return (
-    <div className="min-h-screen bg-neutral-50 text-neutral-900">
+    <div className="relative min-h-screen text-white selection:bg-fuchsia-500/30 selection:text-white flex flex-col">
+      {/* Ambient background */}
+      <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 bg-slate-950" />
+      <div
+        aria-hidden
+        className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(1000px_600px_at_20%_-10%,rgba(99,102,241,0.25),transparent_60%),radial-gradient(900px_500px_at_80%_110%,rgba(236,72,153,0.25),transparent_60%)]"
+      />
+      <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 [mask-image:linear-gradient(to_bottom,black,transparent_85%)]">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.06)_1px,transparent_1px)] bg-[size:60px_60px]" />
+      </div>
+
       {/* Top Navbar */}
-      <header className="sticky top-0 z-40 border-b border-neutral-200 bg-white/80 backdrop-blur">
+      <header className="sticky top-0 z-40 border-b border-white/10 bg-white/10 backdrop-blur-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.15)]">
         <div className="mx-auto flex h-14 max-w-screen-2xl items-center justify-between px-4">
           <div className="flex items-center gap-2">
             <button
               onClick={() => setOpen(true)}
-              className="mr-1 inline-flex h-9 w-9 items-center justify-center rounded-xl border border-neutral-200 bg-white hover:bg-neutral-100 md:hidden"
+              className="mr-1 inline-flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/10 hover:bg-white/20 md:hidden transition"
               aria-label="Open menu"
             >
               <MenuIcon className="h-5 w-5" />
             </button>
             <Link href="/admin" className="flex items-center gap-2">
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-tr from-indigo-500 to-fuchsia-500 text-white font-semibold">DM</span>
-              <span className="text-sm font-semibold tracking-tight">Digital Marketing Admin</span>
+              <span className="relative inline-flex h-8 w-8 items-center justify-center overflow-hidden rounded-xl ring-1 ring-white/20">
+                <Image src="/logo.png" alt="Takshi Tech Digital" fill className="object-cover" />
+              </span>
+              <span className="text-sm font-semibold tracking-tight text-white/90">Takshi Tech Digital</span>
             </Link>
           </div>
 
@@ -39,31 +76,33 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             <div className="relative">
               <input
                 placeholder="Search…"
-                className="h-9 w-64 rounded-xl border border-neutral-200 bg-white px-3 text-sm outline-none ring-0 placeholder:text-neutral-400 focus:border-neutral-300"
+                className="h-9 w-64 rounded-xl border border-white/15 bg-white/10 px-3 text-sm text-white placeholder:text-white/60 outline-none ring-0 focus:border-white/30"
               />
               <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2">
-                <SearchIcon className="h-4 w-4 text-neutral-400" />
+                <SearchIcon className="h-4 w-4 text-white/60" />
               </span>
             </div>
-            <button className="inline-flex h-9 items-center gap-2 rounded-xl border border-neutral-200 bg-white px-3 text-sm hover:bg-neutral-100">
+            <button className="inline-flex h-9 items-center gap-2 rounded-xl border border-white/10 bg-white/10 px-3 text-sm hover:bg-white/20 transition shadow-sm">
               <SparklesIcon className="h-4 w-4" />
               Quick Action
             </button>
-            <button className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-neutral-200 bg-white hover:bg-neutral-100">
+            <button className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/10 hover:bg-white/20 transition">
               <AvatarIcon className="h-5 w-5" />
             </button>
           </div>
         </div>
       </header>
 
-      <div className="mx-auto grid max-w-screen-2xl grid-cols-1 md:grid-cols-[260px_1fr]">
-        {/* Sidebar (desktop) */}
-        <aside className="sticky top-14 hidden h-[calc(100vh-3.5rem)] border-r border-neutral-200 bg-white md:block">
+      {/* SIDEBAR */}
+      <div className="mx-auto w-full max-w-screen-2xl flex-1 md:pl-[260px]">
+        <aside className="hidden md:block fixed left-0 top-14 bottom-0 w-[260px] border-r border-white/10 bg-white/5 backdrop-blur-xl">
           <div className="flex h-full flex-col">
             <div className="p-3">
-              <div className="rounded-2xl bg-gradient-to-br from-indigo-50 to-fuchsia-50 p-3">
-                <p className="text-xs font-medium text-neutral-700">Welcome back 👋</p>
-                <p className="mt-1 text-[11px] text-neutral-500">Manage content & leads in one place.</p>
+              <div className="rounded-2xl bg-white/10 p-3 ring-1 ring-white/10 shadow-lg">
+                <p className="text-xs font-medium text-white/90">{`Welcome${user?.name ? `, ${user.name}` : ''} 👋`}</p>
+                <p className="mt-1 text-[11px] text-white/70">
+                  {user?.email ? `Signed in as ${user.email}` : 'Manage content & leads in one place.'}
+                </p>
               </div>
             </div>
 
@@ -80,12 +119,12 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             </nav>
 
             <div className="mt-auto p-3">
-              <div className="rounded-2xl border border-neutral-200 bg-white p-3">
-                <p className="text-xs font-medium">Usage</p>
-                <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-neutral-100">
+              <div className="rounded-2xl bg-white/5 p-3 ring-1 ring-white/10 shadow">
+                <p className="text-xs font-medium text-white/90">Usage</p>
+                <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-white/10">
                   <div className="h-full w-1/3 bg-gradient-to-r from-indigo-500 to-fuchsia-500" />
                 </div>
-                <p className="mt-1 text-[11px] text-neutral-500">This month’s activity</p>
+                <p className="mt-1 text-[11px] text-white/70">This month’s activity</p>
               </div>
             </div>
           </div>
@@ -94,13 +133,13 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
         {/* Drawer (mobile) */}
         {open && (
           <div className="fixed inset-0 z-50 md:hidden" role="dialog" aria-modal="true">
-            <div className="absolute inset-0 bg-black/30" onClick={() => setOpen(false)} />
-            <div className="absolute inset-y-0 left-0 w-72 bg-white shadow-xl">
-              <div className="flex items-center justify-between border-b border-neutral-200 p-3">
+            <div className="absolute inset-0 bg-black/50" onClick={() => setOpen(false)} />
+            <div className="absolute inset-y-0 left-0 w-72 bg-white/10 backdrop-blur-2xl ring-1 ring-white/15 shadow-2xl">
+              <div className="flex items-center justify-between border-b border-white/10 p-3">
                 <span className="text-sm font-semibold">Menu</span>
                 <button
                   onClick={() => setOpen(false)}
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-lg hover:bg-neutral-100"
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-lg hover:bg-white/10"
                   aria-label="Close menu"
                 >
                   <XIcon className="h-5 w-5" />
@@ -120,45 +159,58 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
           </div>
         )}
 
-        {/* Main content */}
-        <main className="min-h-[calc(100vh-3.5rem)] bg-neutral-50">
+        {/* Main content (with bottom padding so footer doesn't overlap) */}
+        <main className="min-h-[calc(100vh-3.5rem)] pb-20">
           <div className="p-4 md:p-6">
-            {/* Page header (breadcrumbs / actions) */}
             <div className="mb-4 flex items-center justify-between">
-              <div className="text-sm text-neutral-500">
+              <div className="text-sm text-white/60">
                 Admin <span className="mx-1">/</span>
-                <span className="font-medium text-neutral-900">
+                <span className="font-medium text-white/90">
                   {formatCrumb(safePath) ?? 'Dashboard'}
                 </span>
               </div>
               <div className="flex items-center gap-2">
-                <button className="inline-flex h-9 items-center gap-2 rounded-xl border border-neutral-200 bg-white px-3 text-sm hover:bg-neutral-100">
+                <button className="inline-flex h-9 items-center gap-2 rounded-xl border border-white/10 bg-white/10 px-3 text-sm hover:bg-white/20 transition">
                   <PlusIcon className="h-4 w-4" />
                   New
                 </button>
-                <button className="inline-flex h-9 items-center gap-2 rounded-xl border border-neutral-200 bg-white px-3 text-sm hover:bg-neutral-100">
+                <button className="inline-flex h-9 items-center gap-2 rounded-xl border border-white/10 bg-white/10 px-3 text-sm hover:bg-white/20 transition">
                   <SlidersIcon className="h-4 w-4" />
                   Filters
                 </button>
               </div>
             </div>
 
-            {children}
+            <div className="mb-4 rounded-2xl bg-white/5 p-3 ring-1 ring-white/10">
+              <p className="text-sm">
+                {user?.name
+                  ? `Welcome, ${user.name}!`
+                  : user?.email
+                    ? `Welcome, ${user.email.split('@')[0]}!`
+                    : 'Welcome to the dashboard!'}
+              </p>
+            </div>
 
-            {/* Footer */}
-            <footer className="mt-10 border-t border-neutral-200 pt-4 text-xs text-neutral-500">
-              <div className="flex flex-col items-start justify-between gap-2 md:flex-row">
-                <p>© {new Date().getFullYear()} Your Agency Name. All rights reserved.</p>
-                <div className="flex items-center gap-4">
-                  <Link href="/privacy" className="hover:text-neutral-700">Privacy</Link>
-                  <Link href="/terms" className="hover:text-neutral-700">Terms</Link>
-                  <a href="mailto:hello@youragency.com" className="hover:text-neutral-700">Contact</a>
-                </div>
-              </div>
-            </footer>
+            <div className="rounded-2xl bg-white/5 p-4 ring-1 ring-white/10 shadow-xl">
+              {children}
+            </div>
           </div>
         </main>
       </div>
+
+      {/* Fixed footer */}
+      <footer className="fixed bottom-0 left-0 right-0 z-40 border-t border-white/10 bg-white/5 backdrop-blur-xl">
+        <div className="mx-auto max-w-screen-2xl px-4 py-4 text-xs text-white/70">
+          <div className="flex flex-col items-start justify-between gap-2 md:flex-row">
+            <p>© {new Date().getFullYear()} Takshi Tech Digital. All rights reserved.</p>
+            <div className="flex items-center gap-4">
+              <Link href="/privacy" className="hover:text-white/80">Privacy</Link>
+              <Link href="/terms" className="hover:text-white/80">Terms</Link>
+              <a href="mailto:hello@takshitechdigital.com" className="hover:text-white/80">Contact</a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }
@@ -172,7 +224,7 @@ function formatCrumb(path: string) {
 
 /* ---------- small components ---------- */
 function SectionLabel({ children, className = '' }: React.PropsWithChildren<{ className?: string }>) {
-  return <div className={`px-2 pb-2 text-[11px] font-semibold uppercase tracking-wider text-neutral-400 ${className}`}>{children}</div>
+  return <div className={`px-2 pb-2 text-[11px] font-semibold uppercase tracking-wider text-white/50 ${className}`}>{children}</div>
 }
 
 function NavItem({
@@ -180,7 +232,7 @@ function NavItem({
   active,
   onNavigate,
 }: {
-  item: { label: string; href: string; icon: React.ComponentType<React.SVGProps<SVGSVGElement>> } // typed for SVG icon components
+  item: { label: string; href: string; icon: React.ComponentType<React.SVGProps<SVGSVGElement>> }
   active?: boolean
   onNavigate?: () => void
 }) {
@@ -190,10 +242,10 @@ function NavItem({
       <Link
         href={item.href}
         onClick={onNavigate}
-        className={`group relative flex items-center gap-2 rounded-xl px-3 py-2 text-sm transition
-        ${active ? 'bg-neutral-900 text-white' : 'text-neutral-700 hover:bg-neutral-100'}`}
+        className={`group relative flex items-center gap-2 rounded-xl px-3 py-2 text-sm transition ring-1 ring-inset ring-white/10 hover:ring-white/20 shadow-sm 
+        ${active ? 'bg-white/20 text-white' : 'text-white/80 hover:bg-white/10'}`}
       >
-        <Icon className={`h-4 w-4 ${active ? 'text-white' : 'text-neutral-500 group-hover:text-neutral-700'}`} />
+        <Icon className={`h-4 w-4 ${active ? 'text-white' : 'text-white/70 group-hover:text-white'}`} />
         <span className="font-medium">{item.label}</span>
         {active && <span className="absolute inset-y-0 right-0 w-1 rounded-r-xl bg-gradient-to-b from-indigo-500 to-fuchsia-500" />}
       </Link>
@@ -201,7 +253,7 @@ function NavItem({
   )
 }
 
-/* ---------- icons (inline, no deps) ---------- */
+/* ---------- icons ---------- */
 function MenuIcon(props: React.SVGProps<SVGSVGElement>) {
   return <svg viewBox="0 0 24 24" fill="none" {...props}><path stroke="currentColor" strokeWidth="1.5" d="M4 7h16M4 12h16M4 17h16"/></svg>
 }
