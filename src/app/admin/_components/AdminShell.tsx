@@ -37,7 +37,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   const user = useUser()
 
   const nav = [
-    { label: 'Blog', href: '/admin/blog', icon: BlogIcon },
+    { label: 'Blog', href: '/admin/blogs', icon: BlogIcon },
     { label: 'Leads', href: '/admin/leads', icon: LeadsIcon },
   ]
 
