@@ -66,7 +66,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             </button>
             <Link href="/admin" className="flex items-center gap-2">
               <span className="relative inline-flex h-8 w-8 items-center justify-center overflow-hidden rounded-xl ring-1 ring-white/20">
-                <Image src="/logo.png" alt="Takshi Tech Digital" fill className="object-cover" />
+                <Image src="/logo.svg" alt="Takshi Tech Digital" fill className="object-cover" />
               </span>
               <span className="text-sm font-semibold tracking-tight text-white/90">Takshi Tech Digital</span>
             </Link>
@@ -117,16 +117,6 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
                 <NavItem item={nav[1]} active={safePath.startsWith(nav[1].href)} />
               </ul>
             </nav>
-
-            <div className="mt-auto p-3">
-              <div className="rounded-2xl bg-white/5 p-3 ring-1 ring-white/10 shadow">
-                <p className="text-xs font-medium text-white/90">Usage</p>
-                <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-white/10">
-                  <div className="h-full w-1/3 bg-gradient-to-r from-indigo-500 to-fuchsia-500" />
-                </div>
-                <p className="mt-1 text-[11px] text-white/70">This month’s activity</p>
-              </div>
-            </div>
           </div>
         </aside>
 
