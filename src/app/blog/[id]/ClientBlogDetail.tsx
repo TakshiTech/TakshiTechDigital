@@ -10,7 +10,7 @@ import { Twitter, Facebook, Instagram, Share2, MessageCircle } from 'lucide-reac
 type Blog = {
   id: number | string
   title: string | null
-  content: string | null
+  content_html: string | null
   image_url: string | null
   created_at: string | null
   status?: string | null
@@ -59,7 +59,7 @@ export default function ClientBlogDetailPage({ id }: { id: string }) {
 
       const { data: row, error } = await supabase
         .from('blogs')
-        .select('id,title,content,image_url,created_at,status')
+        .select('id,title,content_html,image_url,created_at,status')
         .filter('id', 'eq', String(id))
         .eq('status', 'published')
         .single()
@@ -115,9 +115,9 @@ export default function ClientBlogDetailPage({ id }: { id: string }) {
     )
     heads.forEach(h => io.observe(h))
     return () => io.disconnect()
-  }, [blog?.content])
+  }, [blog?.content_html])
 
-  const rtime = useMemo(() => readingTime(blog?.content), [blog?.content])
+  const rtime = useMemo(() => readingTime(blog?.content_html), [blog?.content_html])
 
   // share helpers
   const encodedUrl = encodeURIComponent(currentUrl)
@@ -229,7 +229,7 @@ export default function ClientBlogDetailPage({ id }: { id: string }) {
               <div className="rounded-md border border-red-200 bg-red-50 p-4 text-red-700">{error}</div>
             )}
             {!loading && !error && (
-              <div ref={contentRef} dangerouslySetInnerHTML={{ __html: blog?.content || '' }} />
+              <div ref={contentRef} dangerouslySetInnerHTML={{ __html: blog?.content_html || '' }} />
             )}
 
             {/* Bottom share */}
