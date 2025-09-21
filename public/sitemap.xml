@@ -130,3 +130,41 @@
 
 
 </urlset>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "TakshiTech Digital",
+  "image": "https://www.takshitechdigital.com/images/animated-logo.gif",
+  "@id": "https://www.takshitechdigital.com/about",
+  "url": "https://www.takshitechdigital.com/",
+  "telephone": "+91 88510 99103",
+  "priceRange": "6000 - 75000",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "H Block Sector 63",
+    "addressLocality": "Noida",
+    "postalCode": "201301",
+    "addressCountry": "IN"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 28.6284537,
+    "longitude": 77.3769437
+  },
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": [
+      "Monday",
+      "Friday",
+      "Thursday",
+      "Wednesday",
+      "Tuesday",
+      "Sunday"
+    ],
+    "opens": "",
+    "closes": ""
+  } 
+}
+</script>
