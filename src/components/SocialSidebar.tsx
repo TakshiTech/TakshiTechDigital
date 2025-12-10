@@ -15,14 +15,14 @@ const SocialSidebar: React.FC = () => {
       </a>
 
       {/* LinkedIn */}
-      {/* <a
-        href="https://www.linkedin.com/company/takshitechdigital/"
+      <a
+        href="https://www.linkedin.com/company/takshitech-digital/"
         target="_blank"
         rel="noopener noreferrer"
         className="bg-black p-3 rounded-full hover:bg-gray-700 transition"
       >
         <FaLinkedinIn className="text-white text-xl hover:text-blue-500" />
-      </a> */}
+      </a>
 
       {/* Facebook */}
       <a
