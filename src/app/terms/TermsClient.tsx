@@ -128,7 +128,7 @@ const TermsClient: React.FC = () => {
             </ul>
 
             <h2 id="cancellation-refund" className="text-4xl font-bold mb-4">Cancellation & Refund Policy</h2>
-            <p className="text-gray-600 mb-4"><strong>Last updated on</strong> 03-06-2025 18:58:28</p>
+            <p className="text-gray-600 mb-4"><strong>Last updated on</strong> 16-12-2025 18:58:28</p>
             <p className="text-gray-600 mb-4">
               Takshi Tech Digital believes in helping its customers as far as possible, and has therefore a liberal
               cancellation policy. Under this policy:
