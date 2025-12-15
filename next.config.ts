@@ -5,10 +5,7 @@ const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseHostname = SUPABASE_URL ? new URL(SUPABASE_URL).hostname : "";
 
 const config: NextConfig = {
-  eslint: {
-    // ✅ don’t fail production builds because of lint errors
-    ignoreDuringBuilds: true,
-  },
+
   typescript: {
     // ✅ don’t fail production builds because of TS errors
     ignoreBuildErrors: true,

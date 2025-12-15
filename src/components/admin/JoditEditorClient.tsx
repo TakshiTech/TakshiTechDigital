@@ -1,8 +1,7 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import dynamic from 'next/dynamic';
-import 'jodit/es5/jodit.min.css';
 
 type Props = {
   initialValue?: string;
@@ -12,7 +11,24 @@ type Props = {
 
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
 
-export default function JoditEditorClient({ initialValue = '', onChangeHTML, theme = 'light' }: Props) {
+export default function JoditEditorClient({
+  initialValue = '',
+  onChangeHTML,
+  theme = 'light',
+}: Props) {
+  // ✅ Load Jodit CSS on client only (avoids Next CSS parser error)
+  useEffect(() => {
+    const id = 'jodit-css';
+    if (document.getElementById(id)) return;
+
+    const link = document.createElement('link');
+    link.id = id;
+    link.rel = 'stylesheet';
+    // You must copy the file to /public (see note below)
+    link.href = '/jodit.min.css';
+    document.head.appendChild(link);
+  }, []);
+
   const config = useMemo(
     () => ({
       readonly: false,
