@@ -2,7 +2,7 @@
 
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { createServerClient } from '@supabase/ssr';
+import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { createClient } from '@supabase/supabase-js';
 
 type EditStatus = 'published' | 'draft' | 'archived';
@@ -11,7 +11,12 @@ const BLOG_BUCKET = 'blog-images';
 const MAX_IMAGE_BYTES = 4 * 1024 * 1024;
 
 const slugify2 = (s: string) =>
-  s.toLowerCase().trim().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-');
+  s
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');
 
 function getEnv2() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || '';
@@ -24,13 +29,30 @@ function getEnv2() {
 }
 
 // cookie-auth client for reading the current user
-function getAuthClient(url: string, anonKey: string) {
-  const store = cookies();
+async function getAuthClient(url: string, anonKey: string) {
+  // ✅ Next.js 16: cookies() is async
+  const store = await cookies();
+
   return createServerClient(url, anonKey, {
     cookies: {
-      get: (name: string) => store.get(name)?.value,
-      set() {},
-      remove() {},
+      get(name: string) {
+        return store.get(name)?.value;
+      },
+      set(name: string, value: string, options: CookieOptions) {
+        // Server Actions / Route Handlers can set cookies
+        try {
+          store.set({ name, value, ...options });
+        } catch {
+          // If called somewhere cookies can't be modified, ignore (common pattern)
+        }
+      },
+      remove(name: string, options: CookieOptions) {
+        try {
+          store.set({ name, value: '', ...options, maxAge: 0 });
+        } catch {
+          // ignore
+        }
+      },
     },
   });
 }
@@ -44,23 +66,23 @@ function getAdminClient(url: string, serviceKey: string) {
 
 function getOptionalFile(fd: FormData, key: string): File | null {
   const v = fd.get(key);
-  // Ensure it's actually a File object
-  if (typeof File !== 'undefined' && v instanceof File) {
-    // Browsers may submit an empty file (name "", size 0) when no new selection was made
-    if (!v.name || v.size === 0) return null;
-    return v;
+
+  // In Server Actions, uploaded files are File objects (Blob-like).
+  if (v && typeof v === 'object') {
+    const maybeFile = v as unknown as File;
+    const hasName = typeof (maybeFile as any).name === 'string';
+    const hasSize = typeof (maybeFile as any).size === 'number';
+    if (hasName && hasSize) {
+      if (!maybeFile.name || maybeFile.size === 0) return null;
+      return maybeFile;
+    }
   }
   return null;
 }
 
 function isLikelyImage(file: File): boolean {
   const mime = (file.type || '').toLowerCase();
-  if (mime) {
-    // If a MIME is present and it's not image/* -> reject
-    if (!mime.startsWith('image/')) return false;
-    return true;
-  }
-  // No MIME provided — fall back to extension
+  if (mime) return mime.startsWith('image/');
   const name = (file.name || '').toLowerCase();
   return /\.(png|jpe?g|webp|gif|bmp|svg)$/i.test(name);
 }
@@ -68,14 +90,21 @@ function isLikelyImage(file: File): boolean {
 function guessMimeFromName(name: string): string {
   const ext = (name.split('.').pop() || '').toLowerCase();
   switch (ext) {
-    case 'png': return 'image/png';
+    case 'png':
+      return 'image/png';
     case 'jpg':
-    case 'jpeg': return 'image/jpeg';
-    case 'webp': return 'image/webp';
-    case 'gif': return 'image/gif';
-    case 'bmp': return 'image/bmp';
-    case 'svg': return 'image/svg+xml';
-    default: return 'application/octet-stream';
+    case 'jpeg':
+      return 'image/jpeg';
+    case 'webp':
+      return 'image/webp';
+    case 'gif':
+      return 'image/gif';
+    case 'bmp':
+      return 'image/bmp';
+    case 'svg':
+      return 'image/svg+xml';
+    default:
+      return 'application/octet-stream';
   }
 }
 
@@ -85,7 +114,7 @@ function guessMimeFromName(name: string): string {
 export async function createBlogAction(formData: FormData) {
   const { url, anonKey, serviceKey } = getEnv2();
 
-  const supabaseAuth = getAuthClient(url, anonKey);
+  const supabaseAuth = await getAuthClient(url, anonKey);
   const { data: userData, error: userErr } = await supabaseAuth.auth.getUser();
   if (userErr) throw new Error(`Auth error: ${userErr.message}`);
   const currentUserId = userData.user?.id || null;
@@ -146,7 +175,8 @@ export async function createBlogAction(formData: FormData) {
     user_id: currentUserId,
   };
 
-  let { error: insertErr } = await supabaseAdmin.from('blogs').insert([payload]);
+  const { error: insertErr } = await supabaseAdmin.from('blogs').insert([payload]);
+
   if (insertErr?.code === '23505') {
     newId = `${baseId}-${Date.now().toString(36)}`;
     const retry = { ...payload, id: newId };
@@ -169,7 +199,7 @@ export async function updateBlogAction(formData: FormData) {
   if (!id) throw new Error('Missing blog id');
 
   // who is updating?
-  const supabaseAuth = getAuthClient(url, anonKey);
+  const supabaseAuth = await getAuthClient(url, anonKey);
   const { data: userData, error: userErr } = await supabaseAuth.auth.getUser();
   if (userErr) throw new Error(`Auth error: ${userErr.message}`);
   const currentUserId = userData.user?.id || null;
@@ -178,11 +208,7 @@ export async function updateBlogAction(formData: FormData) {
   const supabaseAdmin = getAdminClient(url, serviceKey);
 
   // existing row
-  const { data: existing, error: fetchErr } = await supabaseAdmin
-    .from('blogs')
-    .select('*')
-    .eq('id', id)
-    .single();
+  const { data: existing, error: fetchErr } = await supabaseAdmin.from('blogs').select('*').eq('id', id).single();
   if (fetchErr || !existing) throw new Error(fetchErr?.message || 'Blog not found');
   if (existing.user_id && existing.user_id !== currentUserId) {
     throw new Error('You are not allowed to edit this blog.');
@@ -208,7 +234,7 @@ export async function updateBlogAction(formData: FormData) {
   }
 
   const newId = slugify2(title) || slug_hint || id;
-  const keywordsArray = seo_keywords_raw.split(',').map((k) => k.trim()).filter(Boolean);
+  const keywordsArray = seo_keywords_raw.split(',').map((k: string) => k.trim()).filter(Boolean);
   const plainText = contentHTML.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
 
   let image_url: string | null = existing.image_url ?? null;
@@ -243,6 +269,7 @@ export async function updateBlogAction(formData: FormData) {
   if (newId !== existing.id) {
     const { error: insertErr } = await supabaseAdmin.from('blogs').insert([{ ...payload, user_id: existing.user_id }]);
     if (insertErr) throw new Error(`Insert (slug change) failed: ${insertErr.message}`);
+
     const { error: delOldErr } = await supabaseAdmin.from('blogs').delete().eq('id', existing.id);
     if (delOldErr) throw new Error(`Old slug delete failed: ${delOldErr.message}`);
   } else {
@@ -259,7 +286,7 @@ export async function updateBlogAction(formData: FormData) {
 export async function deleteBlogAction(id: string) {
   const { url, anonKey, serviceKey } = getEnv2();
 
-  const supabaseAuth = getAuthClient(url, anonKey);
+  const supabaseAuth = await getAuthClient(url, anonKey);
   const { data: userData, error: userErr } = await supabaseAuth.auth.getUser();
   if (userErr) throw new Error(`Auth error: ${userErr.message}`);
   const currentUserId = userData.user?.id || null;
@@ -283,6 +310,7 @@ export async function deleteBlogAction(id: string) {
     const { data: list } = await supabaseAdmin.storage
       .from(BLOG_BUCKET)
       .list(prefix, { limit: 100, offset: 0, sortBy: { column: 'name', order: 'asc' } });
+
     if (list && list.length) {
       const paths = list.map((f) => `${prefix}/${f.name}`);
       await supabaseAdmin.storage.from(BLOG_BUCKET).remove(paths);
