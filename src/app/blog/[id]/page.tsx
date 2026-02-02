@@ -13,14 +13,41 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 )
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
-  const id = params.id
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  const pagePath = `/blog/${id}`
 
+  // 1. Try fetching from dedicated SEO table
+  const { data: seo } = await supabase
+    .from('seo_metadata')
+    .select('*')
+    .eq('page_path', pagePath)
+    .single()
+
+  if (seo) {
+    return {
+      title: seo.title,
+      description: seo.description,
+      keywords: seo.keywords,
+      openGraph: {
+        title: seo.title || undefined,
+        description: seo.description || undefined,
+        // We might want to fetch the blog image if SEO image is missing?
+        // But seo_metadata doesn't store image url specifically yet (only section/tags)
+        // So we might still want to fetch the blog to get the image default.
+      },
+      alternates: {
+        canonical: `https://www.takshitechdigital.com/blog/${id}`,
+      },
+    }
+  }
+
+  // 2. Fallback to existing Blog table data
   const { data } = await supabase
     .from('blogs')
     .select('title, seo_title, seo_description, seo_keywords, image_url, status')
     .eq('id', id)
-    .eq('status', 'published')
+    // .eq('status', 'published') // Allow previewing drafts via direct link?
     .single()
 
   const title = data?.seo_title || data?.title || `Blog ${id}`
@@ -44,13 +71,13 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
       description,
       images: data?.image_url ? [data.image_url] : undefined,
     },
-    // Optional: canonical per post (nice for SEO)
     alternates: {
-      canonical: `https://www.webdigitalbazaar.com/blog/${id}`,
+      canonical: `https://www.takshitechdigital.com/blog/${id}`,
     },
   }
 }
 
-export default function Page({ params }: { params: { id: string } }) {
-  return <ClientBlogDetailPage id={params.id} />
+export default async function Page({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  return <ClientBlogDetailPage id={id} />
 }

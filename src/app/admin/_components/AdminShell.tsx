@@ -13,16 +13,16 @@ function useUser() {
   const [user, setUser] = useState<{ name?: string; email?: string } | null>(null)
   useEffect(() => {
     let mounted = true
-    ;(async () => {
-      try {
-        const res = await fetch('/api/me', { cache: 'no-store' })
-        if (!res.ok) throw new Error('Failed')
-        const data = await res.json()
-        if (mounted) setUser(data)
-      } catch {
-        // no-op; keep user null
-      }
-    })()
+      ; (async () => {
+        try {
+          const res = await fetch('/api/me', { cache: 'no-store' })
+          if (!res.ok) throw new Error('Failed')
+          const data = await res.json()
+          if (mounted) setUser(data)
+        } catch {
+          // no-op; keep user null
+        }
+      })()
     return () => {
       mounted = false
     }
@@ -39,6 +39,8 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   const nav = [
     { label: 'Blog', href: '/admin/blogs', icon: BlogIcon },
     { label: 'Leads', href: '/admin/leads', icon: LeadsIcon },
+    { label: 'SEO', href: '/admin/seo', icon: SeoIcon },
+    { label: 'SEO of Blogs', href: '/admin/seo-blogs', icon: SeoIcon },
   ]
 
   return (
@@ -116,6 +118,12 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
               <ul className="space-y-1">
                 <NavItem item={nav[1]} active={safePath.startsWith(nav[1].href)} />
               </ul>
+
+              <SectionLabel className="mt-4">Optimization</SectionLabel>
+              <ul className="space-y-1">
+                <NavItem item={nav[2]} active={safePath.startsWith(nav[2].href)} />
+                <NavItem item={nav[3]} active={safePath.startsWith(nav[3].href)} />
+              </ul>
             </nav>
           </div>
         </aside>
@@ -143,6 +151,11 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
                 <SectionLabel className="mt-4">Growth</SectionLabel>
                 <ul className="space-y-1">
                   <NavItem item={nav[1]} active={safePath.startsWith(nav[1].href)} onNavigate={() => setOpen(false)} />
+                </ul>
+                <SectionLabel className="mt-4">Optimization</SectionLabel>
+                <ul className="space-y-1">
+                  <NavItem item={nav[2]} active={safePath.startsWith(nav[2].href)} onNavigate={() => setOpen(false)} />
+                  <NavItem item={nav[3]} active={safePath.startsWith(nav[3].href)} onNavigate={() => setOpen(false)} />
                 </ul>
               </nav>
             </div>
@@ -245,29 +258,32 @@ function NavItem({
 
 /* ---------- icons ---------- */
 function MenuIcon(props: React.SVGProps<SVGSVGElement>) {
-  return <svg viewBox="0 0 24 24" fill="none" {...props}><path stroke="currentColor" strokeWidth="1.5" d="M4 7h16M4 12h16M4 17h16"/></svg>
+  return <svg viewBox="0 0 24 24" fill="none" {...props}><path stroke="currentColor" strokeWidth="1.5" d="M4 7h16M4 12h16M4 17h16" /></svg>
 }
 function XIcon(props: React.SVGProps<SVGSVGElement>) {
-  return <svg viewBox="0 0 24 24" fill="none" {...props}><path stroke="currentColor" strokeWidth="1.5" d="M6 6l12 12M6 18L18 6"/></svg>
+  return <svg viewBox="0 0 24 24" fill="none" {...props}><path stroke="currentColor" strokeWidth="1.5" d="M6 6l12 12M6 18L18 6" /></svg>
 }
 function SearchIcon(props: React.SVGProps<SVGSVGElement>) {
-  return <svg viewBox="0 0 24 24" fill="none" {...props}><circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="1.5"/><path d="M20 20l-3.5-3.5" stroke="currentColor" strokeWidth="1.5"/></svg>
+  return <svg viewBox="0 0 24 24" fill="none" {...props}><circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="1.5" /><path d="M20 20l-3.5-3.5" stroke="currentColor" strokeWidth="1.5" /></svg>
 }
 function AvatarIcon(props: React.SVGProps<SVGSVGElement>) {
-  return <svg viewBox="0 0 24 24" fill="none" {...props}><circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="1.5"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6" stroke="currentColor" strokeWidth="1.5"/></svg>
+  return <svg viewBox="0 0 24 24" fill="none" {...props}><circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="1.5" /><path d="M4 20c0-4 4-6 8-6s8 2 8 6" stroke="currentColor" strokeWidth="1.5" /></svg>
 }
 function SparklesIcon(props: React.SVGProps<SVGSVGElement>) {
-  return <svg viewBox="0 0 24 24" fill="none" {...props}><path d="M12 3l1.5 3.5L17 8l-3.5 1.5L12 13l-1.5-3.5L7 8l3.5-1.5L12 3zM19 13l.8 1.8L21 16l-1.2 1.2L19 19l-.8-1.8L17 16l1.2-1.2L19 13zM6 13l.8 1.8L8 16l-1.2 1.2L6 19l-.8-1.8L4 16l1.2-1.2L6 13z" stroke="currentColor" strokeWidth="1.2"/></svg>
+  return <svg viewBox="0 0 24 24" fill="none" {...props}><path d="M12 3l1.5 3.5L17 8l-3.5 1.5L12 13l-1.5-3.5L7 8l3.5-1.5L12 3zM19 13l.8 1.8L21 16l-1.2 1.2L19 19l-.8-1.8L17 16l1.2-1.2L19 13zM6 13l.8 1.8L8 16l-1.2 1.2L6 19l-.8-1.8L4 16l1.2-1.2L6 13z" stroke="currentColor" strokeWidth="1.2" /></svg>
 }
 function PlusIcon(props: React.SVGProps<SVGSVGElement>) {
-  return <svg viewBox="0 0 24 24" fill="none" {...props}><path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="1.5"/></svg>
+  return <svg viewBox="0 0 24 24" fill="none" {...props}><path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="1.5" /></svg>
 }
 function SlidersIcon(props: React.SVGProps<SVGSVGElement>) {
-  return <svg viewBox="0 0 24 24" fill="none" {...props}><path d="M4 7h12M4 17h16M16 7v6M10 17v-6" stroke="currentColor" strokeWidth="1.5"/></svg>
+  return <svg viewBox="0 0 24 24" fill="none" {...props}><path d="M4 7h12M4 17h16M16 7v6M10 17v-6" stroke="currentColor" strokeWidth="1.5" /></svg>
 }
 function BlogIcon(props: React.SVGProps<SVGSVGElement>) {
-  return <svg viewBox="0 0 24 24" fill="none" {...props}><rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" strokeWidth="1.5"/><path d="M8 9h8M8 13h8M8 17h5" stroke="currentColor" strokeWidth="1.5"/></svg>
+  return <svg viewBox="0 0 24 24" fill="none" {...props}><rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" strokeWidth="1.5" /><path d="M8 9h8M8 13h8M8 17h5" stroke="currentColor" strokeWidth="1.5" /></svg>
 }
 function LeadsIcon(props: React.SVGProps<SVGSVGElement>) {
-  return <svg viewBox="0 0 24 24" fill="none" {...props}><circle cx="8" cy="8" r="3.5" stroke="currentColor" strokeWidth="1.5"/><path d="M2.5 19.5C3.5 16 6 14.5 8 14.5s4.5 1.5 5.5 5" stroke="currentColor" strokeWidth="1.5"/><rect x="14" y="5" width="7.5" height="7.5" rx="1.5" stroke="currentColor" strokeWidth="1.5"/></svg>
+  return <svg viewBox="0 0 24 24" fill="none" {...props}><circle cx="8" cy="8" r="3.5" stroke="currentColor" strokeWidth="1.5" /><path d="M2.5 19.5C3.5 16 6 14.5 8 14.5s4.5 1.5 5.5 5" stroke="currentColor" strokeWidth="1.5" /><rect x="14" y="5" width="7.5" height="7.5" rx="1.5" stroke="currentColor" strokeWidth="1.5" /></svg>
+}
+function SeoIcon(props: React.SVGProps<SVGSVGElement>) {
+  return <svg viewBox="0 0 24 24" fill="none" {...props}><path d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" stroke="currentColor" strokeWidth="1.5" /><path d="M10 10h4m-2-2v4" stroke="currentColor" strokeWidth="1.5" /></svg>
 }

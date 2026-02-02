@@ -5,22 +5,26 @@ type DeleteConfirmModalProps = {
   onClose: () => void
   onConfirm: () => void
   isLoading?: boolean
+  title?: string
+  message?: string
 }
 
 export default function DeleteConfirmModal({
   isOpen,
   onClose,
   onConfirm,
-  isLoading
+  isLoading,
+  title,
+  message
 }: DeleteConfirmModalProps) {
   if (!isOpen) return null
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
       <div className="bg-white rounded-xl shadow-lg w-full max-w-md p-6 animate-fadeIn">
-        <h2 className="text-lg font-semibold text-gray-800">Confirm Delete</h2>
+        <h2 className="text-lg font-semibold text-gray-800">{title || 'Confirm Delete'}</h2>
         <p className="mt-2 text-sm text-gray-600">
-          Are you sure you want to delete this blog? This action cannot be undone.
+          {message || 'Are you sure you want to delete this blog? This action cannot be undone.'}
         </p>
 
         <div className="mt-6 flex justify-end gap-3">

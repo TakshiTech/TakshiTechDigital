@@ -1,4 +1,5 @@
 import './globals.css';
+import Preloader from '@/components/Preloader';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -17,7 +18,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-NB5LG6FF');`,
           }}
         />
-        
+
 
         {/* Google tag (gtag.js)
         <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17158201553"></script>
@@ -45,9 +46,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           }}
         /> */}
 
-{/* Brevo API CONVERSATIONS */}
+        {/* Brevo API CONVERSATIONS */}
 
-         {/* <script
+        {/* <script
           dangerouslySetInnerHTML={{
             __html: `
               (function(d, w, c) {
@@ -67,7 +68,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
       </head>
 
-      <body>
+      <body className="antialiased">
+        <Preloader />
         {/* Google Tag Manager (noscript) */}
         <noscript
           dangerouslySetInnerHTML={{

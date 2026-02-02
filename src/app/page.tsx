@@ -1,23 +1,19 @@
 
-export const metadata = {
-  title: "Top Digital Marketing Company in Noida - Takshi Tech Digital",
-  description:
-    "Takshi Tech Digital offers expert digital marketing services in India. Trusted as a top digital marketing company in Noida for results oriented strategies.",
-  keywords: [
-    "digital marketing company Noida",
-    "Digital Marketing Service in India",
-  ],
-  robots: "index, follow",
-  openGraph: {
+import { getSeoMetadata } from '@/lib/seo';
+
+export async function generateMetadata() {
+  return getSeoMetadata('/', {
     title: "Top Digital Marketing Company in Noida - Takshi Tech Digital",
-    description:
-      "Takshi Tech Digital offers expert digital marketing services in India. Trusted as a top digital marketing company in Noida for results oriented strategies.",
-    url: "https://www.takshitechdigital.com/",
-    siteName: "Takshi Tech Digital",
-    locale: "en_US",
-    type: "website",
-  },
-}; 
+    description: "Takshi Tech Digital offers expert digital marketing services in India. Trusted as a top digital marketing company in Noida for results oriented strategies.",
+    keywords: ["digital marketing company Noida", "Digital Marketing Service in India"],
+    openGraph: {
+      type: "website",
+      locale: "en_US",
+      url: "https://www.takshitechdigital.com/",
+      siteName: "Takshi Tech Digital",
+    },
+  });
+}
 
 
 import PricingTeaser from '@/components/PricingTeaser';
@@ -43,6 +39,7 @@ const FloatNavbar = dynamic(() => import('@/components/FloatNavbar'));
 const SocialSidebar = dynamic(() => import('@/components/SocialSidebar'));
 const ScrollFloat = dynamic(() => import('@/ui/ScrollFloat'));
 const HeroSection = dynamic(() => import('@/components/HeroSection'));
+const Partners = dynamic(() => import('@/components/Partners'));
 
 export default function Home() {
   return (
@@ -52,9 +49,9 @@ export default function Home() {
       {/* <ScrollContactForm /> */}
       <Cursor />
       {/* <SmoothScrollHero /> */}
-      <HeroSection/>
+      <HeroSection />
       <HeroScrollDemo />
-      <StatsShowcase/>
+      <StatsShowcase />
       <ScrollFloat
         animationDuration={1}
         ease='back.inOut(2)'
@@ -67,7 +64,7 @@ export default function Home() {
 
       <Services />
       <OurWork />
-      
+
       <ScrollFloat
         animationDuration={1}
         ease='back.inOut(2)'
@@ -77,9 +74,20 @@ export default function Home() {
       >
         PRICING PLANS
       </ScrollFloat>
-      <PricingTeaser/>
+      <PricingTeaser />
 
-    <IndustriesGrid/>
+      <IndustriesGrid />
+
+      <ScrollFloat
+        animationDuration={1}
+        ease='back.inOut(2)'
+        scrollStart='center bottom+=50%'
+        scrollEnd='bottom bottom-=40%'
+        stagger={0.03}
+      >
+        OUR PARTNERS
+      </ScrollFloat>
+      <Partners />
 
       <ScrollFloat
         animationDuration={1}
@@ -92,11 +100,11 @@ export default function Home() {
       </ScrollFloat>
       {/* <Testimonials /> */}
       <TestimonialsModern autoplayMs={3500} />
-      
+
       {/* <FounderSection /> */}
-      
+
       <FAQ />
       <Footer />
-    </main>
+    </main >
   );
 }

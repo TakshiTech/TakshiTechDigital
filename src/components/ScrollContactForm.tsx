@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from "react";
+import { usePathname } from 'next/navigation';
+import { submitLead } from "@/actions/leads";
 
 const ScrollContactForm = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -69,6 +71,9 @@ const ScrollContactForm = () => {
     }
   };
 
+  /* ---------------------- MOVED TO SERVER ACTION ---------------------- */
+  const pathname = usePathname();
+
   const handleSubmit = async () => {
     const phoneRegex = /^\+\d{10,15}$/;
     const newErrors: { service: boolean; phone: boolean } = {
@@ -81,34 +86,19 @@ const ScrollContactForm = () => {
       return;
     }
 
-    // Split the name into firstName and lastName
-    const nameParts = formData.name.trim().split(" ");
-    const firstName = nameParts[0] || "";
-    const lastName = nameParts.length > 1 ? nameParts.slice(1).join(" ") : "";
-
-    const payload = {
-      email: formData.email,
-      firstName,
-      lastName,
-      sms: formData.phone,
-      service: formData.service,
-    };
-
-    // Log the payload for debugging
-    console.log("Frontend Payload:", payload);
-
     try {
-      const response = await fetch("/api/submit-contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
+      const formPayload = new FormData();
+      formPayload.append('name', formData.name);
+      formPayload.append('email', formData.email);
+      formPayload.append('phone', formData.phone);
+      formPayload.append('source', 'Popup Form');
+      formPayload.append('message', formData.service); // Using service as message
+      formPayload.append('page_path', pathname);
 
-      const result = await response.json();
-      if (response.ok) {
-        alert("Form submitted successfully!");
+      const result = await submitLead(null, formPayload);
+
+      if (result.success) {
+        alert(result.message || "Form submitted successfully!");
         setShowPopup(false);
         setFormData({
           name: "",
@@ -117,7 +107,7 @@ const ScrollContactForm = () => {
           service: "",
         });
       } else {
-        alert("Error: " + result.error);
+        alert("Error: " + (result.error || "Failed to submit"));
       }
     } catch (error) {
       alert("An error occurred while submitting the form.");
@@ -178,9 +168,8 @@ const ScrollContactForm = () => {
                   value={formData.phone}
                   onChange={handleChange}
                   pattern="\+[0-9]{10,15}"
-                  className={`border p-2 sm:p-3 rounded w-full text-sm sm:text-base ${
-                    errors.phone ? "border-red-500" : ""
-                  }`}
+                  className={`border p-2 sm:p-3 rounded w-full text-sm sm:text-base ${errors.phone ? "border-red-500" : ""
+                    }`}
                 />
                 {errors.phone && (
                   <p className="text-red-500 text-xs mt-1">
@@ -193,9 +182,8 @@ const ScrollContactForm = () => {
                   name="service"
                   value={formData.service}
                   onChange={handleChange}
-                  className={`border p-2 sm:p-3 rounded w-full text-sm sm:text-base ${
-                    errors.service ? "border-red-500" : ""
-                  }`}
+                  className={`border p-2 sm:p-3 rounded w-full text-sm sm:text-base ${errors.service ? "border-red-500" : ""
+                    }`}
                 >
                   <option value="">Choose Service</option>
                   <option value="Web Development">Web Development</option>

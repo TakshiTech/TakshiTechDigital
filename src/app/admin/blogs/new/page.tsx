@@ -36,14 +36,9 @@ function SubmitButton() {
 
 export default function NewBlogPage() {
   const [title, setTitle] = useState('');
-  const [seoTitle, setSeoTitle] = useState('');
-  const [seoDescription, setSeoDescription] = useState('');
-  const [seoKeywords, setSeoKeywords] = useState('');
   const [status, setStatus] = useState<Status>('published');
   const [contentHTML, setContentHTML] = useState<string>('');
 
-  const titleCount = seoTitle.length;
-  const descCount = seoDescription.length;
   const slug = useMemo(() => slugify(title || ''), [title]);
 
   return (
@@ -90,64 +85,6 @@ export default function NewBlogPage() {
           <p className="mt-1 text-xs text-gray-500 dark:text-slate-400">Max 4MB. JPG/PNG/WebP recommended.</p>
         </div>
 
-        {/* SEO Section */}
-        <div className="rounded-lg border bg-gray-50 p-4 dark:border-slate-700 dark:bg-slate-800/60">
-          <h2 className="mb-4 text-xl font-semibold text-slate-900 dark:text-slate-100">🔎 SEO</h2>
-
-          {/* SEO Title */}
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 dark:text-slate-300">
-              SEO Title <span className="text-gray-500 dark:text-slate-400">({titleCount}/60)</span>
-            </label>
-            <input
-              type="text"
-              name="seo_title"
-              placeholder="Up to ~60 characters"
-              value={seoTitle}
-              onChange={(e) => setSeoTitle(e.target.value)}
-              className="mt-1 w-full rounded border px-3 py-2 focus:outline-none
-                         text-slate-900 placeholder-slate-400 border-gray-300
-                         dark:text-slate-100 dark:placeholder-slate-500 dark:border-slate-700 dark:bg-slate-900"
-            />
-          </div>
-
-          {/* Meta Description */}
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 dark:text-slate-300">
-              Meta Description{' '}
-              <span className={descCount > 160 ? 'text-red-600' : 'text-gray-500 dark:text-slate-400'}>
-                ({descCount}/160)
-              </span>
-            </label>
-            <textarea
-              name="seo_description"
-              placeholder="Concise summary for search results (up to ~160 chars)"
-              value={seoDescription}
-              onChange={(e) => setSeoDescription(e.target.value)}
-              className="mt-1 w-full rounded border px-3 py-2 focus:outline-none
-                         text-slate-900 placeholder-slate-400 border-gray-300
-                         dark:text-slate-100 dark:placeholder-slate-500 dark:border-slate-700 dark:bg-slate-900"
-              rows={3}
-            />
-          </div>
-
-          {/* Keywords */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-slate-300">
-              Keywords (comma separated)
-            </label>
-            <input
-              type="text"
-              name="seo_keywords"
-              placeholder="e.g. nextjs, supabase, seo tips"
-              value={seoKeywords}
-              onChange={(e) => setSeoKeywords(e.target.value)}
-              className="mt-1 w-full rounded border px-3 py-2 focus:outline-none
-                         text-slate-900 placeholder-slate-400 border-gray-300
-                         dark:text-slate-100 dark:placeholder-slate-500 dark:border-slate-700 dark:bg-slate-900"
-            />
-          </div>
-        </div>
 
         {/* Jodit Editor (HTML) */}
         <div>

@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { usePathname } from 'next/navigation';
+import { submitLead } from "@/actions/leads";
 import Navbar from '@/components/Navbar';
 import { RevealLinks } from '@/components/Links';
 import SocialSidebar from '@/components/SocialSidebar';
@@ -20,6 +22,8 @@ const ContactClient = () => {
     email: false,
     phone: false,
   });
+
+  const pathname = usePathname();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,33 +47,19 @@ const ContactClient = () => {
       return;
     }
 
-    // Split name into firstName and lastName
-    const nameParts = name.trim().split(" ");
-    const firstName = nameParts[0] || "";
-    const lastName = nameParts.length > 1 ? nameParts.slice(1).join(" ") : "";
-
-    const payload = {
-      email,
-      firstName,
-      lastName,
-      sms: phone,
-      service,
-      message: "", // Already in payload, keeping it as is
-    };
-
-    // Log payload for debugging
-    console.log("Frontend Payload:", payload);
-
     try {
-      const response = await fetch("/api/submit-contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      const formData = new FormData();
+      formData.append('name', name.trim());
+      formData.append('email', email.trim());
+      formData.append('phone', phone);
+      formData.append('message', service); // Using service as message for now
+      formData.append('source', 'Contact Page');
+      formData.append('page_path', pathname);
 
-      const result = await response.json();
-      if (response.ok) {
-        alert("Thank you for your message! We will get back to you soon.");
+      const result = await submitLead(null, formData);
+
+      if (result.success) {
+        alert(result.message || "Thank you for your message! We will get back to you soon.");
         setName("");
         setEmail("");
         setPhone("");

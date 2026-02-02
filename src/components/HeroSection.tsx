@@ -3,6 +3,8 @@
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ArrowRight, Sparkles, PlayCircle, Star, Zap, Check, ChevronRight, Send, ShieldCheck } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from 'next/navigation';
+import { submitLead } from "@/actions/leads";
 
 /**
  * AnimatedHero (Digital Marketing Agency Edition)
@@ -250,25 +252,41 @@ function ContactForm() {
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
 
+  /* ---------------------- MOVED TO SERVER ACTION ---------------------- */
+  const rawPathname = usePathname();
+  const pathname = rawPathname || '/'; // Fallback if null
+
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const form = e.currentTarget; // Capture form reference immediately
     setLoading(true);
     setStatus(null);
 
-    const form = new FormData(e.currentTarget);
-    const payload = Object.fromEntries(form.entries());
+    const formData = new FormData(form);
+    formData.append('source', 'Hero Section');
+    formData.append('page_path', pathname);
+
+    // We need to map the form fields to the expected server action fields if names differ
+    // In this form: name="name", email="email", phone="phone", message="message"
+    // So distinct mapping isn't strictly needed, but let's be safe on Service which is mapped to message in Footer
+    // Actually, in Footer we mapped Service -> Message. Here we have both Service and Message.
+    // Let's prepend Service to Message for clarity.
+
+    const service = formData.get('service') as string;
+    const message = formData.get('message') as string;
+    formData.set('message', `[Service: ${service}] ${message}`);
 
     try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      if (!res.ok) throw new Error("Bad response");
-      setStatus("Thanks! We'll be in touch shortly.");
-      (e.currentTarget as HTMLFormElement).reset();
+      const result = await submitLead(null, formData);
+      if (result.success) {
+        setStatus(result.message || "Thanks! We'll be in touch shortly.");
+        form.reset();
+      } else {
+        setStatus(result.error || "Something went wrong.");
+      }
     } catch (err) {
-      setStatus("Something went wrong. Please try again.");
+      console.error("Hero Form Error:", err);
+      setStatus("Error: " + (err instanceof Error ? err.message : String(err)));
     } finally {
       setLoading(false);
     }

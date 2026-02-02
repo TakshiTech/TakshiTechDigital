@@ -3,6 +3,8 @@
 import React, { useMemo, useState, ChangeEvent } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from 'next/navigation';
+import { submitLead } from "@/actions/leads";
 import { FaLinkedin, FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -28,6 +30,9 @@ const FooterModern: React.FC = () => {
     [name, email, phone, service]
   );
 
+  /* ---------------------- MOVED TO SERVER ACTION ---------------------- */
+  const pathname = usePathname(); // Make sure to import usePathname from 'next/navigation'
+
   const handleSubmit = async () => {
     setStatus(null);
 
@@ -41,30 +46,21 @@ const FooterModern: React.FC = () => {
     setErrors(currentErrors);
     if (Object.keys(currentErrors).length) return;
 
-    // Split name
-    const [firstName, ...rest] = name.trim().split(" ");
-    const lastName = rest.join(" ");
-
-    const payload = {
-      email: email.trim(),
-      firstName,
-      lastName,
-      phone: `+91${phone}`,
-      sms: "",
-      service,
-      message: "",
-    };
-
     try {
       setSubmitting(true);
-      const response = await fetch("/api/submit-contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      const result = await response.json().catch(() => ({}));
-      if (response.ok) {
-        setStatus({ ok: true, message: "Thanks! We\u2019ll get back to you soon." });
+
+      const formData = new FormData();
+      formData.append('name', name.trim());
+      formData.append('email', email.trim());
+      formData.append('phone', `+91${phone}`);
+      formData.append('source', 'Footer');
+      formData.append('message', service); // Using service as message for now
+      formData.append('page_path', pathname);
+
+      const result = await submitLead(null, formData);
+
+      if (result.success) {
+        setStatus({ ok: true, message: result.message || "Thanks! We'll get back to you soon." });
         setName("");
         setEmail("");
         setPhone("");
@@ -171,9 +167,8 @@ const FooterModern: React.FC = () => {
                     inputMode="numeric"
                     maxLength={10}
                     placeholder="1234567890"
-                    className={`w-full rounded-r-lg border bg-slate-900/60 p-3 text-white outline-none transition placeholder:text-gray-400 focus:ring-2 focus:ring-indigo-400/30 ${
-                      errors.phone ? "border-red-500 focus:ring-red-400/30" : "border-white/10 focus:border-indigo-400"
-                    }`}
+                    className={`w-full rounded-r-lg border bg-slate-900/60 p-3 text-white outline-none transition placeholder:text-gray-400 focus:ring-2 focus:ring-indigo-400/30 ${errors.phone ? "border-red-500 focus:ring-red-400/30" : "border-white/10 focus:border-indigo-400"
+                      }`}
                     value={phone}
                     onChange={(e: ChangeEvent<HTMLInputElement>) => {
                       setPhone(e.target.value.replace(/\D/g, "").slice(0, 10));
@@ -191,9 +186,8 @@ const FooterModern: React.FC = () => {
                   <input
                     type="email"
                     placeholder="Email"
-                    className={`w-full rounded-lg border bg-slate-900/60 p-3 text-white outline-none transition placeholder:text-gray-400 focus:ring-2 focus:ring-indigo-400/30 ${
-                      errors.email ? "border-red-500 focus:ring-red-400/30" : "border-white/10 focus:border-indigo-400"
-                    }`}
+                    className={`w-full rounded-lg border bg-slate-900/60 p-3 text-white outline-none transition placeholder:text-gray-400 focus:ring-2 focus:ring-indigo-400/30 ${errors.email ? "border-red-500 focus:ring-red-400/30" : "border-white/10 focus:border-indigo-400"
+                      }`}
                     value={email}
                     onChange={(e) => {
                       setEmail(e.target.value);
@@ -258,11 +252,10 @@ const FooterModern: React.FC = () => {
                   animate={{ y: 0, opacity: 1 }}
                   exit={{ y: -10, opacity: 0 }}
                   transition={{ duration: 0.25 }}
-                  className={`mt-3 rounded-lg border px-3 py-2 text-sm ${
-                    status.ok
-                      ? "border-emerald-400/30 bg-emerald-400/10 text-emerald-200"
-                      : "border-red-400/30 bg-red-400/10 text-red-200"
-                  }`}
+                  className={`mt-3 rounded-lg border px-3 py-2 text-sm ${status.ok
+                    ? "border-emerald-400/30 bg-emerald-400/10 text-emerald-200"
+                    : "border-red-400/30 bg-red-400/10 text-red-200"
+                    }`}
                 >
                   {status.message}
                 </motion.div>
@@ -271,147 +264,147 @@ const FooterModern: React.FC = () => {
           </motion.div>
         </div>
         {/* LINKS AREA – modern pill style across all columns */}
-<div className="mt-14">
-  <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
-    {/* COL 1: COMPANY */}
-    <div>
-      <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-white/70">Company</h3>
-      <div className="mt-4 grid gap-2">
-        {[
-          { label: "Why Us?", href: "/why-choose-a-digital-marketing-agency" },
-          { label: "Blog", href: "/blog" },
-          { label: "Careers", href: "/careers" },
-        ].map((l) => (
-          <Link
-            key={l.label}
-            href={l.href}
-            className="rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm text-gray-200 transition hover:border-white/20 hover:bg-white/10 hover:text-white"
-          >
-            {l.label}
-          </Link>
-        ))}
-      </div>
-    </div>
+        <div className="mt-14">
+          <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
+            {/* COL 1: COMPANY */}
+            <div>
+              <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-white/70">Company</h3>
+              <div className="mt-4 grid gap-2">
+                {[
+                  { label: "Why Us?", href: "/why-choose-a-digital-marketing-agency" },
+                  { label: "Blog", href: "/blog" },
+                  { label: "Careers", href: "/careers" },
+                ].map((l) => (
+                  <Link
+                    key={l.label}
+                    href={l.href}
+                    className="rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm text-gray-200 transition hover:border-white/20 hover:bg-white/10 hover:text-white"
+                  >
+                    {l.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
 
-    {/* COL 2: USE CASES */}
-    <div>
-      <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-white/70">Use Cases</h3>
-      <div className="mt-4 grid grid-cols-2 gap-2">
-        {[
-          { label: "Healthcare", slug: "healthcare" },
-          { label: "Education", slug: "education" },
-          { label: "Real Estate", slug: "real-estate" },
-          { label: "Retailers", slug: "retailers" },
-          { label: "Interior Designers", slug: "interior-designers" },
-          { label: "B2B", slug: "b2b" },
-        ].map((u) => (
-          <Link
-            key={u.slug}
-            href={`/use-cases/${u.slug}`}
-            className="rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm text-gray-200 transition hover:border-white/20 hover:bg-white/10 hover:text-white text-center"
-          >
-            {u.label}
-          </Link>
-        ))}
-      </div>
-    </div>
+            {/* COL 2: USE CASES */}
+            <div>
+              <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-white/70">Use Cases</h3>
+              <div className="mt-4 grid grid-cols-2 gap-2">
+                {[
+                  { label: "Healthcare", slug: "healthcare" },
+                  { label: "Education", slug: "education" },
+                  { label: "Real Estate", slug: "real-estate" },
+                  { label: "Retailers", slug: "retailers" },
+                  { label: "Interior Designers", slug: "interior-designers" },
+                  { label: "B2B", slug: "b2b" },
+                ].map((u) => (
+                  <Link
+                    key={u.slug}
+                    href={`/use-cases/${u.slug}`}
+                    className="rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm text-gray-200 transition hover:border-white/20 hover:bg-white/10 hover:text-white text-center"
+                  >
+                    {u.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
 
-    {/* COL 3: SITE NAV */}
-    <div>
-      <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-white/70">Site</h3>
-      <div className="mt-4 grid grid-cols-2 gap-2">
-        {[
-          { label: "Home", href: "/" },
-          { label: "About", href: "/about" },
-          { label: "Services", href: "/services" },
-          { label: "Portfolio", href: "/portfolio" },
-          { label: "Pricing", href: "/pricing" },
-          { label: "Contact", href: "/contact" },
-        ].map((l) => (
-          <Link
-            key={l.label}
-            href={l.href}
-            className="rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm text-gray-200 transition hover:border-white/20 hover:bg-white/10 hover:text-white text-center"
-          >
-            {l.label}
-          </Link>
-        ))}
-      </div>
-    </div>
+            {/* COL 3: SITE NAV */}
+            <div>
+              <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-white/70">Site</h3>
+              <div className="mt-4 grid grid-cols-2 gap-2">
+                {[
+                  { label: "Home", href: "/" },
+                  { label: "About", href: "/about" },
+                  { label: "Services", href: "/services" },
+                  { label: "Portfolio", href: "/portfolio" },
+                  { label: "Pricing", href: "/pricing" },
+                  { label: "Contact", href: "/contact" },
+                ].map((l) => (
+                  <Link
+                    key={l.label}
+                    href={l.href}
+                    className="rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm text-gray-200 transition hover:border-white/20 hover:bg-white/10 hover:text-white text-center"
+                  >
+                    {l.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
 
-    {/* COL 4: LEGAL */}
-    <div>
-      <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-white/70">Legal</h3>
-      <div className="mt-4 grid gap-2">
-        {[
-          { label: "Privacy Policy", href: "/privacy" },
-          { label: "Terms & Conditions", href: "/terms" },
-          { label: "Refund Policy", href: "/terms#cancellation-refund" },
-        ].map((l) => (
-          <Link
-            key={l.label}
-            href={l.href}
-            className="rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm text-gray-200 transition hover:border-white/20 hover:bg-white/10 hover:text-white"
-          >
-            {l.label}
-          </Link>
-        ))}
-      </div>
-    </div>
-  </div>
-</div>
+            {/* COL 4: LEGAL */}
+            <div>
+              <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-white/70">Legal</h3>
+              <div className="mt-4 grid gap-2">
+                {[
+                  { label: "Privacy Policy", href: "/privacy" },
+                  { label: "Terms & Conditions", href: "/terms" },
+                  { label: "Refund Policy", href: "/terms#cancellation-refund" },
+                ].map((l) => (
+                  <Link
+                    key={l.label}
+                    href={l.href}
+                    className="rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm text-gray-200 transition hover:border-white/20 hover:bg-white/10 hover:text-white"
+                  >
+                    {l.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
         <div className="mt-10 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
         {/* Social */}
-{/* Social */}
-<div className="mt-12 text-center">
-  <div className="flex justify-center gap-4">
-    {[
-      // {
-      //   href: "https://www.linkedin.com/company/webdigitalbazaar/",
-      //   icon: <FaLinkedin className="h-5 w-5" />,
-      //   label: "LinkedIn",
-      // },
-      {
-        href: "https://www.youtube.com/@TakshiTechDigital",
-        icon: <FaYoutube className="h-5 w-5" />,
-        label: "YouTube", // <-- was "Facebook"
-      },
-      {
-        href: "https://www.facebook.com/profile.php?id=61579852981225",
-        icon: <FaFacebook className="h-5 w-5" />,
-        label: "Facebook",
-      },
-      {
-        href: "https://www.instagram.com/takshitechdigital/",
-        icon: <FaInstagram className="h-5 w-5" />,
-        label: "Instagram",
-      },
-      {
-        href: "https://x.com/TakshiTech",
-        icon: <FaTwitter className="h-5 w-5" />,
-        label: "Twitter",
-      },
-    ].map((s) => (
-      <a
-        key={s.href}                 // <-- unique, stable key
-        href={s.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={s.label}
-        className="group inline-flex items-center justify-center rounded-full border border-white/10 p-2 text-white transition hover:border-white/30 hover:text-teal-300 focus:outline-none focus:ring-2 focus:ring-white/30"
-      >
-        {s.icon}
-      </a>
-    ))}
-  </div>
+        {/* Social */}
+        <div className="mt-12 text-center">
+          <div className="flex justify-center gap-4">
+            {[
+              // {
+              //   href: "https://www.linkedin.com/company/webdigitalbazaar/",
+              //   icon: <FaLinkedin className="h-5 w-5" />,
+              //   label: "LinkedIn",
+              // },
+              {
+                href: "https://www.youtube.com/@TakshiTechDigital",
+                icon: <FaYoutube className="h-5 w-5" />,
+                label: "YouTube", // <-- was "Facebook"
+              },
+              {
+                href: "https://www.facebook.com/profile.php?id=61579852981225",
+                icon: <FaFacebook className="h-5 w-5" />,
+                label: "Facebook",
+              },
+              {
+                href: "https://www.instagram.com/takshitechdigital/",
+                icon: <FaInstagram className="h-5 w-5" />,
+                label: "Instagram",
+              },
+              {
+                href: "https://x.com/TakshiTech",
+                icon: <FaTwitter className="h-5 w-5" />,
+                label: "Twitter",
+              },
+            ].map((s) => (
+              <a
+                key={s.href}                 // <-- unique, stable key
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={s.label}
+                className="group inline-flex items-center justify-center rounded-full border border-white/10 p-2 text-white transition hover:border-white/30 hover:text-teal-300 focus:outline-none focus:ring-2 focus:ring-white/30"
+              >
+                {s.icon}
+              </a>
+            ))}
+          </div>
 
-  <p className="mt-3 text-xs text-gray-400">© 2025 Takshi Tech Digital | All Rights Reserved</p>
-</div>
+          <p className="mt-3 text-xs text-gray-400">© 2025 Takshi Tech Digital | All Rights Reserved</p>
+        </div>
 
-</div>
+      </div>
 
-{/* ContactPoint JSON-LD for SEO */}
+      {/* ContactPoint JSON-LD for SEO */}
 
       {/* ContactPoint JSON-LD for SEO */}
       <script
