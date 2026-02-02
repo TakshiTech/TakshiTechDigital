@@ -23,6 +23,7 @@ export default function Preloader() {
         setDimension({ width: window.innerWidth, height: window.innerHeight });
         document.body.style.overflow = 'hidden';
 
+
         // Animate percentage smoother
         const interval = setInterval(() => {
             setPercent((prev) => {
