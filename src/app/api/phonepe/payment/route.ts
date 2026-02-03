@@ -68,9 +68,16 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ url: redirectUrl, transactionId });
   } catch (error: any) {
-    console.error("PhonePe Initiation Error:", error.response?.data || error.message);
+    console.error("PhonePe Initiation Error:", error.message);
+    if (error.response) {
+      console.error("Response Data:", JSON.stringify(error.response.data, null, 2));
+      console.error("Response Status:", error.response.status);
+    }
     return NextResponse.json(
-      { error: error.response?.data?.message || "Payment initiation failed" },
+      {
+        error: error.response?.data?.message || error.message || "Payment initiation failed",
+        details: error.response?.data
+      },
       { status: 500 }
     );
   }
