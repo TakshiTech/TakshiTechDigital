@@ -14,9 +14,15 @@ export async function POST(req: NextRequest) {
     const env = process.env.PHONEPE_ENV || "PROD";
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-    if (!merchantId || !saltKey) {
+    if (!merchantId || !saltKey || !saltIndex || !baseUrl) {
+      console.error("Missing PhonePe configuration:", {
+        merchantId: !!merchantId,
+        saltKey: !!saltKey,
+        saltIndex: !!saltIndex,
+        baseUrl: !!baseUrl
+      });
       return NextResponse.json(
-        { error: "PhonePe credentials not configured" },
+        { error: "PhonePe credentials or Base URL not configured" },
         { status: 500 }
       );
     }
@@ -28,7 +34,7 @@ export async function POST(req: NextRequest) {
       merchantId: merchantId,
       merchantTransactionId: transactionId,
       merchantUserId: userId,
-      amount: parseInt(amount) * 100, // Amount in paise
+      amount: Math.round(parseFloat(amount) * 100), // Amount in paise, ensure integer
       redirectUrl: `${baseUrl}/api/phonepe/callback?id=${transactionId}`,
       redirectMode: "POST",
       callbackUrl: `${baseUrl}/api/phonepe/callback`,
@@ -47,8 +53,15 @@ export async function POST(req: NextRequest) {
 
     const phonePeUrl =
       env === "PROD"
-        ? "https://api.phonepe.com/apis/hermes/pg/v1/pay"
+        ? "https://api.phonepe.com/apis/pg/v1/pay"
         : "https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay";
+
+    console.log("Initiating PhonePe Payment:", {
+      transactionId,
+      amount: data.amount,
+      url: phonePeUrl,
+      env
+    });
 
     const response = await axios.post(
       phonePeUrl,
@@ -64,9 +77,14 @@ export async function POST(req: NextRequest) {
       }
     );
 
-    const redirectUrl = response.data.data.instrumentResponse.redirectInfo.url;
+    if (response.data && response.data.success) {
+      const redirectUrl = response.data.data.instrumentResponse.redirectInfo.url;
+      return NextResponse.json({ url: redirectUrl, transactionId });
+    } else {
+      console.error("PhonePe API Error Response:", response.data);
+      throw new Error(response.data.message || "PhonePe API returned failure");
+    }
 
-    return NextResponse.json({ url: redirectUrl, transactionId });
   } catch (error: any) {
     console.error("PhonePe Initiation Error:", error.message);
     if (error.response) {
