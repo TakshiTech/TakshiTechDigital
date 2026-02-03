@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
 
     const phonePeUrl =
       env === "PROD"
-        ? "https://api.phonepe.com/apis/pg/v1/pay"
+        ? "https://api.phonepe.com/apis/hermes/pg/v1/pay"
         : "https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay";
 
     const response = await axios.post(
