@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 
 // Search Engine Optimization Pricing Plans
 const seoPlans = [
-  
+
   {
     name: 'Starter',
     price: '₹8,000',
@@ -37,7 +37,7 @@ const seoPlans = [
       '200 Backlinks',
       'Weekly Reports',
       'Audits & Keyword Research (Free)',
-      
+
       'Backlink Creation',
       '3 Months Delivery',
       'Quarterly: 8% Off, Half Yearly: 12% Off',
@@ -55,7 +55,7 @@ const seoPlans = [
       '250 Backlinks',
       'Weekly Reports',
       'Audits & Keyword Research (Free)',
-      
+
       'Title Description + Backlink Creation',
       'On Page SEO',
       '3 Months Delivery',
@@ -73,7 +73,7 @@ const seoPlans = [
       '500 Backlinks',
       'Weekly Reports',
       'Audits & Keyword Research (Free)',
-      
+
       'Title Description + Backlink Creation',
       'On Page SEO',
       '3 Months Delivery',
@@ -128,7 +128,7 @@ const socialMediaPlans = [
       'Facebook Page & Instagram',
       '18 Posts, 5 Stories, 4 Reels',
       'Weekly Reports',
-      
+
       'Page Optimization + Reach + Promotion',
       'Marketing Strategy',
       '3 Months Delivery',
@@ -145,7 +145,7 @@ const socialMediaPlans = [
       'Facebook Page & Instagram',
       '25 Posts, 10 Stories, 6 Reels',
       'Weekly Reports',
-      
+
       'Page Optimization + Reach + Promotion',
       'Marketing Strategy',
       '3 Months Delivery',
@@ -166,13 +166,13 @@ const webDevelopmentPlans = [
       '5 Pages',
       'Basic On Page SEO',
       'Analytics Connection (Free)',
-      
+
       'Domain Hosting + Web Development',
       '7-15 Days Delivery',
     ],
     cta: 'Choose Wordpress',
   },
-  
+
   {
     name: 'React.js/Next.js',
     price: '₹53,000',
@@ -182,7 +182,7 @@ const webDevelopmentPlans = [
       '8 Pages',
       'Basic On Page SEO',
       'Analytics Connection (Free)',
-      
+
       'Domain Hosting + Web Development',
       'Upto 2 Months Delivery',
     ],
@@ -204,7 +204,7 @@ const webDevelopmentPlans = [
     ],
     cta: 'Choose HTML/PHP',
   },
-  
+
 ];
 // Web Development Ecommerce Pricing Plans
 const webDevelopmentPlansEcommerce = [
@@ -222,7 +222,7 @@ const webDevelopmentPlansEcommerce = [
     ],
     cta: 'Choose Wordpress',
   },
-  
+
   {
     name: 'React.js/Next.js',
     price: '₹70,000',
@@ -280,7 +280,7 @@ const paidAdsPlans = [
     features: [
       'Daily Lead Reports',
       'Free Page Creation',
-      
+
       'Instant Delivery',
     ],
     cta: 'Choose Google Ads',
@@ -349,7 +349,7 @@ const allInOnePlans = [
       '15 Graphics (Posts)',
       'Weekly Reports',
       'Audits & Keyword Research (Free)',
-      
+
       '3 Months Delivery',
     ],
     cta: 'Choose Starter',
@@ -367,7 +367,7 @@ const allInOnePlans = [
       '20 Graphics (Posts)',
       'Weekly Reports',
       'Audits & Keyword Research (Free)',
-      
+
       '3 Months Delivery',
     ],
     cta: 'Choose Advanced',
@@ -393,13 +393,35 @@ const PricingCard = ({ plan, index }: { plan: typeof seoPlans[0]; index: number 
     tap: { scale: 0.95 },
   };
 
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
     setIsLoading(true);
-    const encodedPlanName = encodeURIComponent(plan.name);
-    const encodedPrice = encodeURIComponent(plan.price);
-    setTimeout(() => {
-      router.push(`/payment?plan=${encodedPlanName}&price=${encodedPrice}`);
-    }, 2000); // 2-second delay before redirect
+    try {
+      const numericAmount = plan.price.replace(/[^0-9]/g, '');
+      const response = await fetch('/api/phonepe/payment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          amount: numericAmount,
+          mobileNumber: "9999999999", // You can update this to ask user for input if needed
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        console.error("Payment initiation failed", data);
+        alert("Payment initiation failed. Please try again.");
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.error("Error starting payment:", error);
+      alert("Something went wrong. Please try again.");
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -471,37 +493,37 @@ export default function PricingClient() {
         <meta name="description" content="Explore our pricing plans for SEO, social media marketing, web development, paid ads, content, Google listing, and all-in-one digital marketing services." />
       </Head>
 
-       <section
-              className="w-full h-[100vh] relative overflow-hidden flex items-center justify-center"
-            >
-              {/* Background Image */}
-              <div
-                className="absolute inset-0 bg-center bg-cover bg-no-repeat"
-                style={{
-                  backgroundImage: "url('/images/background5.webp')",
-                  filter: "blur(3px)",
-                  transform: "scale(1.1)", // prevents edges from showing when blurred
-                }}
-              ></div>
-      
-              {/* Overlay color for readability (optional) */}
-              <div className="absolute inset-0 bg-white/50"></div>
-      
-              {/* Content */}
-              <motion.div
-                initial={{ y: "-150%" }}
-                animate={{ y: 0 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-                className="absolute text-center w-full"
-              >
-                <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold text-black">
-                  PRICING
-                </h1>
-                <p className="mt-2 sm:mt-4 text-lg sm:text-xl md:text-2xl text-gray-600">
-                   Digital Marketing Plans That Fit You
-                </p>
-              </motion.div>
-            </section>
+      <section
+        className="w-full h-[100vh] relative overflow-hidden flex items-center justify-center"
+      >
+        {/* Background Image */}
+        <div
+          className="absolute inset-0 bg-center bg-cover bg-no-repeat"
+          style={{
+            backgroundImage: "url('/images/background5.webp')",
+            filter: "blur(3px)",
+            transform: "scale(1.1)", // prevents edges from showing when blurred
+          }}
+        ></div>
+
+        {/* Overlay color for readability (optional) */}
+        <div className="absolute inset-0 bg-white/50"></div>
+
+        {/* Content */}
+        <motion.div
+          initial={{ y: "-150%" }}
+          animate={{ y: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="absolute text-center w-full"
+        >
+          <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold text-black">
+            PRICING
+          </h1>
+          <p className="mt-2 sm:mt-4 text-lg sm:text-xl md:text-2xl text-gray-600">
+            Digital Marketing Plans That Fit You
+          </p>
+        </motion.div>
+      </section>
 
       <div className="min-h-auto bg-gray-50 py-12 mt-20">
         <p className='text-center mt-10 mb-10'>*All Prices are inclusive with GST</p>

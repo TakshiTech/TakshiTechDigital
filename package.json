@@ -21,6 +21,7 @@
     "@tabler/icons-react": "^3.31.0",
     "@tsparticles/engine": "^3.8.1",
     "@tsparticles/react": "^3.0.0",
+    "axios": "^1.13.4",
     "cloudinary": "^2.7.0",
     "clsx": "^2.1.1",
     "dotted-map": "^2.2.3",
@@ -50,7 +51,8 @@
     "sib-api-v3-typescript": "^2.2.2",
     "stripe": "^18.1.1",
     "tailwind-merge": "^3.3.0",
-    "tsparticles": "^3.8.1"
+    "tsparticles": "^3.8.1",
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
