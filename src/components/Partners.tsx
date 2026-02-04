@@ -8,10 +8,6 @@ const partners = [
         name: 'PhonePe',
         logo: '/images/partners/phonepe.png',
     },
-    {
-        name: 'Sharda Hospital',
-        logo: '/images/partners/sharda.png',
-    },
 ]
 
 export default function Partners() {

@@ -396,7 +396,7 @@ const PricingCard = ({ plan, index }: { plan: typeof seoPlans[0]; index: number 
   const handleCheckout = async () => {
     setIsLoading(true);
     try {
-      const numericAmount = plan.price.replace(/[^0-9]/g, '');
+      const numericAmount = plan.price.split('-')[0].replace(/[^0-9]/g, '');
       const response = await fetch('/api/phonepe/payment', {
         method: 'POST',
         headers: {
@@ -404,7 +404,7 @@ const PricingCard = ({ plan, index }: { plan: typeof seoPlans[0]; index: number 
         },
         body: JSON.stringify({
           amount: numericAmount,
-          mobileNumber: "9999999999", // You can update this to ask user for input if needed
+          mobileNumber: "9999999999",
         }),
       });
 

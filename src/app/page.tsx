@@ -40,6 +40,7 @@ const SocialSidebar = dynamic(() => import('@/components/SocialSidebar'));
 const ScrollFloat = dynamic(() => import('@/ui/ScrollFloat'));
 const HeroSection = dynamic(() => import('@/components/HeroSection'));
 const Partners = dynamic(() => import('@/components/Partners'));
+const Clients = dynamic(() => import('@/components/Clients'));
 
 export default function Home() {
   return (
@@ -88,6 +89,17 @@ export default function Home() {
         OUR PARTNERS
       </ScrollFloat>
       <Partners />
+
+      <ScrollFloat
+        animationDuration={1}
+        ease='back.inOut(2)'
+        scrollStart='center bottom+=50%'
+        scrollEnd='bottom bottom-=40%'
+        stagger={0.03}
+      >
+        OUR CLIENTS
+      </ScrollFloat>
+      <Clients />
 
       <ScrollFloat
         animationDuration={1}

@@ -47,7 +47,8 @@ export async function POST(req: NextRequest) {
     const payload = JSON.stringify(data);
     const payloadMain = Buffer.from(payload).toString("base64");
     const keyIndex = saltIndex;
-    const stringToSign = payloadMain + "/pg/v1/pay" + saltKey;
+    const endpointPath = "/pg/v1/pay";
+    const stringToSign = payloadMain + endpointPath + saltKey;
     const sha256 = crypto.createHash("sha256").update(stringToSign).digest("hex");
     const checksum = sha256 + "###" + keyIndex;
 
@@ -60,7 +61,9 @@ export async function POST(req: NextRequest) {
       transactionId,
       amount: data.amount,
       url: phonePeUrl,
-      env
+      env,
+      merchantId,
+      endpointPath
     });
 
     const response = await axios.post(
