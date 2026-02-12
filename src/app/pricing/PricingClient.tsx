@@ -413,8 +413,8 @@ const PricingCard = ({ plan, index }: { plan: typeof seoPlans[0]; index: number 
       if (data.url) {
         window.location.href = data.url;
       } else {
-        console.error("Payment initiation failed", data);
-        alert(`Payment Failed: ${data.error || "Unknown Error"}`);
+        console.error("Payment initiation failed", JSON.stringify(data));
+        alert(`Payment Failed: ${data.error || JSON.stringify(data) || "Unknown Error"}`);
         setIsLoading(false);
       }
     } catch (error) {
