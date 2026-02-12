@@ -51,6 +51,8 @@ export async function POST(req: NextRequest) {
 
     console.log("Auth Token Generated Successfully");
 
+
+
     // 2. Create Payment Request
     const transactionId = "TXN" + uuidv4().replace(/-/g, "").substring(0, 20);
     const userId = "USER" + uuidv4().replace(/-/g, "").substring(0, 20);
