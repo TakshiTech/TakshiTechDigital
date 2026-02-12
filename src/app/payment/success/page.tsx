@@ -1,40 +1,70 @@
-
 "use client";
-import React, { useEffect } from 'react';
-import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { CheckCircle } from 'lucide-react';
 
-export default function PaymentSuccess() {
+import React from "react";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { CheckCircle } from "lucide-react";
+
+export default function PaymentSuccessPage() {
     return (
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+        <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 sm:px-6 lg:px-8">
             <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
+                initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center"
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className="max-w-md w-full space-y-8 bg-white p-10 rounded-2xl shadow-xl text-center"
             >
-                <div className="flex justify-center mb-6">
-                    <CheckCircle className="w-20 h-20 text-green-500" />
-                </div>
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">Payment Successful!</h1>
-                <p className="text-gray-600 mb-8">
-                    Thank you for your purchase. We have received your payment and will begin processing your order immediately.
-                </p>
+                <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{
+                        delay: 0.2,
+                        type: "spring",
+                        stiffness: 260,
+                        damping: 20,
+                    }}
+                    className="mx-auto flex items-center justify-center h-24 w-24 rounded-full bg-green-100"
+                >
+                    <CheckCircle className="h-16 w-16 text-green-600" />
+                </motion.div>
 
-                <div className="space-y-4">
-                    <Link
-                        href="/"
-                        className="block w-full bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition"
-                    >
-                        Return to Home
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4, duration: 0.5 }}
+                >
+                    <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
+                        Payment Successful!
+                    </h2>
+                    <p className="mt-2 text-sm text-gray-600">
+                        Thank you for your purchase. Your order has been confirmed and is being processed.
+                    </p>
+                </motion.div>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6, duration: 0.5 }}
+                    className="mt-8 space-y-4"
+                >
+                    <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                        <p className="text-sm text-gray-500">Transaction ID</p>
+                        <p className="text-lg font-mono font-medium text-gray-800 break-all">
+                            {/* We could grab this from URL params if needed, for now mostly static success message */}
+                            Creating Magic...
+                        </p>
+                    </div>
+
+                    <Link href="/" passHref>
+                        <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow-md"
+                        >
+                            Go to Dashboard
+                        </motion.button>
                     </Link>
-                    <Link
-                        href="/dashboard"
-                        className="block w-full bg-gray-100 text-gray-800 font-semibold py-3 rounded-lg hover:bg-gray-200 transition"
-                    >
-                        Go to Dashboard
-                    </Link>
-                </div>
+                </motion.div>
             </motion.div>
         </div>
     );

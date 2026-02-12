@@ -1,62 +1,62 @@
 
 import { NextRequest, NextResponse } from "next/server";
-import crypto from "crypto";
-import { headers } from "next/headers";
 
 export async function POST(req: NextRequest) {
     try {
         const text = await req.text();
         const params = new URLSearchParams(text);
 
-        // Sometimes PhonePe sends data as form-urlencoded with 'response' key
-        // Other times it might be JSON if configured differently, but documentation says POST body.
-        // However, for redirectMode: "POST", it sends a POST request to the redirectUrl.
-
-        // Let's handle both standard S2S callback (JSON body usually) and Redirect (Form Data)
-
-        // Check if it's the S2S callback or the user redirect
-        // The implementation plan uses the same route for both redirectUrl and callbackUrl for simplicity,
-        // but they handle things slightly differently.
-
-        // If it is the user redirect (POST), it comes as form-data: `code`, `merchantId`, `transactionId`, `amount`, `providerReferenceId`, `checksum`
-
-        // If it is S2S, it comes with X-VERIFY header and a base64 encoded JSON body.
-
-        const contentType = req.headers.get("content-type");
-
-        if (contentType?.includes("application/json")) {
-            // S2S Webhook logic would go here
-            // This is where you'd verify the signature and update the order status
-            return NextResponse.json({ status: "success" });
-        }
-
         // Handle User Redirect (POST form data)
         let bodyData: any = {};
+        const contentType = req.headers.get("content-type");
+
         if (contentType?.includes("application/x-www-form-urlencoded")) {
             params.forEach((value, key) => {
                 bodyData[key] = value;
             });
+        } else if (contentType?.includes("application/json")) {
+            // If it happens to be JSON (S2S or configured differently)
+            try {
+                bodyData = JSON.parse(text);
+            } catch (e) {
+                console.error("Failed to parse JSON body", e);
+            }
         }
 
-        // If we have a transaction ID and status
+        console.log("Payment Callback Received:", bodyData);
+
+        // Check Status Code
         if (bodyData.code === "PAYMENT_SUCCESS") {
-            // Redirect to a success page on frontend
-            return NextResponse.redirect(new URL("/payment/success", req.url));
-        } else if (bodyData.code) {
-            return NextResponse.redirect(new URL("/payment/failure", req.url));
+            // Redirect to a success page
+            const url = new URL("/payment/success", req.url);
+            // Optionally pass transaction ID or other params
+            if (bodyData.transactionId) {
+                url.searchParams.set("tid", bodyData.transactionId);
+            }
+            return NextResponse.redirect(url);
+        } else if (
+            bodyData.code === "PAYMENT_ERROR" ||
+            bodyData.code === "PAYMENT_DECLINED" ||
+            bodyData.code === "PAYMENT_CANCELLED"
+        ) {
+            // Redirect to the Offer/Cancel page
+            const url = new URL("/payment/offer", req.url);
+            return NextResponse.redirect(url);
+        } else {
+            // Fallback for unknown states
+            const url = new URL("/payment/offer", req.url); // Default to offer/retry
+            return NextResponse.redirect(url);
         }
-
-        // Initial fallback if something isn't right
-        return NextResponse.redirect(new URL("/payment", req.url));
 
     } catch (error) {
         console.error("Callback Error:", error);
-        return NextResponse.redirect(new URL("/payment/failure", req.url));
+        // Fallback to offer page on system error
+        return NextResponse.redirect(new URL("/payment/offer", req.url));
     }
 }
 
 export async function GET(req: NextRequest) {
-    // Just in case they use GET redirect which is default mode if not specified as POST
-    // But we specified POST in initiation.
-    return NextResponse.redirect(new URL("/payment", req.url));
+    // Just in case they use GET redirect
+    // Redirect to pricing or offer page
+    return NextResponse.redirect(new URL("/pricing", req.url));
 }
