@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
     // 1. Generate Auth Token
     const authUrl =
       env === "PROD"
-        ? "https://api.phonepe.com/apis/hermes/v1/oauth/token" // Production Auth URL
+        ? "https://api.phonepe.com/apis/identity-manager/v1/oauth/token" // Production Auth URL
         : "https://api-preprod.phonepe.com/apis/pg-sandbox/v1/oauth/token"; // Sandbox Auth URL
 
     const authData = new URLSearchParams();
@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
 
     const paymentUrl =
       env === "PROD"
-        ? "https://api.phonepe.com/apis/hermes/pg/checkout/v2/pay" // Production Payment URL
+        ? "https://api.phonepe.com/apis/pg/checkout/v2/pay" // Production Payment URL
         : "https://api-preprod.phonepe.com/apis/pg-sandbox/checkout/v2/pay"; // Sandbox Payment URL
 
     const paymentData = {
